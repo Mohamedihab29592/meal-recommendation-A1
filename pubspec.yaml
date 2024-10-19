@@ -13,6 +13,8 @@ dependencies:
 
   cupertino_icons: ^1.0.8
   firebase_core: ^3.6.0
+  # A flutter plugin for adapting screen and font size.Guaranteed to look good on different models
+  flutter_screenutil: ^5.9.3
 
 dev_dependencies:
   flutter_test:
@@ -29,7 +31,8 @@ flutter:
     - assets/svgs/
 
   fonts:
-    - family: Inter/Inter_28pt-      fonts:
+    - family: Inter
+      fonts:
         - asset: assets/fonts/Inter/Inter_28pt-Light.ttf
           weight: 300
         - asset: assets/fonts/Inter/Inter_28pt-Regular.ttf
@@ -40,3 +43,10 @@ flutter:
           weight: 600
         - asset: assets/fonts/Inter/Inter_28pt-Bold.ttf
           weight: 700
+
+
+flutter_assets:
+  assets_path: assets/
+  output_path: lib/core/utils/
+  filename: assets.dart
+  field_prefix: null
