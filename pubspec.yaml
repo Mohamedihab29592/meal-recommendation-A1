@@ -15,6 +15,8 @@ dependencies:
   firebase_core: ^3.6.0
   # A flutter plugin for adapting screen and font size.Guaranteed to look good on different models
   flutter_screenutil: ^5.9.3
+  # Provides A collection of animated loading indicators
+  loading_indicator: ^3.1.1
 
 dev_dependencies:
   flutter_test:

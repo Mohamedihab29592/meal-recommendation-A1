@@ -3,4 +3,5 @@ class AppStrings {
 
   static const String fontFamily = 'Inter';
   static const String appTitle = 'Meal-Recommendation';
+  static const String pleaseWait = 'Please wait';
 }

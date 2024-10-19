@@ -10,4 +10,9 @@ class AppTextStyles {
         color: AppColors.primaryColor,
         fontWeight: FontWeight.bold,
       );
+  static TextStyle get font18RegularDarkBlue => TextStyle(
+        fontSize: 18.sp,
+        color: AppColors.primaryColor,
+        fontWeight: FontWeight.w400,
+      );
 }
