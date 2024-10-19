@@ -21,8 +21,9 @@ class PrimaryButton extends StatelessWidget {
     this.isOutlined = false,
     this.fontSize,
     this.margin,
-    this.borderColor = AppColors.primaryColor,
+    this.borderColor = Colors.white,
     this.borderWidth = 1,
+    this.shape,
   });
 
   final String? text;
@@ -42,6 +43,7 @@ class PrimaryButton extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
   final Color borderColor;
   final double borderWidth;
+  final ShapeBorder? shape;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +54,7 @@ class PrimaryButton extends StatelessWidget {
       decoration: BoxDecoration(
         color: isOutlined
             ? Colors.transparent
-            : backgroundColor ?? AppColors.primaryColor,
+            : backgroundColor ?? AppColors.scaffoldBackgroundLightColor,
         borderRadius: BorderRadiusDirectional.circular(
           borderRadius?.r ?? 45.0.r,
         ),
@@ -67,23 +69,19 @@ class PrimaryButton extends StatelessWidget {
       child: MaterialButton(
         padding: padding,
         onPressed: onPressed,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadiusDirectional.circular(
-            borderRadius?.r ?? 45.0.r,
-          ),
-        ),
-        child: child ??
-            FittedBox(
-              child: Text(
-                text!,
-                style: textStyle ??
-                    AppTextStyles.font21BoldDarkBlue.copyWith(
-                      fontSize: fontSize?.sp ?? 21.sp,
-                      color: isOutlined
-                          ? AppColors.primaryColor
-                          : textColor ?? Colors.white,
-                    ),
+        shape: shape ??
+            RoundedRectangleBorder(
+              borderRadius: BorderRadiusDirectional.circular(
+                borderRadius?.r ?? 45.0.r,
               ),
+            ),
+        child: child ??
+            Text(
+              text!,
+              style: textStyle ??
+                  AppTextStyles.font21BoldDarkBlue.copyWith(
+                    fontSize: fontSize?.sp ?? 21.sp,
+                  ),
             ),
       ),
     );
