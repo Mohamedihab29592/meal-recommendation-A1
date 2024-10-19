@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.meal_recommendations">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:label="meal_recommendations"
         android:name="${applicationName}"
