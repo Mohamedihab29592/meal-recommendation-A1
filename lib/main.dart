@@ -12,7 +12,8 @@ void main() async {
    FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  );
+  );  await Future.delayed(const Duration(seconds: 10));
+
   runApp(const MyApp());
    FlutterNativeSplash.remove();
 }
