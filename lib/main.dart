@@ -5,8 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meal_recommendations/core/themes/app_themes.dart';
 import 'package:meal_recommendations/core/utils/strings.dart';
 
-import 'features/auth/persentation/otp_screen.dart';
 import 'features/auth/register/persentation/cubit/otp_auth_cubit.dart';
+import 'features/auth/register/persentation/screens/otp_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
