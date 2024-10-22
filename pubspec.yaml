@@ -23,6 +23,9 @@ dependencies:
   internet_connection_checker_plus: ^2.5.2
   flutter_svg: ^2.0.10+1
   get_it: ^8.0.0
+  # For generating OTP Text Field
+  flutter_otp_text_field: ^1.2.0
+  flutter_bloc: ^8.1.6
 
 dev_dependencies:
   flutter_test:
@@ -36,6 +39,7 @@ flutter:
 
   assets:
     - assets/
+    - assets/images/
     - assets/svgs/
 
   fonts:
