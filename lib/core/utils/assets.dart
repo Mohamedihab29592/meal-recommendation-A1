@@ -58,5 +58,13 @@ class Assets {
   /// Assets for svgsOnboardingLogo
   /// assets/svgs/onboarding-logo.svg
   static const String svgsOnboardingLogo = "assets/svgs/onboarding-logo.svg";
+
+  /// Assets for pngsOnboardingLogo
+  /// assets/images/rectangleOnboarding.png
+  static const String rectangleOnboarding = "assets/images/rectangle_onboarding.png";
+
+  /// Assets for imagesSplash
+  /// assets/images/splash_icon.png
+  static const String imagesSplash = "assets/images/splash_icon.png";
 }
 

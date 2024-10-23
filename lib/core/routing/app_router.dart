@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:meal_recommendations/core/routing/routes.dart';
-import 'package:meal_recommendations/features/splash_boarding/splash_screen.dart';
+import 'package:meal_recommendations/features/splash_boarding/screens/on_boarding_screen.dart';
+
 
 class AppRouter {
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
 
-      case Routes.splash:
-        return MaterialPageRoute(
-          builder: (_) => const Placeholder(),
-        );
+      // case Routes.splash:
+      //   return MaterialPageRoute(
+      //     builder: (_) => const Placeholder(),
+      //   );
 
       case Routes.onBoarding:
         return MaterialPageRoute(
-          builder: (_) => const Placeholder(),
+          builder: (_) => const OnboardingScreen(),
         );
 
       case Routes.register:
@@ -54,7 +55,7 @@ class AppRouter {
 
       default:
         return MaterialPageRoute(
-          builder: (_) => const SplashScreen(),
+          builder: (_) => const OnboardingScreen(),
         );
     }
   }
