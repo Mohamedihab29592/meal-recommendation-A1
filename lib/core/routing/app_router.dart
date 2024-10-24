@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:meal_recommendations/core/routing/routes.dart';
+import 'package:meal_recommendations/features/auth/Login_Screen/presenation/screens/LoginScreen.dart';
 import 'package:meal_recommendations/features/splash_boarding/splash_screen.dart';
+
+import '../../features/auth/Login_Screen/presenation/controller/Login_bloc/bloc/Login BLoc.dart';
 
 class AppRouter {
 
@@ -9,7 +14,7 @@ class AppRouter {
 
       case Routes.splash:
         return MaterialPageRoute(
-          builder: (_) => const Placeholder(),
+          builder: (_) => const SplashScreen(),
         );
 
       case Routes.onBoarding:
@@ -24,7 +29,12 @@ class AppRouter {
 
       case Routes.login:
         return MaterialPageRoute(
-          builder: (_) => const Placeholder(),
+          builder: (_) {
+            return BlocProvider(
+              create: (_) => GetIt.instance<LoginBloc>(),
+              child: const LoginScreen(),
+            );
+          },
         );
 
       case Routes.verifyOtp:

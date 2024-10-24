@@ -22,6 +22,11 @@ dependencies:
   # For internet connectivity checking
   internet_connection_checker_plus: ^2.5.2
   get_it: ^8.0.0
+  flutter_svg: ^2.0.10+1
+  google_sign_in: ^6.2.1
+  flutter_bloc: ^8.1.6
+  flutter_secure_storage: ^9.2.2
+  dartz: ^0.10.1
 
 dev_dependencies:
   flutter_test:
@@ -36,6 +41,7 @@ flutter:
   assets:
     - assets/
     - assets/svgs/
+    - assets/images/
 
   fonts:
     - family: Inter
