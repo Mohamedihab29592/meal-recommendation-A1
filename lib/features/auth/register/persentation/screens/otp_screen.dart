@@ -116,7 +116,7 @@ class _OtpScreenState extends State<OtpScreen> {
               ? () {
                   print("Continue button pressed. OTP: $otpCode");
 
-                  context.read<OtpAuthCubit>().sendOtp(otpCode);
+                  context.read<OtpAuthCubit>().verifyOtp('', otpCode);
 
                   _showMyDialog(context);
                 }
