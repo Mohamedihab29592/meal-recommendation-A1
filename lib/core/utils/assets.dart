@@ -55,6 +55,8 @@ class Assets {
   /// assets/svgs/mobile.svg
   static const String Mobile = "assets/images/phone.png";
 
+  static const String Eye = "assets/images/eye.png";
+
   /// Assets for svgsOnboardingLogo
   /// assets/svgs/onboarding-logo.svg
   static const String svgsOnboardingLogo = "assets/svgs/onboarding-logo.svg";

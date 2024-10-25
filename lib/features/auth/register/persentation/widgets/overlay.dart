@@ -47,18 +47,16 @@ Widget defaultFormField({
         hintStyle: const TextStyle(color: Colors.white70), // Hint text in white (with slight opacity)
         // Prefix Icon as SVG
         prefixIcon: Container(
-          child: Image.asset(prefixPath,height: 15,width: 15,),
+          child: Image.asset(prefixPath,height: 10,width: 10,),
           ),
 
         suffixIcon: suffixSvgPath != null
             ? InkWell(
           onTap: suffixPressed,
           child: Padding(
-            padding: const EdgeInsets.all(12.0), // Adjust as needed
-            child: SvgPicture.asset(
-              suffixSvgPath,
-              width: 30,
-              height: 30,
+            padding:  EdgeInsets.all(5.0), // Adjust as needed
+            child:  Container(
+              child: Image.asset(suffixSvgPath,height: 10,width: 10,),
             ),
           ),
         )
