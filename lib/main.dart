@@ -18,7 +18,6 @@ void main() async {
 
   setupServiceLocator();
 
-  // await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -31,11 +30,7 @@ class MyApp extends StatelessWidget {
       title: AppStrings.appTitle,
       debugShowCheckedModeBanner: false,
       theme: AppThemes.lightTheme,
-      // initialRoute: SplashScreen.routeName,
-      // routes: {
-      //   LoginScreen.routeName: (context) => const LoginScreen(),
-      //   SplashScreen.routeName: (context) => const SplashScreen(),
-      // },
+
       initialRoute: Routes.splash,
       onGenerateRoute: AppRouter.onGenerateRoute,
     );
