@@ -44,14 +44,18 @@ class MealDetailsView extends StatelessWidget {
               const SliverToBoxAdapter(
                 child: MealDetailsTabBar(),
               ),
-              SliverFillRemaining(
-                child: Padding(
-                  padding: EdgeInsetsDirectional.only(
-                    start: 24.w,
-                    top: 24.h,
-                    bottom: 16.h,
+              SliverPadding(
+                padding: EdgeInsetsDirectional.only(
+                  start: 24.w,
+                  top: 24.h,
+                  bottom: 16.h,
+                ),
+                sliver: SliverFillViewport(
+                  viewportFraction: 1.0,
+                  delegate: SliverChildBuilderDelegate(
+                    (_, __) => MealDetailsTabBarView(meal: meal),
+                    childCount: 1,
                   ),
-                  child: MealDetailsTabBarView(meal: meal),
                 ),
               ),
             ],

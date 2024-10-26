@@ -15,22 +15,12 @@ class MealDetailsTabBarView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TabBarView(
-      physics: const NeverScrollableScrollPhysics(),
       children: [
-        SingleChildScrollView(
-          physics: const NeverScrollableScrollPhysics(),
-          child: SummaryTab(
-            mealSummary: meal.summary!,
-          ),
+        SummaryTab(
+          mealSummary: meal.summary!,
         ),
-        const SingleChildScrollView(
-          physics: NeverScrollableScrollPhysics(),
-          child: IngredientsTab(),
-        ),
-        const SingleChildScrollView(
-          physics: NeverScrollableScrollPhysics(),
-          child: DirectionTab(),
-        ),
+        IngredientsTab(ingredients: meal.ingredients!),
+        const DirectionTab(),
       ],
     );
   }
