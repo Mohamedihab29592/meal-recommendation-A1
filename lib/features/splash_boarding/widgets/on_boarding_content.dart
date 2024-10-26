@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meal_recommendations/core/themes/app_text_styles.dart';
 
 class OnboardingContent extends StatelessWidget {
@@ -16,22 +15,33 @@ class OnboardingContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return SizedBox(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: 280.h),
+          SizedBox(height: screenHeight * 0.35), 
           CircleAvatar(
-            radius: 119.r,
+            radius: screenWidth * 0.32,
             backgroundColor: Colors.transparent,
             child: ClipOval(
-              child: Image.asset(image,
-                  height: 238.h, width: 238.w, fit: BoxFit.cover),
+              child: Image.asset(
+                image,
+                height: screenHeight * 0.3, 
+                width: screenWidth * 0.63, 
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(right: 9.w, left: 9.w, top: 35.h),
+              padding: EdgeInsets.only(
+                right: screenWidth * 0.024, 
+                left: screenWidth * 0.024, 
+                top: screenHeight * 0.045, 
+              ),
               child: Column(
                 children: [
                   Text(
@@ -39,7 +49,7 @@ class OnboardingContent extends StatelessWidget {
                     style: AppTextStyles.titleOnboarding,
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 10.h),
+                  SizedBox(height: screenHeight * 0.012),
                   Text(
                     description,
                     style: AppTextStyles.descriptionOnboarding,
@@ -54,3 +64,4 @@ class OnboardingContent extends StatelessWidget {
     );
   }
 }
+

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meal_recommendations/core/themes/app_colors.dart';
 import 'package:meal_recommendations/core/utils/assets.dart';
 
@@ -8,34 +7,38 @@ class BackgroundShapes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Stack(
       children: [
         Positioned(
-          top: 255.h,
-          left: 46.w,
-          right: 45.w,
-          bottom: 273.h,
+          top: screenHeight * 0.31, 
+          left: screenWidth * 0.12,
+          right: screenWidth * 0.12, 
+          bottom: screenHeight * 0.33, 
           child: Container(
-            width: 284.w,
-            height: 284.h,
+            width: screenWidth * 0.76, 
+            height: screenHeight * 0.35,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: AppColors.scaffoldBackgroundLightColor,
               border: Border.all(
                 color: AppColors.primaryColor,
-                width: 1.w,
+                width: screenWidth * 0.0026, 
               ),
             ),
           ),
         ),
         Positioned(
-            top: 0.h,
-            child: Image.asset(
-              Assets.rectangleOnboarding,
-              width: 375.w,
-              height: 452.h,
-              fit: BoxFit.fill,
-            )),
+          top: 0,
+          child: Image.asset(
+            Assets.rectangleOnboarding,
+            width: screenWidth,
+            height: screenHeight * 0.56,
+            fit: BoxFit.fill,
+          ),
+        ),
       ],
     );
   }

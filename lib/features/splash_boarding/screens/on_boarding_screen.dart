@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meal_recommendations/core/themes/app_colors.dart';
 import 'package:meal_recommendations/core/utils/assets.dart';
 import 'package:meal_recommendations/features/splash_boarding/widgets/action_buttons.dart';
@@ -38,12 +37,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         children: [
           const BackgroundShapes(),
           Positioned(
-            top: 80.h,
-            left: 138.w,
+            top: MediaQuery.of(context).size.height * 0.1,
+            left: MediaQuery.of(context).size.width * 0.38,
             child: Image.asset(
               Assets.imagesSplash,
-              height: 98.h,
-              width: 98.w,
+              height: MediaQuery.of(context).size.height * 0.12,
+              width: MediaQuery.of(context).size.width * 0.25,
             ),
           ),
           Column(
@@ -63,12 +62,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: 5.h, right: 33.w, left: 33.w),
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.01,
+                  right: MediaQuery.of(context).size.width * 0.08,
+                  left: MediaQuery.of(context).size.width * 0.08,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(
-                      width: 53.w,
+                      width: MediaQuery.of(context).size.width * 0.20,
                       child: _currentPage != onboardingScreens.length - 1
                           ? SkipButton(onPressed: _skipToLastPage)
                           : const SizedBox.shrink(),

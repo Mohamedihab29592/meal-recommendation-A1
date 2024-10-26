@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meal_recommendations/core/themes/app_colors.dart';
 
 class DotsIndicator extends StatelessWidget {
@@ -14,16 +13,18 @@ class DotsIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(
         totalPages,
         (index) => Container(
-          margin: EdgeInsets.symmetric(horizontal: 4.w),
-          height: 10.h,
-          width: 32.w,
+          margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.01),
+          height: screenWidth * 0.025, 
+          width: screenWidth * 0.085, 
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5.r),
+            borderRadius: BorderRadius.circular(screenWidth * 0.013), 
             color: currentPage == index
                 ? AppColors.primaryColor
                 : AppColors.inActiveDots,
