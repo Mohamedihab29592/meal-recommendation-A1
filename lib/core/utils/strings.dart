@@ -11,4 +11,6 @@ class AppStrings {
   static const String direction = 'Direction';
   static const String nutrition = 'Nutrition';
   static const String totalIngredients = 'Total ingredients';
+  static const String totalSteps = 'Total steps';
+  static const String step = 'Step';
 }

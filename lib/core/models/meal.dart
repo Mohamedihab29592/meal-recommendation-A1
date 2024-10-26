@@ -9,7 +9,7 @@ class Meal {
   final int? cookTime, servingSize;
   final MealSummary? summary;
   final List<MealIngredient>? ingredients;
-  final List<MealDirectionStep>? direction;
+  final List<String>? mealSteps;
   final bool isFavourite;
 
   Meal({
@@ -20,7 +20,7 @@ class Meal {
     this.servingSize,
     this.summary,
     this.ingredients,
-    this.direction,
+    this.mealSteps,
     this.mealType,
     this.rating,
     this.isFavourite = false,
@@ -78,19 +78,4 @@ class MealIngredient {
       _$MealIngredientFromJson(json);
 
   Map<String, dynamic> toJson() => _$MealIngredientToJson(this);
-}
-
-@JsonSerializable(fieldRename: FieldRename.snake)
-class MealDirectionStep {
-  final int stepNumber;
-  final String description;
-
-  MealDirectionStep({
-    required this.stepNumber,
-    required this.description,
-  });
-
-  factory MealDirectionStep.fromJson(Map<String, dynamic> json) =>
-      _$MealDirectionStepFromJson(json);
-  Map<String, dynamic> toJson() => _$MealDirectionStepToJson(this);
 }

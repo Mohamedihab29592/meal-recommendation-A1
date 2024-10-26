@@ -18,8 +18,8 @@ Meal _$MealFromJson(Map<String, dynamic> json) => Meal(
       ingredients: (json['ingredients'] as List<dynamic>?)
           ?.map((e) => MealIngredient.fromJson(e as Map<String, dynamic>))
           .toList(),
-      direction: (json['direction'] as List<dynamic>?)
-          ?.map((e) => MealDirectionStep.fromJson(e as Map<String, dynamic>))
+      mealSteps: (json['meal_steps'] as List<dynamic>?)
+          ?.map((e) => e as String)
           .toList(),
       mealType: json['meal_type'] as String?,
       rating: (json['rating'] as num?)?.toDouble(),
@@ -36,7 +36,7 @@ Map<String, dynamic> _$MealToJson(Meal instance) => <String, dynamic>{
       'serving_size': instance.servingSize,
       'summary': instance.summary?.toJson(),
       'ingredients': instance.ingredients?.map((e) => e.toJson()).toList(),
-      'direction': instance.direction?.map((e) => e.toJson()).toList(),
+      'meal_steps': instance.mealSteps,
       'is_favourite': instance.isFavourite,
     };
 
@@ -77,16 +77,4 @@ Map<String, dynamic> _$MealIngredientToJson(MealIngredient instance) =>
       'name': instance.name,
       'imageUrl': instance.imageUrl,
       'pieces': instance.pieces,
-    };
-
-MealDirectionStep _$MealDirectionStepFromJson(Map<String, dynamic> json) =>
-    MealDirectionStep(
-      stepNumber: (json['step_number'] as num).toInt(),
-      description: json['description'] as String,
-    );
-
-Map<String, dynamic> _$MealDirectionStepToJson(MealDirectionStep instance) =>
-    <String, dynamic>{
-      'step_number': instance.stepNumber,
-      'description': instance.description,
     };
