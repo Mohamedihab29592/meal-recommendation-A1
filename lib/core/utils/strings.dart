@@ -6,4 +6,8 @@ class AppStrings {
   static const String pleaseWait = 'Please wait';
   static const String noInternetConnection =
       'No internet connection. Please check your internet connection and try again.';
+  static const String summary = 'Summary';
+  static const String ingredients = 'Ingredients';
+  static const String direction = 'Direction';
+  static const String nutrition = 'Nutrition';
 }

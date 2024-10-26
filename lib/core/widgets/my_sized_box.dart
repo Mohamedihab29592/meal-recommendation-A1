@@ -19,4 +19,5 @@ class MySizedBox {
   MySizedBox._();
 
   static const CustomSizedBox height19 = CustomSizedBox(height: 19);
+  static const CustomSizedBox height11 = CustomSizedBox(height: 11);
 }

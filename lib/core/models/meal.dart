@@ -79,7 +79,7 @@ class MealIngredient {
   Map<String, dynamic> toJson() => _$MealIngredientToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class MealDirectionStep {
   final int stepNumber;
   final String description;

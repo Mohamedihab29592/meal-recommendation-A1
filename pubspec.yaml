@@ -28,6 +28,8 @@ dependencies:
   freezed_annotation: ^2.4.4
   # Classes and helper functions that support JSON code generation via the `json_serializable` package.
   json_annotation: ^4.9.0
+  # To load and cache network images.
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:
