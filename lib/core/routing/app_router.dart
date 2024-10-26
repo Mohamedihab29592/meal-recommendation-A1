@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommendations/core/routing/routes.dart';
+import 'package:meal_recommendations/core/services/di.dart';
+import 'package:meal_recommendations/features/layout/presentation/blocs/layout_bloc.dart';
+import 'package:meal_recommendations/features/layout/presentation/views/layout_view.dart';
 import 'package:meal_recommendations/features/splash_boarding/splash_screen.dart';
 
 class AppRouter {
-
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-
       case Routes.splash:
         return MaterialPageRoute(
           builder: (_) => const Placeholder(),
@@ -50,6 +52,14 @@ class AppRouter {
       case Routes.settings:
         return MaterialPageRoute(
           builder: (_) => const Placeholder(),
+        );
+
+      case Routes.layout:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider<LayoutBloc>(
+            create: (_) => di.get<LayoutBloc>(),
+            child: const LayoutView(),
+          ),
         );
 
       default:
