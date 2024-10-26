@@ -25,6 +25,7 @@ class IngredientsTab extends StatelessWidget {
         Expanded(
           child: ListView.separated(
             padding: EdgeInsetsDirectional.only(end: 19.w, top: 19.h),
+            physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (_, index) =>
                 IngredientItem(ingredient: ingredients[index]),
             separatorBuilder: (_, __) => const Divider(

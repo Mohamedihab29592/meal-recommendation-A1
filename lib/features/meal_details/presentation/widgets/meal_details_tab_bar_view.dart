@@ -20,7 +20,7 @@ class MealDetailsTabBarView extends StatelessWidget {
           mealSummary: meal.summary!,
         ),
         IngredientsTab(ingredients: meal.ingredients!),
-        const DirectionTab(),
+        DirectionTab(steps: meal.mealSteps!),
       ],
     );
   }
