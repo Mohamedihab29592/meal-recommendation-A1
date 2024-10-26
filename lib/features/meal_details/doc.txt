@@ -1,0 +1,39 @@
+# Meal Details Feature
+
+## Overview
+The Meal Details feature provides a comprehensive view of a specific meal, including its image, name, cooking information, and detailed tabs for summary, ingredients, and cooking directions.
+
+## Data layer && Domain layer
+    No need for data & domain layers because there's no business logic to handle. We just want to display the UI.
+
+## Key Components
+
+### 1. MealDetailsView
+- Main widget that structures the entire meal details page.
+- Uses a CustomScrollView for scrollable content.
+- Implements a DefaultTabController for tab navigation.
+
+### 2. MealDetailsSliverAppBar
+- Custom app bar for the meal details page.
+
+### 3. MealDetailsImage
+- Displays the meal's image.
+- Falls back to a default image if none is provided.
+
+### 4. MealName
+- Shows the name of the meal.
+
+### 5. MealDataRow
+- Displays key meal information:
+  - Dish name
+  - Cooking time
+  - Serving size
+
+### 6. MealDetailsTabBar
+- Tab bar for navigating between Summary, Ingredients, and Directions.
+
+### 7. MealDetailsTabBarView
+- Contains the content for each tab:
+  - SummaryTab: Displays the meal's summary.
+  - IngredientsTab: Lists the ingredients.
+  - DirectionTab: Shows step-by-step cooking instructions.
