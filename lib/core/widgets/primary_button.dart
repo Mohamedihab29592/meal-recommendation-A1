@@ -54,7 +54,7 @@ class PrimaryButton extends StatelessWidget {
       decoration: BoxDecoration(
         color: isOutlined
             ? Colors.transparent
-            : backgroundColor ?? AppColors.scaffoldBackgroundLightColor,
+            : backgroundColor ?? AppColors.primaryColor,
         borderRadius: BorderRadiusDirectional.circular(
           borderRadius?.r ?? 45.0.r,
         ),
@@ -81,6 +81,7 @@ class PrimaryButton extends StatelessWidget {
               style: textStyle ??
                   AppTextStyles.font21BoldDarkBlue.copyWith(
                     fontSize: fontSize?.sp ?? 21.sp,
+                    color: textColor ?? Colors.white,
                   ),
             ),
       ),
