@@ -65,10 +65,11 @@ class MealNutrition {
 
 @JsonSerializable()
 class MealIngredient {
-  final String name;
+  final String name, imageUrl;
   final int pieces;
 
   MealIngredient({
+    required this.imageUrl,
     required this.name,
     required this.pieces,
   });
