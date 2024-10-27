@@ -193,7 +193,7 @@ class RegisterScreen extends StatelessWidget {
                             SnackBar(content: Text(state.message)),
                           );
                         } else if (state is UserSuccessState) {
-                          Navigator.pushReplacementNamed(context, Routes.home);
+                          Navigator.pushNamed(context, Routes.verifyOtp);
                         }
                       },
                       child: const SizedBox.shrink(), // No need to return a widget here
