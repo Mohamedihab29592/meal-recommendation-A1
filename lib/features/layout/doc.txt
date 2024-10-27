@@ -1,0 +1,32 @@
+# Layout Feature Documentation
+
+## Overview
+The Layout feature is responsible for managing the main structure and navigation of the application. 
+It provides a consistent layout across different sections of the app, including Home, Favorites, and Profile tabs.
+
+
+## Data layer && Domain layer
+    Data layer is not used in this feature because there's no business logic to handle. We just want to display the tabs.
+
+
+## Presentation layer
+
+### 1. LayoutView
+- Main view that sets up the overall structure of the app.
+- Implements the bottom navigation bar for switching between different tabs.
+
+### 2. LayoutBloc
+- Manages the state of the layout, including the currently selected tab.
+- Handles events related to tab switching.
+
+### 3. Tab Bodies
+- HomeTabBody: Displays the content for the Home tab.
+- FavoritesTabBody: Displays the content for the Favorites tab.
+- ProfileTabBody: Displays the content for the Profile tab.
+
+## Routing
+The Layout feature is integrated into the app's routing system:
+- Route: '/layout'
+- Handled in AppRouter (lib/core/routing/app_router.dart)
+- Uses BlocProvider to inject LayoutBloc
+

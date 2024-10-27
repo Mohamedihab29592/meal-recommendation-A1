@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:meal_recommendations/features/layout/presentation/blocs/layout_bloc.dart';
 import 'package:meal_recommendations/features/auth/register/data/data_source/data_source.dart';
 import 'package:meal_recommendations/features/auth/register/data/repo/repo.dart';
 import 'package:meal_recommendations/features/auth/register/domain/base_repo/user_repo.dart';
@@ -13,10 +14,10 @@ import '../../features/auth/Login_Screen/domain/repositories/BaseLoginRepository
 final GetIt di = GetIt.instance;
 
 void setupServiceLocator() {
+
+  //data source
   di.registerLazySingleton<RemoteDataSourceFirebase>(
           ()=> RemoteDataSourceFirebase());
-  //data source
-  di.registerLazySingleton<BaseLoginDataSource>(() => LoginDataSourceImpl());
 
   //  repositories
   di.registerLazySingleton<UserRepository>(
@@ -33,13 +34,11 @@ void setupServiceLocator() {
   //  use cases
 
 
-  
-
-
 
 
 
   //  blocs or cubits
+  _setupForBlocs();
   di.registerLazySingleton<UserBloc>(
           ()=> UserBloc(di())
   );
@@ -49,7 +48,12 @@ void setupServiceLocator() {
   (LoginBloc()));
 
   //External Libraries like dio
-
-
-
 }
+
+void _setupForBlocs() {
+  di.registerLazySingleton<LayoutBloc>(() => LayoutBloc());
+}
+
+
+
+

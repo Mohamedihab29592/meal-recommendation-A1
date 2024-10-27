@@ -22,6 +22,30 @@ class Assets {
   /// assets/fonts/Inter/Inter_28pt-SemiBold.ttf
   static const String fontsInterInter28ptSemiBold = "assets/fonts/Inter/Inter_28pt-SemiBold.ttf";
 
+  /// Assets for iconsHeartIcon
+  /// assets/icons/heart-icon.png
+  static const String iconsHeartIcon = "assets/icons/heart-icon.png";
+
+  /// Assets for iconsHomeIcon
+  /// assets/icons/home-icon.png
+  static const String iconsHomeIcon = "assets/icons/home-icon.png";
+
+  /// Assets for iconsProfileIcon
+  /// assets/icons/profile-icon.png
+  static const String iconsProfileIcon = "assets/icons/profile-icon.png";
+
+  /// Assets for iconsWhiteHeartIcon
+  /// assets/icons/white-heart-icon.png
+  static const String iconsWhiteHeartIcon = "assets/icons/white-heart-icon.png";
+
+  /// Assets for iconsWhiteHomeIcon
+  /// assets/icons/white-home-icon.png
+  static const String iconsWhiteHomeIcon = "assets/icons/white-home-icon.png";
+
+  /// Assets for iconsWhiteProfileIcon
+  /// assets/icons/white-profile-icon.png
+  static const String iconsWhiteProfileIcon = "assets/icons/white-profile-icon.png";
+
   /// Assets for imagesOnboarding1
   /// assets/images/onboarding1.png
   static const String imagesOnboarding1 = "assets/images/onboarding1.png";
