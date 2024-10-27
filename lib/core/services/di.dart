@@ -14,10 +14,10 @@ import '../../features/auth/Login_Screen/domain/repositories/BaseLoginRepository
 final GetIt di = GetIt.instance;
 
 void setupServiceLocator() {
+
+  //data source
   di.registerLazySingleton<RemoteDataSourceFirebase>(
           ()=> RemoteDataSourceFirebase());
-  //data source
-  di.registerLazySingleton<BaseLoginDataSource>(() => LoginDataSourceImpl());
 
   //  repositories
   di.registerLazySingleton<UserRepository>(
@@ -57,4 +57,3 @@ void _setupForBlocs() {
 
 
 
-}
