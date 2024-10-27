@@ -11,9 +11,6 @@ final GetIt di = GetIt.instance;
 void setupServiceLocator() {
 
   //  repositories
-  di.registerLazySingleton<BaseLoginDataSource>(() =>
-  (LoginDataSourceImpl()));
-
 
 
   di.registerLazySingleton<BaseLoginRepository>(

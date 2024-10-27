@@ -27,6 +27,7 @@ dependencies:
   flutter_bloc: ^8.1.6
   flutter_secure_storage: ^9.2.2
   dartz: ^0.10.1
+  flutter_native_splash: ^2.4.0
 
 dev_dependencies:
   flutter_test:
