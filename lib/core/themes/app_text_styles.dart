@@ -50,6 +50,17 @@ class AppTextStyles {
       );
   static TextStyle get font18BoldDarkBlue => TextStyle(
         fontSize: 18.sp,
+        static TextStyle get titleOnboarding => TextStyle(
+        fontSize: 17.sp,
+        color: AppColors.primaryColor,
+        fontWeight: FontWeight.bold,
+      );
+  static TextStyle get descriptionOnboarding => TextStyle(
+        fontSize: 13.sp,
+        color: AppColors.primaryColor,
+      );
+  static TextStyle get textOnboarding => TextStyle(
+        fontSize: 14.sp,
         color: AppColors.primaryColor,
         fontWeight: FontWeight.bold,
       );
