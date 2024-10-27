@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../core/utils/assets.dart';
 
 Widget watermarkOverlay() {
   return Positioned.fill(
     child: Opacity(
-      opacity: 0.25, // Adjust the opacity as needed
+      opacity: 0.10, // Adjust the opacity as needed
       child: Image.asset(
+        width: double.infinity,
+        height: double.infinity,
         Assets.auth_background,
-        fit: BoxFit.cover,
+        fit: BoxFit.fill,
       ),
     ),
   );
@@ -46,18 +47,14 @@ Widget defaultFormField({
         hintText: label,  // You can replace this if you want a different hint text
         hintStyle: const TextStyle(color: Colors.white70), // Hint text in white (with slight opacity)
         // Prefix Icon as SVG
-        prefixIcon: Container(
-          child: Image.asset(prefixPath,height: 10,width: 10,),
-          ),
+        prefixIcon: Image.asset(prefixPath,height: 10,width: 10,),
 
         suffixIcon: suffixSvgPath != null
             ? InkWell(
           onTap: suffixPressed,
           child: Padding(
-            padding:  EdgeInsets.all(5.0), // Adjust as needed
-            child:  Container(
-              child: Image.asset(suffixSvgPath,height: 10,width: 10,),
-            ),
+            padding:  const EdgeInsets.all(5.0), // Adjust as needed
+            child:  Image.asset(suffixSvgPath,height: 10,width: 10,),
           ),
         )
             : null,

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../domain/base_repo/user_repo.dart';
 import '../data_source/data_source.dart';

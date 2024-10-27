@@ -2,7 +2,6 @@ import 'package:get_it/get_it.dart';
 import 'package:meal_recommendations/features/auth/register/data/data_source/data_source.dart';
 import 'package:meal_recommendations/features/auth/register/data/repo/repo.dart';
 import 'package:meal_recommendations/features/auth/register/domain/base_repo/user_repo.dart';
-import 'package:meal_recommendations/features/auth/register/domain/use_cases/sign_up.dart';
 import 'package:meal_recommendations/features/auth/register/persentation/controller/sign_up_bloc.dart';
 import 'package:meal_recommendations/features/auth/Login_Screen/presenation/controller/Login_bloc/bloc/Login%20BLoc.dart';
 
@@ -32,9 +31,8 @@ void setupServiceLocator() {
 
 
   //  use cases
-  di.registerLazySingleton<SignUpUseCase>(
-      () => SignUpUseCase(di())
-  );
+
+
   
 
 
