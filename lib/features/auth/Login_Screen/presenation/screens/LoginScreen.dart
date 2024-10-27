@@ -93,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Column(
                               children: [
                                 CustomTextFormField(
-                                  prefixIcon: Icon(
+                                  prefixIcon: const Icon(
                                     Icons.person,
                                     color: Colors.white,
                                   ),
@@ -114,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   },
                                 ),
                                 CustomTextFormField(
-                                  prefixIcon: Icon(
+                                  prefixIcon: const Icon(
                                     Icons.lock,
                                     color: Colors.white,
                                   ),
@@ -150,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   height:
                                       MediaQuery.of(context).size.height * 0.02,
                                 ),
-                                CustomCheckbox(),
+                                const CustomCheckbox(),
                                 SizedBox(
                                   height:
                                       MediaQuery.of(context).size.height * 0.02,
@@ -172,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.04,
                           ),
-                          OrLOginWith(),
+                          const OrLOginWith(),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.02,
                           ),
@@ -186,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                               height:
                                   MediaQuery.of(context).size.height * 0.04),
-                          NoAccountText()
+                          const NoAccountText()
                         ],
                       ),
                     ),

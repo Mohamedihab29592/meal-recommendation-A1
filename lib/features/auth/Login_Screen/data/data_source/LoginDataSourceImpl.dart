@@ -19,7 +19,6 @@ class LoginDataSourceImpl implements BaseLoginDataSource {
         password: password,
       );
 
-      print('User signed in successfully');
       return Right(userCredential);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {

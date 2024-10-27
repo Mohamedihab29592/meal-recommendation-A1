@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class OrLOginWith extends StatelessWidget {
+  const OrLOginWith({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Row(

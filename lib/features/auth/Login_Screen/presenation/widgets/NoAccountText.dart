@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../../../core/routing/routes.dart';
 
 class NoAccountText extends StatelessWidget {
+  const NoAccountText({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Row(

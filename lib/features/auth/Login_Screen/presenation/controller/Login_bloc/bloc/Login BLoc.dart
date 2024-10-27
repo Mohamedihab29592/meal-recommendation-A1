@@ -7,13 +7,13 @@ import 'package:meal_recommendations/features/auth/Login_Screen/presenation/cont
 import '../../../../domain/repositories/BaseLoginRepository.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginStates> {
-  final storage = FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
 
   final BaseLoginRepository loginRepository =
   GetIt.instance<BaseLoginRepository>();
   var formKey = GlobalKey<FormState>();
-  var emailController = TextEditingController(text: 'ahmed2@gmail.com');
-  var passwordController = TextEditingController(text: 'ahmed');
+  var emailController = TextEditingController(text: '');
+  var passwordController = TextEditingController(text: '');
   bool isObsecure = true;
 
   LoginBloc() : super(LoginInitialState()) {
