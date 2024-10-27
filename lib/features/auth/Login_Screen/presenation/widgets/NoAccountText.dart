@@ -19,7 +19,7 @@ class NoAccountText extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            Navigator.pushReplacementNamed(context, Routes.register);
+            Navigator.pushNamed(context, Routes.register);
           },
           child: Text(
             'Register Now',
