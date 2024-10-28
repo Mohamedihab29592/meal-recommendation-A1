@@ -16,7 +16,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupServiceLocator();
-
+  Firebase.initializeApp();
   Bloc.observer = MyBlocObserver();
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
             title: AppStrings.appTitle,
             debugShowCheckedModeBanner: false,
             theme: AppThemes.lightTheme,
-            initialRoute: Routes.register,
+            initialRoute: Routes.home,
           );
         });
   }

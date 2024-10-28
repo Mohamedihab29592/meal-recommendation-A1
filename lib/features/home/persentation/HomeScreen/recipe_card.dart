@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:meal_recommendations/core/themes/app_text_styles.dart';
 import '../../../../core/themes/app_colors.dart';
 import '../businessLogic/meal_cubit.dart';
 
-class RecipeCard extends StatelessWidget {
+class RecipeCard extends StatefulWidget {
   const RecipeCard({super.key});
 
+  @override
+  State<RecipeCard> createState() => _RecipeCardState();
+}
+
+class _RecipeCardState extends State<RecipeCard> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MealCubit, MealState>(
@@ -134,7 +140,19 @@ class RecipeCard extends StatelessWidget {
                       IconButton(
                           onPressed: () {
                             BlocProvider.of<MealCubit>(context)
-                                .addFavMeal(meal);
+                                .addFavMeal(meal)
+                                .then(
+                                  (value) => ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                          backgroundColor:
+                                              AppColors.primaryColor,
+                                          content: Text(
+                                            'Meal added successfully',
+                                            style: AppTextStyles.font16Regular
+                                                .copyWith(color: Colors.white),
+                                          ))),
+                                );
+
                           },
                           icon: Icon(
                             meal.isFavourite

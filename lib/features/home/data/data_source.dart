@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../core/models/meal.dart';
 
-class FirebaseService {
-  final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
+final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
 
+class FirebaseService {
   Future<List<Meal>> fetchMeals() async {
     try {
       QuerySnapshot snapshot = await _fireStore.collection('meals').get();
@@ -19,4 +19,6 @@ class FirebaseService {
       return [];
     }
   }
+
+
 }
