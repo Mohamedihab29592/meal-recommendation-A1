@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meal_recommendations/core/routing/routes.dart';
+import 'package:meal_recommendations/features/profile/presentation/screens/profile_screen.dart';
 import 'package:meal_recommendations/features/splash_boarding/splash_screen.dart';
 
 class AppRouter {
@@ -44,7 +45,7 @@ class AppRouter {
 
       case Routes.profile:
         return MaterialPageRoute(
-          builder: (_) => const Placeholder(),
+          builder: (_) => const ProfileScreen(),
         );
 
       case Routes.settings:

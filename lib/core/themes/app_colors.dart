@@ -6,4 +6,5 @@ class AppColors {
 
   static const Color primaryColor = Color(0xff001A3F);
   static const Color scaffoldBackgroundLightColor = Color(0xffFFFFFF);
+  static const Color textFormColor = Color(0xff838383);
 }
