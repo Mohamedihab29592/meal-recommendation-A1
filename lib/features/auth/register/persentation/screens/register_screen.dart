@@ -9,8 +9,6 @@ import '../controller/user_events.dart';
 import '../controller/user_states.dart';
 import '../widgets/overlay.dart';
 
-
-
 class RegisterScreen extends StatelessWidget {
   var formkey = GlobalKey();
   final nameController = TextEditingController();
@@ -31,7 +29,9 @@ class RegisterScreen extends StatelessWidget {
           children: [
             watermarkOverlay(),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06), // Padding based on screen width
+              padding: EdgeInsets.symmetric(
+                  horizontal:
+                      screenWidth * 0.06), // Padding based on screen width
               child: Form(
                 key: formkey,
                 child: Column(
@@ -84,20 +84,18 @@ class RegisterScreen extends StatelessWidget {
                     SizedBox(height: screenHeight * 0.02),
 
                     // Create Password Field
-                    BlocBuilder<UserBloc,UserState>(
+                    BlocBuilder<UserBloc, UserState>(
                       builder: (BuildContext context, UserState state) {
                         return defaultFormField(
                           controller: passwordController,
                           type: TextInputType.text,
                           isPassword: isPasssword,
                           suffixSvgPath: Assets.Eye,
-                          suffixPressed: (){
-                             isPasssword=!isPasssword;
+                          suffixPressed: () {
+                            isPasssword = !isPasssword;
 
-                            BlocProvider.of<UserBloc>(context).add(
-                              TogglePasswordEvent(isPasssword)
-                            );
-
+                            BlocProvider.of<UserBloc>(context)
+                                .add(TogglePasswordEvent(isPasssword));
                           },
 
                           label: 'Create Password',
@@ -170,14 +168,18 @@ class RegisterScreen extends StatelessWidget {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
                               foregroundColor: AppColors.primaryColor,
-                              padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02), // Scaled padding
+                              padding: EdgeInsets.symmetric(
+                                  vertical:
+                                      screenHeight * 0.02), // Scaled padding
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(32),
                               ),
                             ),
                             child: Text(
                               'Register',
-                              style: TextStyle(fontSize: screenWidth * 0.045), // Scaled text size
+                              style: TextStyle(
+                                  fontSize:
+                                      screenWidth * 0.045), // Scaled text size
                             ),
                           ),
                         );
@@ -193,22 +195,27 @@ class RegisterScreen extends StatelessWidget {
                             SnackBar(content: Text(state.message)),
                           );
                         } else if (state is UserSuccessState) {
-                          Navigator.pushNamed(context, Routes.verifyOtp);
+                          Navigator.pushNamed(context, Routes.verifyOtp,
+                              arguments: phoneController.text);
                         }
                       },
-                      child: const SizedBox.shrink(), // No need to return a widget here
+                      child: const SizedBox
+                          .shrink(), // No need to return a widget here
                     ),
 
                     Text(
                       'or login with',
-                      style: TextStyle(color: Colors.white70, fontSize: screenWidth * 0.04), // Scaled font size
+                      style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: screenWidth * 0.04), // Scaled font size
                     ),
                     SizedBox(height: screenHeight * 0.02),
 
                     // Social Media Buttons
                     Center(
                       child: IconButton(
-                        icon: SvgPicture.asset(Assets.svgsGoogleLogo, height: screenWidth * 0.1),
+                        icon: SvgPicture.asset(Assets.svgsGoogleLogo,
+                            height: screenWidth * 0.1),
                         onPressed: () {},
                       ),
                     ),
@@ -252,4 +259,3 @@ class RegisterScreen extends StatelessWidget {
     return true;
   }
 }
-

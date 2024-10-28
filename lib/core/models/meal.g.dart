@@ -3,6 +3,188 @@
 part of 'meal.dart';
 
 // **************************************************************************
+// TypeAdapterGenerator
+// **************************************************************************
+
+class MealAdapter extends TypeAdapter<Meal> {
+  @override
+  final int typeId = 0;
+
+  @override
+  Meal read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return Meal(
+      imageUrl: fields[0] as String?,
+      name: fields[1] as String?,
+      dishName: fields[2] as String?,
+      cookTime: fields[5] as int?,
+      servingSize: fields[6] as int?,
+      summary: fields[7] as MealSummary?,
+      ingredients: (fields[8] as List?)?.cast<MealIngredient>(),
+      mealSteps: (fields[9] as List?)?.cast<String>(),
+      mealType: fields[3] as String?,
+      rating: fields[4] as double?,
+      isFavourite: fields[10] as bool,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, Meal obj) {
+    writer
+      ..writeByte(11)
+      ..writeByte(0)
+      ..write(obj.imageUrl)
+      ..writeByte(1)
+      ..write(obj.name)
+      ..writeByte(2)
+      ..write(obj.dishName)
+      ..writeByte(3)
+      ..write(obj.mealType)
+      ..writeByte(4)
+      ..write(obj.rating)
+      ..writeByte(5)
+      ..write(obj.cookTime)
+      ..writeByte(6)
+      ..write(obj.servingSize)
+      ..writeByte(7)
+      ..write(obj.summary)
+      ..writeByte(8)
+      ..write(obj.ingredients)
+      ..writeByte(9)
+      ..write(obj.mealSteps)
+      ..writeByte(10)
+      ..write(obj.isFavourite);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is MealAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class MealSummaryAdapter extends TypeAdapter<MealSummary> {
+  @override
+  final int typeId = 1;
+
+  @override
+  MealSummary read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return MealSummary(
+      summary: fields[0] as String,
+      nutrations: (fields[1] as List).cast<MealNutrition>(),
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, MealSummary obj) {
+    writer
+      ..writeByte(2)
+      ..writeByte(0)
+      ..write(obj.summary)
+      ..writeByte(1)
+      ..write(obj.nutrations);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is MealSummaryAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class MealNutritionAdapter extends TypeAdapter<MealNutrition> {
+  @override
+  final int typeId = 2;
+
+  @override
+  MealNutrition read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return MealNutrition(
+      quantityInGrams: fields[0] as int,
+      nutrientName: fields[1] as String,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, MealNutrition obj) {
+    writer
+      ..writeByte(2)
+      ..writeByte(0)
+      ..write(obj.quantityInGrams)
+      ..writeByte(1)
+      ..write(obj.nutrientName);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is MealNutritionAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class MealIngredientAdapter extends TypeAdapter<MealIngredient> {
+  @override
+  final int typeId = 3;
+
+  @override
+  MealIngredient read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return MealIngredient(
+      imageUrl: fields[1] as String,
+      name: fields[0] as String,
+      pieces: fields[2] as int,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, MealIngredient obj) {
+    writer
+      ..writeByte(3)
+      ..writeByte(0)
+      ..write(obj.name)
+      ..writeByte(1)
+      ..write(obj.imageUrl)
+      ..writeByte(2)
+      ..write(obj.pieces);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is MealIngredientAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+// **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
