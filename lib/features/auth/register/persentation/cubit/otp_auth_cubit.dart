@@ -7,13 +7,34 @@ part 'otp_auth_state.dart';
 class OtpAuthCubit extends Cubit<OtpAuthState> {
   OtpAuthCubit() : super(OtpAuthInitial());
 
-  //todo : Register screen must handel the implementation of requesting OTP authentication and add verificationId;
-  //todo  String verificationId='';
+  String verificationId = '';
+  String phoneNumber = '';
+  String otpCode = '';
 
-  Future<void> verifyOtp(
-    String verificationId,
-    String otpCode,
-  ) async {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> verifyPhoneNumber() async {
+    await _auth.verifyPhoneNumber(
+      phoneNumber: phoneNumber,
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        await _auth.signInWithCredential(credential);
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        if (e.code == 'invalid-phone-number') {
+          print('The provided phone number is not valid.');
+        }
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        this.verificationId = verificationId;
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        this.verificationId = verificationId;
+      },
+      timeout: const Duration(seconds: 60), // Adjust timeout as needed
+    );
+  }
+
+  Future<void> verifyOtp() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     emit(OtpAuthLoading());
     try {

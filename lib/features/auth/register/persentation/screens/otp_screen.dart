@@ -9,7 +9,9 @@ import 'package:meal_recommendations/features/auth/register/persentation/cubit/o
 import '../../../../../core/themes/app_colors.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key});
+  const OtpScreen({
+    super.key,
+  });
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -68,7 +70,7 @@ class _OtpScreenState extends State<OtpScreen> {
         ),
         SizedBox(height: 10.h),
         Text(
-          'Enter 4 digits verification code. We just sent you on $phoneNumber',
+          'Enter 4 digits verification code. We just sent you on }',
           textAlign: TextAlign.center,
           style: AppTextStyles.font18RegularDarkBlue.copyWith(
             fontSize: 16.sp,
@@ -115,8 +117,9 @@ class _OtpScreenState extends State<OtpScreen> {
           onTap: isButtonEnabled
               ? () {
                   print("Continue button pressed. OTP: $otpCode");
+                  context.read<OtpAuthCubit>().otpCode = otpCode;
 
-                  context.read<OtpAuthCubit>().verifyOtp('', otpCode);
+                  context.read<OtpAuthCubit>().verifyOtp();
 
                   _showMyDialog(context);
                 }
