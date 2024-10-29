@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:meal_recommendations/core/routing/routes.dart';
 import 'package:meal_recommendations/core/themes/app_colors.dart';
 import 'package:meal_recommendations/core/utils/assets.dart';
 import 'package:meal_recommendations/features/splash_boarding/widgets/action_buttons.dart';
@@ -15,6 +17,14 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
+
+
+void finishOnboarding() async {
+  final box = Hive.box('appBox');
+  await box.put('onboardingShown', true); 
+  Navigator.pushReplacementNamed(context, Routes.login); 
+}
+
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
