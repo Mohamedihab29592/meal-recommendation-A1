@@ -44,13 +44,13 @@ void _checkUserStatus() async {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double imageSize = screenWidth * 0.4;
+    double imageSize = screenWidth * 0.35;
 
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       body: Center(
         child: Image.asset(
-          'assets/images/splash_icon.png',
+          'assets/images/logo.png',
           width: imageSize,
           height: imageSize,
           fit: BoxFit.contain,
