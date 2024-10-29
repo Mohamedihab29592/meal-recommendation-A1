@@ -21,7 +21,7 @@ class OtpAuthCubit extends Cubit<OtpAuthState> {
       },
       verificationFailed: (FirebaseAuthException e) {
         if (e.code == 'invalid-phone-number') {
-          print('The provided phone number is not valid.');
+          emit(OtpAuthFailure('invalid-phone-number'));
         }
       },
       codeSent: (String verificationId, int? resendToken) {
@@ -30,7 +30,7 @@ class OtpAuthCubit extends Cubit<OtpAuthState> {
       codeAutoRetrievalTimeout: (String verificationId) {
         this.verificationId = verificationId;
       },
-      timeout: const Duration(seconds: 60), // Adjust timeout as needed
+      timeout: const Duration(seconds: 60),
     );
   }
 
@@ -42,7 +42,6 @@ class OtpAuthCubit extends Cubit<OtpAuthState> {
         verificationId: verificationId,
         smsCode: otpCode,
       );
-
       await auth.signInWithCredential(credential);
       emit(OtpAuthSuccess());
     } catch (e) {

@@ -1,0 +1,54 @@
+# OTP Authentication Documentation
+
+## Overview
+This feature allows users to verify their phone numbers using a 4-digit OTP (One-Time Password) sent via SMS, utilizing Firebase Authentication and the Bloc state management pattern.
+
+### File Structure
+1. **otp_auth_cubit.dart**: Contains OTP verification logic.
+2. **otp_auth_state.dart**: Defines states for OTP authentication.
+3. **otp_screen.dart**: User interface for entering and verifying the OTP.
+
+---
+
+## 1. otp_auth_cubit.dart
+
+### Purpose
+Manages the logic for OTP authentication.
+
+### Key Components
+- **OtpAuthCubit Class**: Extends `Cubit<OtpAuthState>`.
+
+  - **Methods**:
+    - `verifyPhoneNumber()`: Sends OTP to the user’s phone.
+    - `verifyOtp()`: Validates the entered OTP.
+
+---
+
+## 2. otp_auth_state.dart
+
+### Purpose
+Defines states for OTP authentication.
+
+### Key Components
+- **OtpAuthState Class**:
+  - `OtpAuthInitial`: Initial state.
+  - `OtpAuthLoading`: Loading state during verification.
+  - `OtpAuthSuccess`: Indicates successful verification.
+  - `OtpAuthFailure`: Indicates failure with an error message.
+
+---
+
+## 3. otp_screen.dart
+
+### Purpose
+UI for the OTP input screen.
+
+### Key Components
+- **OtpScreen Class**:
+  - Displays the OTP input field and manages user interactions.
+  - Uses `BlocListener` to react to authentication state changes, displaying a loading dialog during verification and showing a SnackBar on failure.
+
+---
+
+## Conclusion
+This implementation provides a clear OTP verification process using Firebase Authentication. Ensure Firebase is configured correctly and test various scenarios for an optimal user experience.

@@ -1,31 +1,73 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:meal_recommendations/core/themes/app_text_styles.dart';
 import 'package:meal_recommendations/features/auth/register/persentation/cubit/otp_auth_cubit.dart';
-
 import '../../../../../core/themes/app_colors.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({
-    super.key,
-  });
+  const OtpScreen({super.key});
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-  final String phoneNumber = "+2001015466730";
   String otpCode = "";
   bool isButtonEnabled = false;
 
+  @override
+  Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final width = mediaQuery.size.width;
+    final height = mediaQuery.size.height;
+
+    return ScaffoldMessenger(
+      child: BlocListener<OtpAuthCubit, OtpAuthState>(
+        listener: (context, state) {
+          if (state is OtpAuthLoading) {
+            _showMyDialog(context);
+          } else if (state is OtpAuthSuccess) {
+            Navigator.pushReplacementNamed(context, '/home');
+          } else if (state is OtpAuthFailure) {
+            Navigator.pop(context);
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('OTP verification failed')),
+            );
+          }
+        },
+        child: Scaffold(
+          body: Stack(
+            children: [
+              _buildBackground(),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+                child: Column(
+                  children: [
+                    SizedBox(height: height * 0.1),
+                    _buildHeader(width, height),
+                    SizedBox(height: height * 0.05),
+                    _buildOtpField(width),
+                    SizedBox(height: height * 0.05),
+                    _buildContinueButton(width, height),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   void _onOtpChange(String value) {
-    setState(() {
-      otpCode = value;
-      isButtonEnabled = otpCode.length == 4;
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        otpCode = value;
+        isButtonEnabled = otpCode.length == 4;
+      });
     });
   }
 
@@ -48,32 +90,24 @@ class _OtpScreenState extends State<OtpScreen> {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(double width, double height) {
     return Column(
       children: [
-        SizedBox(
-          height: 80.h,
-        ),
+        SizedBox(height: height * 0.05),
         Image.asset(
           'assets/images/logo.png',
-          width: 135.w,
-          height: 135.h,
+          width: width * 0.3,
+          height: width * 0.3,
         ),
-        SizedBox(height: 20.h),
+        SizedBox(height: height * 0.02),
+        Text('verification',
+            style: AppTextStyles.font21BoldDarkBlue
+                .copyWith(color: Colors.white, fontSize: 28)),
+        SizedBox(height: height * 0.01),
         Text(
-          'verification',
-          style: TextStyle(
-            fontSize: 26.sp,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        SizedBox(height: 10.h),
-        Text(
-          'Enter 4 digits verification code. We just sent you on }',
+          'Enter 4 digits verification code. We just sent you on ${context.read<OtpAuthCubit>().phoneNumber}',
           textAlign: TextAlign.center,
           style: AppTextStyles.font18RegularDarkBlue.copyWith(
-            fontSize: 16.sp,
             color: Colors.white,
           ),
         ),
@@ -81,95 +115,37 @@ class _OtpScreenState extends State<OtpScreen> {
     );
   }
 
-  Widget _buildOtpField() {
+  Widget _buildOtpField(double width) {
     return OtpTextField(
       onSubmit: (value) => _onOtpChange(value),
       onCodeChanged: (_) => setState(() => isButtonEnabled = false),
       focusedBorderColor: Colors.white,
       showFieldAsBox: true,
       fillColor: Colors.white,
-      fieldWidth: 60.w,
-      textStyle: TextStyle(
-        fontSize: 24.sp,
-        color: Colors.black,
-        fontWeight: FontWeight.bold,
-      ),
+      fieldWidth: width * 0.15,
+      textStyle: AppTextStyles.font21BoldDarkBlue,
       filled: true,
     );
   }
 
-  Widget _buildContinueButton() {
-    return BlocBuilder<OtpAuthCubit, OtpAuthState>(
-      builder: (context, state) {
-        if (state is OtpAuthLoading) {
-          _showMyDialog(context);
-        } else if (state is OtpAuthSuccess) {
-          print("OTP verified successfully");
-          Navigator.pushReplacementNamed(context, '/home');
-        } else if (state is OtpAuthFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('OTP verification failed')),
-          );
-          print("OTP verification failed");
-        }
-
-        return GestureDetector(
-          onTap: isButtonEnabled
-              ? () {
-                  print("Continue button pressed. OTP: $otpCode");
-                  context.read<OtpAuthCubit>().otpCode = otpCode;
-
-                  context.read<OtpAuthCubit>().verifyOtp();
-
-                  _showMyDialog(context);
-                }
-              : null,
-          child: Container(
-            width: 324.w,
-            height: 57.h,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(45.r),
-            ),
-            child: Center(
-              child: Text(
-                'continue',
-                style: TextStyle(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primaryColor,
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    ScreenUtil.init(context);
-    return Scaffold(
-      body: Stack(
-        children: [
-          _buildBackground(),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 20.w,
-            ),
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildHeader(),
-                SizedBox(height: 30.h),
-                _buildOtpField(),
-                SizedBox(height: 30.h),
-                _buildContinueButton(),
-              ],
-            ),
-          ),
-        ],
+  Widget _buildContinueButton(double width, double height) {
+    return GestureDetector(
+      onTap: isButtonEnabled
+          ? () {
+              context.read<OtpAuthCubit>().otpCode = otpCode;
+              context.read<OtpAuthCubit>().verifyOtp();
+            }
+          : null,
+      child: Container(
+        width: width * 0.85,
+        height: height * 0.07,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(45),
+        ),
+        child: Center(
+          child: Text('continue', style: AppTextStyles.font21BoldDarkBlue),
+        ),
       ),
     );
   }
@@ -192,13 +168,11 @@ void _showMyDialog(BuildContext context) {
               ),
             ),
           ),
-          SizedBox(
-            height: 12.h,
-          ),
+          const SizedBox(height: 12),
           Text(
             'please wait...',
             style: AppTextStyles.font18RegularDarkBlue,
-          )
+          ),
         ]),
       );
     },
