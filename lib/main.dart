@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_print
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,13 +20,14 @@ void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  await Hive.initFlutter();
-  await Hive.openBox('appBox');
-
+ await Hive.initFlutter();
+ await Hive.openBox('appBox'); 
+ print('Hive box appBox is initialized.');
+ 
+  
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
 
   runApp(const MyApp());
   FlutterNativeSplash.remove();

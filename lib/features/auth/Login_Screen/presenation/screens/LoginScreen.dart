@@ -11,7 +11,6 @@ import 'package:meal_recommendations/features/auth/Login_Screen/presenation/widg
 import 'package:meal_recommendations/features/auth/Login_Screen/presenation/widgets/NoAccountText.dart';
 import 'package:meal_recommendations/features/auth/Login_Screen/presenation/widgets/OrLoginWith.dart';
 import 'package:meal_recommendations/features/auth/Login_Screen/presenation/widgets/SocalCard.dart';
-
 import '../../../../../core/routing/routes.dart';
 import '../controller/Login_bloc/bloc/Login BLoc.dart';
 import '../controller/Login_bloc/state/login_state.dart';
@@ -203,3 +202,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
