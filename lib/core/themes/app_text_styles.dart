@@ -64,4 +64,9 @@ class AppTextStyles {
         color: AppColors.primaryColor,
         fontWeight: FontWeight.bold,
       );
+       static TextStyle get textElevatedButton => TextStyle(
+        fontSize: 20.sp,
+        color: AppColors.scaffoldBackgroundLightColor,
+        fontWeight: FontWeight.bold,
+      );
 }
