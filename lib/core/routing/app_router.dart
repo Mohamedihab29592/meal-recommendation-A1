@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommendations/core/models/meal.dart';
 import 'package:meal_recommendations/core/routing/routes.dart';
 import 'package:meal_recommendations/core/services/di.dart';
+import 'package:meal_recommendations/features/favourite/presentation/screens/favourite_screen.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_bloc.dart';
 import 'package:meal_recommendations/features/layout/presentation/views/layout_view.dart';
 import 'package:meal_recommendations/features/meal_details/presentation/views/meal_details_view.dart';
-import 'package:meal_recommendations/features/splash_boarding/splash_screen.dart';
 import 'package:meal_recommendations/features/auth/register/persentation/screens/otp_screen.dart';
 import 'package:meal_recommendations/features/auth/register/persentation/screens/register_screen.dart';
 import 'package:meal_recommendations/features/splash_boarding/screens/on_boarding_screen.dart';
@@ -55,7 +55,7 @@ class AppRouter {
 
       case Routes.favourite:
         return MaterialPageRoute(
-          builder: (_) => const Placeholder(),
+          builder: (_) => const FavouriteScreen(),
         );
 
       case Routes.profile:

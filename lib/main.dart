@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:meal_recommendations/core/helpers/bloc_observer.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:meal_recommendations/core/routing/app_router.dart';
@@ -9,6 +10,7 @@ import 'package:meal_recommendations/core/routing/routes.dart';
 import 'package:meal_recommendations/core/services/di.dart';
 import 'package:meal_recommendations/core/themes/app_themes.dart';
 import 'package:meal_recommendations/core/utils/strings.dart';
+import 'features/favourite/data/models/meal.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -20,6 +22,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await Hive.initFlutter();
+  await Hive.openBox<FavMealModel>('favorites');
 
 
   runApp(const MyApp());
