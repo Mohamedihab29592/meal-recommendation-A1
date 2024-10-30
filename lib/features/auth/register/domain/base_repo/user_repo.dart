@@ -5,6 +5,7 @@ abstract class UserRepository {
     required String email,
     required String password,
     required String fullName,
+    required String phone,
   });
 
   Future<void> signOut();

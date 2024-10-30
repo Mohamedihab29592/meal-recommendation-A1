@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meal_recommendations/core/themes/app_colors.dart';
 import 'package:meal_recommendations/core/utils/assets.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_bloc.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_event.dart';
@@ -8,6 +9,7 @@ import 'package:meal_recommendations/features/layout/presentation/widgets/custom
 import 'package:meal_recommendations/features/layout/presentation/widgets/favorites_tab_body.dart';
 import 'package:meal_recommendations/features/layout/presentation/widgets/home_tab_body.dart';
 import 'package:meal_recommendations/features/layout/presentation/widgets/profile_tab_body.dart';
+import 'package:meal_recommendations/features/sidebar/presentation/screens/side_bar_screen.dart';
 
 class LayoutView extends StatelessWidget {
   const LayoutView({super.key});
@@ -18,6 +20,16 @@ class LayoutView extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.bottomNavIndex != current.bottomNavIndex,
       builder: (context, state) => Scaffold(
+        appBar: AppBar(
+          leading: Builder(
+            builder: (context) {
+              return IconButton(onPressed: (){
+                Scaffold.of(context).openDrawer();
+              }, icon:  Icon(Icons.menu),color: AppColors.primaryColor,);
+            }
+          ),
+        ),
+        drawer: SideMenu(),
         body: [
           // (Don't use scaffold again in the following widgets)
           const HomeTabBody(),

@@ -15,12 +15,14 @@ class UserRepositoryImpl implements UserRepository {
     required String email,
     required String password,
     required String fullName,
+    required String phone,
   }) async {
     // Fetching data from the remote data source as a UserModel
     final UserModel? userModel = await remoteDataSource.signUpWithEmailAndPassword(
       email: email,
       password: password,
       fullName: fullName,
+      phone: phone,
     );
 
     // Mapping UserModel to the User entity

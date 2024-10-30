@@ -19,7 +19,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         final UserModel? userModel = await repository.signUpWithEmailAndPassword(
           email: event.email,
           password: event.password,
-          fullName: event.fullName,
+          fullName: event.fullName, phone: event.phone,
         );
         emit(UserSuccessState(userModel??UserModel()));
       } catch (error) {
