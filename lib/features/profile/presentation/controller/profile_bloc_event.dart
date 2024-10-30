@@ -1,4 +1,9 @@
-part of 'profile_bloc_bloc.dart';
+abstract class ProfileEvent {}
 
-@immutable
-sealed class ProfileBlocEvent {}
+class FetchUserProfile extends ProfileEvent {
+  final String uid;
+
+  FetchUserProfile(this.uid);
+}
+
+

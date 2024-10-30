@@ -17,7 +17,6 @@ import '../../features/auth/Login_Screen/presenation/screens/LoginScreen.dart';
 import '../../features/auth/register/persentation/controller/sign_up_bloc.dart';
 import '../../features/auth/register/persentation/cubit/otp_auth_cubit.dart';
 
-
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -47,7 +46,7 @@ class AppRouter {
             builder: (_) => BlocProvider<OtpAuthCubit>(
                 create: (_) => OtpAuthCubit(), child: const OtpScreen()));
 
-    case Routes.home:
+      case Routes.home:
         return MaterialPageRoute(
           builder: (_) => const Placeholder(),
         );
@@ -56,12 +55,10 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => const Placeholder(),
         );
-
       case Routes.profile:
         return MaterialPageRoute(
-          builder: (_) => const ProfileScreen(),
+          builder: (_) => const ProfileScreen(uid: 'ZZg8pccM5ZceMicpUTAFkvZADLT2'),
         );
-
       case Routes.settings:
         return MaterialPageRoute(
           builder: (_) => const Placeholder(),
@@ -80,7 +77,6 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => MealDetailsView(meal: args),
         );
-
 
       default:
         return MaterialPageRoute(

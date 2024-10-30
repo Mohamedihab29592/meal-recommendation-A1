@@ -1,6 +1,17 @@
-part of 'profile_bloc_bloc.dart';
+abstract class ProfileState {}
 
-@immutable
-sealed class ProfileBlocState {}
+class ProfileInitial extends ProfileState {}
 
-final class ProfileBlocInitial extends ProfileBlocState {}
+class ProfileLoading extends ProfileState {}
+
+class ProfileLoaded extends ProfileState {
+  final Map<String, dynamic> profileData;
+
+  ProfileLoaded(this.profileData);
+}
+
+class ProfileError extends ProfileState {
+  final String message;
+
+  ProfileError(this.message);
+}

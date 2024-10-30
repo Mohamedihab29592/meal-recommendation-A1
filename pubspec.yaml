@@ -15,6 +15,7 @@ dependencies:
   # Firebase
   firebase_auth: ^5.3.1
   firebase_core: ^3.6.0
+  cloud_firestore: ^5.4.4
   # A flutter plugin for adapting screen and font size.Guaranteed to look good on different models
   flutter_screenutil: ^5.9.3
   # Provides A collection of animated loading indicators
@@ -40,10 +41,18 @@ dependencies:
   bloc: ^8.1.4
   hive_flutter: ^1.1.0
   hive: ^2.2.3
+  path_provider: ^2.1.5
+  image_picker: ^1.1.2
+  firebase_storage: ^12.3.4
+  permission_handler: ^11.3.1
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  hive_generator: ^2.0.1
+  
+  
 
   flutter_lints: ^4.0.0
   # A build system for Dart code generation and modular compilation.
