@@ -8,4 +8,16 @@ class LocalData {
     print('Meal added to favorites');
     print(box.length);
   }
+
+  void removeFavMeal(Meal meal) {
+    box.delete(meal);
+    print('Meal deleted successfully');
+    print(box.length);
+  }
+
+  void removeAllMeals(Meal meal) {
+    box.clear();
+    print('All meals deleted successfully');
+    print(box.length);
+  }
 }

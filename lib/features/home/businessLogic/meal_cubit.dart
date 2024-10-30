@@ -2,16 +2,17 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meal_recommendations/features/home/data/local_data.dart';
 import 'package:meta/meta.dart';
-
 import '../../../../core/models/meal.dart';
-import '../../data/data_source.dart';
+import '../data/data_source.dart';
 part 'meal_state.dart';
 
 final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
 
 class MealCubit extends Cubit<MealState> {
   final FirebaseService firebaseService;
-  MealCubit(this.firebaseService) : super(MealInitial());
+  MealCubit(this.firebaseService) : super(MealInitial()) {
+    _listenToMeals();
+  }
 
   List<Meal> myMeals = [];
 
@@ -38,6 +39,19 @@ class MealCubit extends Cubit<MealState> {
     }
   }
 
+  void _listenToMeals() {
+    FirebaseFirestore.instance
+        .collection('meals')
+        .snapshots()
+        .listen((snapshot) {
+      final updatedMeals = snapshot.docs.map((doc) {
+        return Meal.fromJson(doc.data());
+      }).toList();
+      myMeals = updatedMeals;
+      emit(MealLoaded(myMeals));
+    });
+  }
+
   Future<String?> fetchSpecificMealId(String dishName) async {
     QuerySnapshot snapshot = await _fireStore
         .collection('meals')
@@ -54,13 +68,13 @@ class MealCubit extends Cubit<MealState> {
     }
   }
 
-  Future<void> updateIsFavInFireStore(String dishName) async {
+  Future<void> updateIsFavInFireStore(String dishName, bool isFav) async {
     final docId = await fetchSpecificMealId(dishName);
     if (docId != null) {
       await _fireStore
           .collection('meals')
           .doc(docId)
-          .update({'is_favourite': true})
+          .update({'is_favourite': !isFav})
           .then((_) => print("Is Fav updated successfully"))
           .catchError(
               (error) => print("Failed to update is_favourite: $error"));
@@ -72,12 +86,22 @@ class MealCubit extends Cubit<MealState> {
   Future<void> addFavMeal(Meal meal) async {
     final docId = await fetchSpecificMealId(meal.dishName ?? '');
     if (docId != null) {
-      await updateIsFavInFireStore(meal.dishName ?? '');
+      await updateIsFavInFireStore(meal.dishName ?? '', false);
       LocalData().addMealToFav(meal);
-      fetchMeals();
     } else {
       print(
-          "Failed to add meal to favorites because it does not exist in Firestore");
+          "Failed to add meal to favorites because it does not exist in FireStore");
+    }
+  }
+
+  Future<void> removeFavMeal(Meal meal) async {
+    final docId = await fetchSpecificMealId(meal.dishName ?? '');
+    if (docId != null) {
+      await updateIsFavInFireStore(meal.dishName ?? '', true);
+      LocalData().removeFavMeal(meal);
+    } else {
+      print(
+          "Failed to add meal to favorites because it does not exist in FireStore");
     }
   }
 }

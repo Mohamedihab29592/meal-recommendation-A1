@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
             title: AppStrings.appTitle,
             debugShowCheckedModeBanner: false,
             theme: AppThemes.lightTheme,
-            initialRoute: Routes.home,
+            initialRoute: Routes.layout,
           );
         });
   }
