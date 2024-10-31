@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommendations/features/sidebar/presentation/controller/bloc/sidebar_states.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../../core/routing/routes.dart';
 import '../../../../core/themes/app_colors.dart';
 import '../controller/bloc/side_bloc.dart';
 import '../controller/bloc/sidebar_events.dart';
@@ -35,8 +34,7 @@ class SideMenu extends StatelessWidget {
             String selectedMenu = state is MenuSelectedState
                 ? state.selectedMenu
                 : 'Home';
-            String? name = bloc.name;
-            String? imagePath = bloc.image_path;
+
 
             // Get name and path from the state if it’s an initial state
             return Column(
@@ -56,10 +54,10 @@ class SideMenu extends StatelessWidget {
                         CircleAvatar(
                           radius: avatarRadius,
                           backgroundColor: Colors.grey[300],
-                          backgroundImage: imagePath !=null
+                          backgroundImage: bloc.image_path !=null
                               ? NetworkImage("${bloc.image_path}")
                               : null,
-                          child: imagePath == null
+                          child: bloc.image_path == null
                               ? Icon(Icons.person, size: iconSize, color: Colors.white)
                               : null,
                         ),
