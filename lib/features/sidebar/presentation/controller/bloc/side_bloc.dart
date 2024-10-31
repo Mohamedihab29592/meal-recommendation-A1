@@ -9,23 +9,27 @@ import '../../../domain/repo/sidebar_repo.dart';
 class SideBarBloc extends Bloc<SideBarEvent,SideBarStates>{
   final SidebarRepo repository;
   var storage = FlutterSecureStorage();
+  String? image_path;
+  String? name;
 
-  SideBarBloc(this.repository) : super(SideBarIntitalState("https://image.freepik.com/"
-      "free-photo/horizontal-shot-smiling-curly-haired-woman-indicates"
-      "-free-space-demonstrates-place-your-advertisement-attracts-attention"
-      "-sale-wears-green-turtleneck-isolated-vibrant-pink-wall_273609-42770.jpg"
-      ,"Ahmad Muslim")) {
+
+  SideBarBloc(this.repository) : super(SideBarIntitalState()) {
     on<SelectMenuEvent>((event, emit) {
       emit(MenuSelectedState(event.selectedMenu));
     });
     on<LoadUserData>((event,emit)async{
-     var uid= await storage.read(key: "token");
+      emit(LoadUserDataState());
+      var uid= await storage.read(key: "token");
 
      // Fetch data from repository
-     final userData = await repository.getHeader(uid: uid!);
+     await repository.getHeader(uid: uid!).then((value){
+       image_path = value?.path??"";
+       name = value?.name??"Ahmad";
+
+     });
 
      // Emit new state with name and path from the repository
-     emit(SideBarIntitalState(userData?.path??"", userData?.name??"Ahmad Muslim"));
+     emit(SuccessUserDataState());
 
 
     });

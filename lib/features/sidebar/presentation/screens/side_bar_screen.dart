@@ -1,6 +1,8 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommendations/features/sidebar/presentation/controller/bloc/sidebar_states.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/routing/routes.dart';
 import '../../../../core/themes/app_colors.dart';
@@ -33,48 +35,62 @@ class SideMenu extends StatelessWidget {
             String selectedMenu = state is MenuSelectedState
                 ? state.selectedMenu
                 : 'Home';
-            String name = '';
-            String imagePath = '';
+            String? name = bloc.name;
+            String? imagePath = bloc.image_path;
 
             // Get name and path from the state if it’s an initial state
-            if (state is SideBarIntitalState) {
-              name = state.name;
-              imagePath = state.path;
-            }
-
             return Column(
               children: [
                 // Header
-                Container(
-                  height: screenHeight * 0.25, // 25% of screen height for header
-                  color: AppColors.primaryColor,
-                  padding: EdgeInsets.symmetric(
-                    vertical: padding,
-                    horizontal: padding,
-                  ),
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        radius: avatarRadius,
-                        backgroundColor: Colors.grey[300],
-                        backgroundImage: imagePath.isNotEmpty
-                            ? NetworkImage(imagePath)
-                            : null,
-                        child: imagePath.isEmpty
-                            ? Icon(Icons.person, size: iconSize, color: Colors.white)
-                            : null,
-                      ),
-                      SizedBox(width: padding),
-                      Text(
-                        name,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: fontSize,
-                          fontWeight: FontWeight.w500,
+                ConditionalBuilder(
+                  condition: state is! LoadUserDataState,
+                  builder: (context) => Container(
+                    height: screenHeight * 0.25, // 25% of screen height for header
+                    color: AppColors.primaryColor,
+                    padding: EdgeInsets.symmetric(
+                      vertical: padding,
+                      horizontal: padding,
+                    ),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          radius: avatarRadius,
+                          backgroundColor: Colors.grey[300],
+                          backgroundImage: imagePath !=null
+                              ? NetworkImage("${bloc.image_path}")
+                              : null,
+                          child: imagePath == null
+                              ? Icon(Icons.person, size: iconSize, color: Colors.white)
+                              : null,
                         ),
-                      ),
-                    ],
+                        SizedBox(width: padding),
+                        Text(
+                          '${bloc.name}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: fontSize,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
+                  fallback: (context) => Shimmer.fromColors(
+                    baseColor: Colors.grey.shade300,
+                    highlightColor: Colors.grey.shade100,
+                    enabled: true,
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          radius: avatarRadius,
+                        ),
+                        SizedBox(width: padding,),
+                        SizedBox(height: fontSize,),
+                      ],
+                    ),
+
+                  ),
+
                 ),
 
                 // Navigation Buttons

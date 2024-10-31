@@ -38,12 +38,12 @@ class RemoteDataSourceFirebase {
       await user.reload();  // Refresh the user's information
 
       // Call Firestore user creation
-      await userCreate(
-        name: fullName,
-        email: email,
-        uid: user.uid,
-        phone: phone,
-      );
+      // await userCreate(
+      //   name: fullName,
+      //   email: email,
+      //   uid: user.uid,
+      //   phone: phone,
+      // );
 
       return UserModel(
         name: user.displayName,

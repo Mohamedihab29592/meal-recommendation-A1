@@ -7,6 +7,12 @@ abstract class UserRepository {
     required String fullName,
     required String phone,
   });
+  Future<void> userCreate({
+    required String name,
+    required String email,
+    required String? uid,
+    required String? phone,
+  });
 
   Future<void> signOut();
 }

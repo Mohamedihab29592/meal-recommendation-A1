@@ -1,9 +1,10 @@
 abstract class SideBarStates {}
-class SideBarIntitalState extends SideBarStates{
-  final String path;
-  final String name;
-  SideBarIntitalState(this.path,this.name);
+class SideBarIntitalState extends SideBarStates{}
+class LoadUserDataState extends SideBarStates{}
+class SuccessUserDataState extends SideBarStates{
+
 }
+
 
 class MenuSelectedState extends SideBarStates {
   final String selectedMenu;

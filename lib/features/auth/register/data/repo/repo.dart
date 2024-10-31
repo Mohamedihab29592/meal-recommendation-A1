@@ -39,6 +39,12 @@ class UserRepositoryImpl implements UserRepository {
   Future<void> signOut() async {
     await remoteDataSource.signOut();
   }
+
+  @override
+  Future<void> userCreate({required String name, required String email, required String? uid, required String? phone})
+  async{
+    await remoteDataSource.userCreate(name: name, email: email, uid: uid, phone: phone);
+  }
 }
 
 
