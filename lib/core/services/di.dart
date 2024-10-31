@@ -20,12 +20,14 @@ import '../../features/auth/Login_Screen/domain/repositories/BaseLoginRepository
 final GetIt di = GetIt.instance;
 
 void setupServiceLocator() {
-  di.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
+
   //data source
   di.registerLazySingleton<RemoteDataSourceFirebase>(
       () => RemoteDataSourceFirebase());
   di.registerLazySingleton<ProfileDataSource>(
       () => ProfileDataSourceImpl(di<FirebaseFirestore>()));
+
+  di.registerLazySingleton<BaseLoginDataSource>(() => LoginDataSourceImpl());
 
   //  repositories
   di.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(di()));
@@ -47,7 +49,7 @@ void setupServiceLocator() {
   _setupForBlocs();
   di.registerLazySingleton<UserBloc>(() => UserBloc(di()));
 
-  di.registerLazySingleton<LoginBloc>(() => (LoginBloc()));
+  di.registerLazySingleton<LoginBloc>( () => (LoginBloc(di.get<BaseLoginRepository>())));
   di.registerLazySingleton<ProfileBloc>(
       () => ProfileBloc(di<GetUserProfileUseCase>()));
   //External Libraries like dio
