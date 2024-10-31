@@ -187,8 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                         ),
                         SizedBox(
-                            height:
-                                MediaQuery.of(context).size.height * 0.04),
+                            height: MediaQuery.of(context).size.height * 0.04),
                         const NoAccountText()
                       ],
                     ),

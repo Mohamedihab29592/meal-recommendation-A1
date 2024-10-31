@@ -10,16 +10,15 @@ class LoginRepositoryImpl implements BaseLoginRepository {
   LoginRepositoryImpl({required this.loginDataSource});
 
   @override
-  Future<Either<FirebaseErrorModel, UserCredential>?> signInWithEmailAndPassword(
-      String email,
-      String password,
-      ) async {
-    final response = await loginDataSource.signInWithEmailAndPassword(email, password);
+  Future<Either<FirebaseErrorModel, UserCredential>?>
+      signInWithEmailAndPassword(
+    String email,
+    String password,
+  ) async {
+    final response =
+        await loginDataSource.signInWithEmailAndPassword(email, password);
 
-    return response?.fold(
-            (error) => Left(error),
-            (userCredential) => Right(userCredential)
-    );
+    return response;
   }
 
   @override
@@ -27,9 +26,6 @@ class LoginRepositoryImpl implements BaseLoginRepository {
     final response = await loginDataSource.signInWithGoogle();
 
     return response?.fold(
-            (error) => Left(error),
-            (userCredential) => Right(userCredential)
-    );
+        (error) => Left(error), (userCredential) => Right(userCredential));
   }
 }
-
