@@ -8,6 +8,7 @@ import 'package:meal_recommendations/core/routing/app_router.dart';
 import 'package:meal_recommendations/core/routing/routes.dart';
 import 'package:meal_recommendations/core/services/di.dart';
 import 'package:meal_recommendations/core/themes/app_themes.dart';
+import 'package:meal_recommendations/core/utils/functions/check_if_user_is_logged_in.dart';
 import 'package:meal_recommendations/core/utils/strings.dart';
 import 'firebase_options.dart';
 
@@ -20,7 +21,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  await checkIfUserIsLoggedIn();
 
   runApp(const MyApp());
   FlutterNativeSplash.remove();
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
             title: AppStrings.appTitle,
             debugShowCheckedModeBanner: false,
             theme: AppThemes.lightTheme,
-            initialRoute: Routes.onBoarding,
+            // initialRoute: Routes.onBoarding,
           );
         });
   }

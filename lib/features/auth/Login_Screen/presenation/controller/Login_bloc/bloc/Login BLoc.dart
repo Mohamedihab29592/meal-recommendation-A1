@@ -1,16 +1,17 @@
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:meal_recommendations/core/helpers/cache_keys.dart';
+import 'package:meal_recommendations/core/helpers/secure_storage_helper.dart';
 import 'package:meal_recommendations/features/auth/Login_Screen/presenation/controller/Login_bloc/state/login_events.dart';
 import 'package:meal_recommendations/features/auth/Login_Screen/presenation/controller/Login_bloc/state/login_state.dart';
 import '../../../../domain/repositories/BaseLoginRepository.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginStates> {
-  final storage = const FlutterSecureStorage();
-
   final BaseLoginRepository loginRepository;
 
   var formKey = GlobalKey<FormState>();
@@ -29,7 +30,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginStates> {
           await login?.fold((l) {
             emit(LoginErrorState(l.error));
           }, (response) async {
-            await storage.write(key: 'token', value: response.user!.uid);
+            _setSecuredUserId(response.user!.uid);
             emit(LoginSuccessState(response));
           });
         } catch (e) {
@@ -51,7 +52,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginStates> {
         await login?.fold((l) {
           emit(LoginErrorState(l.error));
         }, (response) async {
-          await storage.write(key: 'token', value: response.user!.uid);
+          _setSecuredUserId(response.user!.uid);
           emit(LoginSuccessState(response));
         });
       } catch (e) {
@@ -59,5 +60,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginStates> {
             'An error occurred during Google sign in: ${e.toString()}'));
       }
     });
+  }
+
+  void _setSecuredUserId(String userId) {
+    SecureStorageHelper.setSecuredString(
+      CacheKeys.cachedUserId,
+      userId,
+    );
   }
 }
