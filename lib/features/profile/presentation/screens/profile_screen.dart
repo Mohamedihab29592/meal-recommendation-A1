@@ -1,45 +1,65 @@
-// ignore_for_file: use_build_context_synchronously, prefer_const_constructors
-
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:meal_recommendations/core/themes/app_colors.dart';
-import 'package:meal_recommendations/core/themes/app_text_styles.dart';
-import 'package:meal_recommendations/core/utils/assets.dart';
 import 'package:meal_recommendations/features/profile/data/profile_repository_impl.dart';
 import 'package:meal_recommendations/features/profile/domain/usecases/get_profile_use_case.dart';
 import 'package:meal_recommendations/features/profile/presentation/controller/profile_bloc_bloc.dart';
 import 'package:meal_recommendations/features/profile/presentation/controller/profile_bloc_event.dart';
 import 'package:meal_recommendations/features/profile/presentation/controller/profile_bloc_state.dart';
-import 'package:permission_handler/permission_handler.dart';
-
+import 'package:meal_recommendations/features/profile/presentation/widgets/change_password_widget.dart';
+import 'package:meal_recommendations/features/profile/presentation/widgets/profile_image_widget.dart';
+import 'package:meal_recommendations/features/profile/presentation/widgets/profile_text_fields_widget.dart';
+import 'package:meal_recommendations/features/profile/presentation/widgets/save_button_widget.dart';
 import '../../data/remote/profile_data_source_impl.dart';
 
-class ProfileScreen extends StatefulWidget {
-  final String uid;
+// ignore_for_file: use_build_context_synchronously, prefer_const_constructors
 
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, required this.uid});
 
+  final String uid;
+
   @override
-    ProfileScreenState createState() => ProfileScreenState();
+  ProfileScreenState createState() => ProfileScreenState();
 }
 
 class ProfileScreenState extends State<ProfileScreen> {
   bool _isEditing = false;
-  String? _profileImageUrl; 
+  String? _profileImageUrl;
+
+  void _toggleEditing() {
+    setState(() {
+      _isEditing = !_isEditing;
+    });
+  }
+
+  Future<void> _saveProfileData(BuildContext context, String uid, String name,
+      String email, String phone) async {
+    var box = await Hive.openBox('profileBox');
+    await box.put('name', name);
+    await box.put('email', email);
+    await box.put('phone', phone);
+    try {
+      await FirebaseFirestore.instance.collection('users').doc(uid).update({
+        'name': name,
+        'email': email,
+        'phone': phone,
+      });
+
+      BlocProvider.of<ProfileBloc>(context).add(FetchUserProfile(uid));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Failed to update profile: $e")),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    const double padding = 25.0;
-    final double avatarSize = screenSize.width * 0.4;
-    final double iconButtonSize = screenSize.width * 0.13;
-    final double textFieldWidth = screenSize.width * 0.9;
-    final double buttonWidth = screenSize.width * 0.9;
+    final double padding = screenSize.width * 0.06;
 
     return BlocProvider(
       create: (_) => ProfileBloc(GetUserProfileUseCase(ProfileRepositoryImpl(
@@ -82,156 +102,45 @@ class ProfileScreenState extends State<ProfileScreen> {
 
               return SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: padding, top: padding, right: padding),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: padding, vertical: padding),
                   child: Column(
                     children: [
-                      Center(
-                        child: SizedBox(
-                          width: avatarSize,
-                          height: avatarSize,
-                          child: Stack(
-                            children: [
-                              SizedBox(
-                                width: 122.0,
-                                height: 122.0,
-                                child: CircleAvatar(
-                                  backgroundImage: _getProfileImage(),
-                                  onBackgroundImageError: (error, stackTrace) {
-
-                                    setState(() {
-                                      _profileImageUrl = null;
-                                      AssetImage(Assets
-                                          .profileLogo); 
-                                    });
-                                  },
-                                ),
-                              ),
-                              Positioned(
-                                top: avatarSize * 0.6,
-                                left: avatarSize * 0.7- (iconButtonSize / 2),
-                                child: InkWell(
-                                  onTap: () async {
-
-                                    setState(() {
-                                      _isEditing = !_isEditing;
-                                    });
-
-
-                                    if (_isEditing) {
-                                      await _pickImage();
-                                    }
-                                  },
-                                  child: Image.asset(
-                                    Assets.editProfile,
-                                    width: 50,
-                                    height: 50,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                      ProfileImageWidget(
+                        uid: widget.uid,
+                        initialImageUrl: _profileImageUrl,
+                        onImageUrlChanged: (url) {
+                          setState(() {
+                            _profileImageUrl = url;
+                          });
+                        },
+                        onEditTapped: _toggleEditing,
                       ),
-                      const SizedBox(height: 22),
-                      SizedBox(
-                        width: textFieldWidth,
-                        child: TextFormField(
-                          controller: nameController,
-                          readOnly: !_isEditing,
-                          decoration: InputDecoration(
-                            labelText: 'Name',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: const BorderSide(
-                                color: AppColors.textFormColor,
-                                width: 2.0,
-                              ),
-                            ),
-                          ),
-                        ),
+                      ProfileTextFields(
+                        nameController: nameController,
+                        emailController: emailController,
+                        phoneController: phoneController,
+                        isEditing: _isEditing,
                       ),
-                      const SizedBox(height: 22),
-                      SizedBox(
-                        width: textFieldWidth,
-                        child: TextFormField(
-                          controller: emailController,
-                          readOnly: !_isEditing,
-                          decoration: InputDecoration(
-                            labelText: 'Email',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: const BorderSide(
-                                color: AppColors.textFormColor,
-                                width: 2.0,
-                              ),
-                            ),
-                          ),
-                        ),
+                      const Padding(
+                        padding: EdgeInsets.all(22.0),
+                        child: ChangePasswordWidget(),
                       ),
-                      const SizedBox(height: 22),
-                      SizedBox(
-                        width: textFieldWidth,
-                        child: TextFormField(
-                          controller: phoneController,
-                          readOnly: !_isEditing,
-                          decoration: InputDecoration(
-                            labelText: 'Phone',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: const BorderSide(
-                                color: AppColors.textFormColor,
-                                width: 2.0,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),  const SizedBox(height: 22),
-              SizedBox(
-                width: textFieldWidth,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: const BorderSide(
-                        color: AppColors.textFormColor,
-                        width: 2.0,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 68),
-                      Container(
-                        width: buttonWidth,
-                        height: 68,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14),
-                          color: AppColors.primaryColor,
-                        ),
-                        child: ElevatedButton(
-                          onPressed: _isEditing
-                              ? () async {
-                                  await _saveProfileData(
-                                    context,
-                                    widget.uid,
-                                    nameController.text,
-                                    emailController.text,
-                                    phoneController.text,
-                                  );
-                                  setState(() {
-                                    _isEditing = false; 
-                                  });
-                                }
-                              : null,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primaryColor,
-                          ),
-                          child: Text(
-                            'Save',
-                            style: AppTextStyles.textElevatedButton,
-                          ),
-                        ),
+                      const SizedBox(height: 68),
+                      SaveButtonWidget(
+                        isEditing: _isEditing,
+                        onSavePressed: () async {
+                          await _saveProfileData(
+                            context,
+                            widget.uid,
+                            nameController.text,
+                            emailController.text,
+                            phoneController.text,
+                          );
+                          setState(() {
+                            _isEditing = false;
+                          });
+                        },
                       ),
                     ],
                   ),
@@ -245,86 +154,5 @@ class ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     );
-  }
-
-  ImageProvider _getProfileImage() {
-    if (_profileImageUrl != null && _profileImageUrl!.isNotEmpty) {
-      return NetworkImage(_profileImageUrl!);
-    } else {
-    
-      return NetworkImage(
-          "https://cdn-icons-png.flaticon.com/512/3177/3177440.png"); 
-    }
-  }
-
-  Future<void> _uploadImageToFirebase(XFile imageFile) async {
-    try {
-      // Upload image to Firebase Storage
-      final storageRef = FirebaseStorage.instance
-          .ref()
-          .child('profileImages/${widget.uid}/${imageFile.name}');
-      await storageRef.putFile(File(imageFile.path));
-
-      // Get the download URL
-      String downloadUrl = await storageRef.getDownloadURL();
-
-      // Save the image URL to Firestore
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(widget.uid)
-          .update({'profileImage': downloadUrl});
-
-      // Save the image URL in Hive
-      var box = await Hive.openBox('profileBox');
-      await box.put('profileImage', downloadUrl);
-
-      setState(() {
-        _profileImageUrl = downloadUrl; 
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Profile image updated successfully.")),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Failed to upload image: $e")),
-      );
-    }
-  }
-
-  Future<void> _saveProfileData(BuildContext context, String uid, String name,
-      String email, String phone) async {
-    var box = await Hive.openBox('profileBox');
-    await box.put('name', name);
-    await box.put('email', email);
-    await box.put('phone', phone);
-    try {
-      await FirebaseFirestore.instance.collection('users').doc(uid).update({
-        'name': name,
-        'email': email,
-        'phone': phone,
-      });
-
-      BlocProvider.of<ProfileBloc>(context).add(FetchUserProfile(uid));
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Failed to update profile: $e")),
-      );
-    }
-  }
-    // Request permission
-  Future<void> _pickImage() async {
-    var status = await Permission.storage.request();
-    if (status.isGranted) {
-      final pickedFile =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (pickedFile != null) {
-        await _uploadImageToFirebase(pickedFile);
-      }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Permission denied to access storage.")),
-      );
-    }
   }
 }
