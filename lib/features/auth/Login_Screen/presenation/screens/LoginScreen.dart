@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ));
-          Navigator.pushReplacementNamed(context, Routes.home);
+          Navigator.pushReplacementNamed(context, Routes.layout);
         } else if (state is LoginErrorState) {
           // Show error message
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -182,8 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                         ),
                         SizedBox(
-                            height:
-                                MediaQuery.of(context).size.height * 0.04),
+                            height: MediaQuery.of(context).size.height * 0.04),
                         const NoAccountText()
                       ],
                     ),
