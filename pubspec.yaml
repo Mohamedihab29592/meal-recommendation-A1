@@ -22,29 +22,36 @@ dependencies:
   loading_indicator: ^3.1.1
   # For internet connectivity checking
   internet_connection_checker_plus: ^2.5.2
-  get_it: ^8.0.0
-  # For generating OTP Text Field
-  flutter_otp_text_field: ^1.2.0
   flutter_svg: ^2.0.10+1
+  get_it: ^8.0.0
   google_sign_in: ^6.2.1
   flutter_bloc: ^8.1.6
-  # Code generator (mainly used with Bloc)
+
   freezed_annotation: ^2.4.4
-  # Classes and helper functions that support JSON code generation via the `json_serializable` package.
+  flutter_otp_text_field: ^1.2.0
+    # Classes and helper functions that support JSON code generation via the `json_serializable` package.
   json_annotation: ^4.9.0
-  # To load and cache network images.
+    # To load and cache network images.
   cached_network_image: ^3.4.1
+  custom_rating_bar: ^3.0.0
 
   flutter_secure_storage: ^9.2.2
   dartz: ^0.10.1
   flutter_native_splash: ^2.4.0
   bloc: ^8.1.4
-  hive_flutter: ^1.1.0
-  hive: ^2.2.3
+
   path_provider: ^2.1.5
   image_picker: ^1.1.2
   firebase_storage: ^12.3.4
   permission_handler: ^11.3.1
+  cloud_firestore: ^5.4.4
+  conditional_builder_null_safety: ^0.0.6
+  shimmer: ^3.0.0
+
+  flutter_rating_bar: ^4.0.1
+  font_awesome_flutter: ^10.7.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
 
 
 dev_dependencies:
@@ -55,22 +62,22 @@ dev_dependencies:
   
 
   flutter_lints: ^4.0.0
+
   # A build system for Dart code generation and modular compilation.
   build_runner: ^2.4.13
   # Code generator (mainly used with Bloc)
   freezed: ^2.5.7
   # Automatically generate code for converting to and from JSON by annotating Dart classes.
   json_serializable: ^6.8.0
+  hive_generator: ^2.0.1
 
 flutter:
   uses-material-design: true
 
 
   assets:
-    - assets/
-    - assets/svgs/
     - assets/images/
-    - assets/icons/
+    - assets/svgs/
 
   fonts:
     - family: Inter
