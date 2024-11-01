@@ -4,11 +4,13 @@ class SignUpEvent extends UserEvent {
   final String email;
   final String password;
   final String fullName;
+  final String phone;
 
   SignUpEvent({
     required this.email,
     required this.password,
     required this.fullName,
+    required this.phone,
   });
 }
 
