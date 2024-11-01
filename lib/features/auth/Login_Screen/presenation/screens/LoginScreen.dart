@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ));
-          Navigator.pushReplacementNamed(context, Routes.home);
+          Navigator.pushReplacementNamed(context, Routes.layout);
         } else if (state is LoginErrorState) {
           // Show error message
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(

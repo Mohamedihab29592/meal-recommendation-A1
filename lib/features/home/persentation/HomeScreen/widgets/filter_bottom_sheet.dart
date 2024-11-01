@@ -96,7 +96,6 @@ class _ShowFilterMealsBottomSheetState extends State<ShowFilterMealsBottomSheet>
       children: [
         Text(title, style: AppTextStyles.font20Bold),
         Row(
-          spacing: 16.0,
           children: options.map((option) {
             final isSelected = selectedOption == option;
             return ChoiceChip(

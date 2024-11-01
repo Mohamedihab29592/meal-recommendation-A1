@@ -75,14 +75,15 @@ class AppRouter {
             builder: (_) => MultiBlocProvider(providers: [
                   BlocProvider<LayoutBloc>(
                     create: (_) => di.get<LayoutBloc>(),
-                    child: const LayoutView(),
+
                   ),
                   BlocProvider(
                     create: (context) =>
                         MealCubit(FirebaseService())..fetchMeals(),
-                    child: const HomeScreen(),
+
                   )
-                ], child: const LayoutView()));
+                ],
+                child: const LayoutView()));
 
       case Routes.mealDetails:
         final args = settings.arguments as Meal;

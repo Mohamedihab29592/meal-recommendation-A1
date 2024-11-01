@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
             theme: AppThemes.lightTheme,
             initialRoute: FirebaseAuth.instance.currentUser == null
                 ? Routes.onBoarding
-                : Routes.home,
+                : Routes.layout,
           );
         });
   }
