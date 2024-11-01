@@ -7,6 +7,8 @@ import 'package:meal_recommendations/features/home/persentation/HomeScreen/home_
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_bloc.dart';
 import 'package:meal_recommendations/features/layout/presentation/views/layout_view.dart';
 import 'package:meal_recommendations/features/meal_details/presentation/views/meal_details_view.dart';
+
+// import 'package:meal_recommendations/features/splash_boarding/splash_screen.dart';
 import 'package:meal_recommendations/features/auth/register/persentation/screens/otp_screen.dart';
 import 'package:meal_recommendations/features/auth/register/persentation/screens/register_screen.dart';
 import 'package:meal_recommendations/features/splash_boarding/screens/on_boarding_screen.dart';

@@ -52,6 +52,7 @@ class AppTextStyles {
         fontSize: 18.sp,);
         static TextStyle get titleOnboarding => TextStyle(
          fontSize: 17.sp,
+
         color: AppColors.primaryColor,
         fontWeight: FontWeight.bold,
       );

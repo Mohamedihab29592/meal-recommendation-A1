@@ -22,15 +22,15 @@ class OnboardingContent extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: screenHeight * 0.35), 
+          SizedBox(height: screenHeight * 0.35),
           CircleAvatar(
             radius: screenWidth * 0.32,
             backgroundColor: Colors.transparent,
             child: ClipOval(
               child: Image.asset(
                 image,
-                height: screenHeight * 0.3, 
-                width: screenWidth * 0.63, 
+                height: screenHeight * 0.3,
+                width: screenWidth * 0.63,
                 fit: BoxFit.cover,
               ),
             ),
@@ -38,9 +38,9 @@ class OnboardingContent extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: EdgeInsets.only(
-                right: screenWidth * 0.024, 
-                left: screenWidth * 0.024, 
-                top: screenHeight * 0.045, 
+                right: screenWidth * 0.024,
+                left: screenWidth * 0.024,
+                top: screenHeight * 0.045,
               ),
               child: Column(
                 children: [
@@ -64,4 +64,3 @@ class OnboardingContent extends StatelessWidget {
     );
   }
 }
-

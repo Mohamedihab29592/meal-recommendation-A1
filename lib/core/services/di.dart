@@ -14,38 +14,27 @@ import '../../features/auth/Login_Screen/domain/repositories/BaseLoginRepository
 final GetIt di = GetIt.instance;
 
 void setupServiceLocator() {
-
   //data source
   di.registerLazySingleton<RemoteDataSourceFirebase>(
-          ()=> RemoteDataSourceFirebase());
+      () => RemoteDataSourceFirebase());
+
+  di.registerLazySingleton<BaseLoginDataSource>(() => LoginDataSourceImpl());
 
   //  repositories
-  di.registerLazySingleton<UserRepository>(
-          ()=> UserRepositoryImpl(di())
-  );
-
+  di.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(di()));
 
   di.registerLazySingleton<BaseLoginRepository>(
-        () => LoginRepositoryImpl(loginDataSource: di<BaseLoginDataSource>()),
+    () => LoginRepositoryImpl(loginDataSource: di<BaseLoginDataSource>()),
   );
-
-
 
   //  use cases
 
-
-
-
-
   //  blocs or cubits
   _setupForBlocs();
-  di.registerLazySingleton<UserBloc>(
-          ()=> UserBloc(di())
-  );
+  di.registerLazySingleton<UserBloc>(() => UserBloc(di()));
 
-
-  di.registerLazySingleton<LoginBloc>(() =>
-  (LoginBloc()));
+  di.registerLazySingleton<LoginBloc>(
+      () => (LoginBloc(di.get<BaseLoginRepository>())));
 
   //External Libraries like dio
 }
@@ -53,7 +42,3 @@ void setupServiceLocator() {
 void _setupForBlocs() {
   di.registerLazySingleton<LayoutBloc>(() => LayoutBloc());
 }
-
-
-
-
