@@ -27,12 +27,14 @@ dependencies:
   flutter_svg: ^2.0.10+1
   google_sign_in: ^6.2.1
   flutter_bloc: ^8.1.6
+
   # Code generator (mainly used with Bloc)
   freezed_annotation: ^2.4.4
   # Classes and helper functions that support JSON code generation via the `json_serializable` package.
   json_annotation: ^4.9.0
   # To load and cache network images.
   cached_network_image: ^3.4.1
+  custom_rating_bar: ^3.0.0
 
   flutter_secure_storage: ^9.2.2
   dartz: ^0.10.1

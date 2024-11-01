@@ -31,6 +31,6 @@ class BuildIngredientButton extends StatelessWidget {
           ),
         ),
       ),
-    );;
+    );
   }
 }
