@@ -12,6 +12,13 @@ import 'package:meal_recommendations/core/routing/routes.dart';
 import 'package:meal_recommendations/core/services/di.dart';
 import 'package:meal_recommendations/core/themes/app_themes.dart';
 import 'package:meal_recommendations/core/utils/strings.dart';
+import 'package:meal_recommendations/features/auth/Login_Screen/presenation/controller/Login_bloc/bloc/Login%20BLoc.dart';
+import 'package:meal_recommendations/features/auth/register/persentation/controller/sign_up_bloc.dart';
+import 'package:meal_recommendations/features/auth/register/persentation/screens/register_screen.dart';
+import 'package:meal_recommendations/features/sidebar/presentation/screens/side_bar_screen.dart';
+import 'features/layout/presentation/blocs/layout_bloc.dart';
+import 'features/layout/presentation/views/layout_view.dart';
+import 'features/sidebar/presentation/controller/bloc/side_bloc.dart';
 import 'core/models/meal.dart';
 import 'firebase_options.dart';
 
@@ -46,6 +53,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return ScreenUtilInit(
         minTextAdapt: true,
         splitScreenMode: true,

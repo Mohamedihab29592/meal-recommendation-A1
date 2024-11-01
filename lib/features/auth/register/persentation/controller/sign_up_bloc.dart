@@ -17,9 +17,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
             await repository.signUpWithEmailAndPassword(
           email: event.email,
           password: event.password,
-          fullName: event.fullName,
+          fullName: event.fullName, phone: event.phone,
         );
-        emit(UserSuccessState(userModel ?? UserModel()));
+        await repository.userCreate(name: event.fullName, email: event.email, uid: userModel?.uId??"", phone: event.phone);
+
+        emit(UserSuccessState(userModel??UserModel()));
+
       } catch (error) {
         emit(UserErrorState(error.toString()));
       }

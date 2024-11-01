@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meal_recommendations/core/themes/app_colors.dart';
 import 'package:meal_recommendations/core/utils/assets.dart';
 import 'package:meal_recommendations/features/home/persentation/HomeScreen/home_screen.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_bloc.dart';
@@ -8,6 +9,9 @@ import 'package:meal_recommendations/features/layout/presentation/blocs/layout_s
 import 'package:meal_recommendations/features/layout/presentation/widgets/custom_navigation_destination.dart';
 import 'package:meal_recommendations/features/layout/presentation/widgets/favorites_tab_body.dart';
 import 'package:meal_recommendations/features/layout/presentation/widgets/profile_tab_body.dart';
+import 'package:meal_recommendations/features/sidebar/presentation/screens/side_bar_screen.dart';
+
+import '../widgets/home_tab_body.dart';
 
 class LayoutView extends StatelessWidget {
   const LayoutView({super.key});
@@ -17,37 +21,46 @@ class LayoutView extends StatelessWidget {
     return BlocBuilder<LayoutBloc, LayoutState>(
       buildWhen: (previous, current) =>
           previous.bottomNavIndex != current.bottomNavIndex,
-      builder: (context, state) => SafeArea(
-        child: Scaffold(
-          body: [
-            // (Don't use scaffold again in the following widgets)
-            const HomeScreen(),
-            const FavoritesTabBody(),
-            const ProfileTabBody(),
-          ][state.bottomNavIndex],
-          bottomNavigationBar: NavigationBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            indicatorColor: Colors.transparent,
-            animationDuration: const Duration(milliseconds: 500),
-            destinations: const [
-              CustomNavigationDestination(
-                icon: Assets.iconsHomeIcon,
-                selectedIcon: Assets.iconsWhiteHomeIcon,
-              ),
-              CustomNavigationDestination(
-                icon: Assets.iconsHeartIcon,
-                selectedIcon: Assets.iconsWhiteHeartIcon,
-              ),
-              CustomNavigationDestination(
-                icon: Assets.iconsProfileIcon,
-                selectedIcon: Assets.iconsWhiteProfileIcon,
-              ),
-            ],
-            selectedIndex: state.bottomNavIndex,
-            onDestinationSelected: (index) =>
-                context.read<LayoutBloc>().add(ChangeBottomNavIndex(index)),
+      builder: (context, state) => Scaffold(
+        appBar: AppBar(
+          leading: Builder(
+            builder: (context) {
+              return IconButton(onPressed: (){
+                Scaffold.of(context).openDrawer();
+              }, icon:  Icon(Icons.menu),color: AppColors.primaryColor,);
+            }
           ),
+        ),
+        drawer: SideMenu(),
+        body: [
+          // (Don't use scaffold again in the following widgets)
+          const HomeTabBody(),
+          const FavoritesTabBody(),
+          const ProfileTabBody(),
+        ][state.bottomNavIndex],
+        bottomNavigationBar: NavigationBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          indicatorColor: Colors.transparent,
+          animationDuration: const Duration(milliseconds: 500),
+          destinations: const [
+            CustomNavigationDestination(
+              icon: Assets.iconsHomeIcon,
+              selectedIcon: Assets.iconsWhiteHomeIcon,
+            ),
+            CustomNavigationDestination(
+              icon: Assets.iconsHeartIcon,
+              selectedIcon: Assets.iconsWhiteHeartIcon,
+            ),
+            CustomNavigationDestination(
+              icon: Assets.iconsProfileIcon,
+              selectedIcon: Assets.iconsWhiteProfileIcon,
+            ),
+          ],
+          selectedIndex: state.bottomNavIndex,
+          onDestinationSelected: (index) =>
+              context.read<LayoutBloc>().add(ChangeBottomNavIndex(index)),
+
         ),
       ),
     );
