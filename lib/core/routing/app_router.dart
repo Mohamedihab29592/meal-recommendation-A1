@@ -3,12 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommendations/core/models/meal.dart';
 import 'package:meal_recommendations/core/routing/routes.dart';
 import 'package:meal_recommendations/core/services/di.dart';
-import 'package:meal_recommendations/features/home/persentation/HomeScreen/home_screen.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_bloc.dart';
 import 'package:meal_recommendations/features/layout/presentation/views/layout_view.dart';
 import 'package:meal_recommendations/features/meal_details/presentation/views/meal_details_view.dart';
-
-// import 'package:meal_recommendations/features/splash_boarding/splash_screen.dart';
 import 'package:meal_recommendations/features/auth/register/persentation/screens/otp_screen.dart';
 import 'package:meal_recommendations/features/auth/register/persentation/screens/register_screen.dart';
 import 'package:meal_recommendations/features/splash_boarding/screens/on_boarding_screen.dart';
@@ -17,8 +14,10 @@ import '../../features/auth/Login_Screen/presenation/controller/Login_bloc/bloc/
 import '../../features/auth/Login_Screen/presenation/screens/LoginScreen.dart';
 import '../../features/auth/register/persentation/controller/sign_up_bloc.dart';
 import '../../features/auth/register/persentation/cubit/otp_auth_cubit.dart';
+import '../../features/favourite/presentation/screens/favourite_screen.dart';
 import '../../features/home/businessLogic/meal_cubit.dart';
 import '../../features/home/data/data_source.dart';
+import '../../features/home/persentation/HomeScreen/home_screen.dart';
 
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -59,7 +58,7 @@ class AppRouter {
 
       case Routes.favourite:
         return MaterialPageRoute(
-          builder: (_) => const Placeholder(),
+          builder: (_) => const FavouriteScreen(),
         );
 
       case Routes.profile:
@@ -92,6 +91,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => MealDetailsView(meal: args),
         );
+
 
       default:
         return MaterialPageRoute(

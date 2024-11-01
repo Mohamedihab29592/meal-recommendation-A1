@@ -49,6 +49,6 @@ class BuildSearchBar extends StatelessWidget {
         ),
       ],
     );
-    ;
+
   }
 }
