@@ -1,4 +1,7 @@
+// ignore_for_file: avoid_print, use_build_context_synchronously
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:meal_recommendations/core/routing/routes.dart';
 import 'package:meal_recommendations/core/themes/app_colors.dart';
 import 'package:meal_recommendations/core/utils/assets.dart';
 import 'package:meal_recommendations/features/splash_boarding/widgets/action_buttons.dart';
@@ -15,6 +18,23 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
+void finishOnboarding() async {
+  final box = Hive.box('appBox');
+
+  print('Saving onboarding status...'); 
+  await box.put('onboardingShown', true); 
+  print('Onboarding status saved.'); 
+
+  bool onboardingCheck = box.get('onboardingShown'); 
+  print('Onboarding status after saving: $onboardingCheck');
+
+  if (onboardingCheck) {
+    Navigator.pushReplacementNamed(context, Routes.login); 
+  } else {
+    print('Failed to save onboarding state.'); 
+  }
+}
+
   final PageController _pageController = PageController();
   int _currentPage = 0;
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hive/hive.dart';
 import 'package:meal_recommendations/core/themes/app_colors.dart';
 import 'package:meal_recommendations/core/utils/assets.dart';
 import 'package:meal_recommendations/features/auth/Login_Screen/presenation/controller/Login_bloc/state/login_events.dart';
@@ -10,7 +11,6 @@ import 'package:meal_recommendations/features/auth/Login_Screen/presenation/widg
 import 'package:meal_recommendations/features/auth/Login_Screen/presenation/widgets/NoAccountText.dart';
 import 'package:meal_recommendations/features/auth/Login_Screen/presenation/widgets/OrLoginWith.dart';
 import 'package:meal_recommendations/features/auth/Login_Screen/presenation/widgets/SocalCard.dart';
-
 import '../../../../../core/routing/routes.dart';
 import '../controller/Login_bloc/bloc/Login BLoc.dart';
 import '../controller/Login_bloc/state/login_state.dart';
@@ -23,11 +23,16 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final box = Hive.box('appBox');
+
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LoginBloc, LoginStates>(
       listener: (context, state) {
         if (state is LoginSuccessState) {
+            // Set the login status 
+           box.put('isLoggedIn', true); 
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.green,
             content: Text(
@@ -37,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ));
-          Navigator.pushReplacementNamed(context, Routes.home);
+          Navigator.pushReplacementNamed(context, Routes.layout);
         } else if (state is LoginErrorState) {
           // Show error message
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -182,8 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                         ),
                         SizedBox(
-                            height:
-                                MediaQuery.of(context).size.height * 0.04),
+                            height: MediaQuery.of(context).size.height * 0.04),
                         const NoAccountText()
                       ],
                     ),
@@ -197,3 +201,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+

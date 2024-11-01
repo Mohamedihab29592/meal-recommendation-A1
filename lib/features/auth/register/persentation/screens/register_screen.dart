@@ -11,8 +11,6 @@ import '../controller/user_events.dart';
 import '../controller/user_states.dart';
 import '../widgets/overlay.dart';
 
-
-
 class RegisterScreen extends StatelessWidget {
   var formkey = GlobalKey();
   final nameController = TextEditingController();
@@ -173,6 +171,7 @@ class RegisterScreen extends StatelessWidget {
                                     ),
                                   );
                                 }
+
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.white,
@@ -191,6 +190,7 @@ class RegisterScreen extends StatelessWidget {
                         },
                       ),
 
+
                       SizedBox(height: screenHeight * 0.02),
 
                       BlocListener<UserBloc, UserState>(
@@ -204,6 +204,7 @@ class RegisterScreen extends StatelessWidget {
                           }
                         },
                         child: SizedBox.shrink(), // No need to return a widget here
+
                       ),
 
                       Text(
@@ -260,4 +261,3 @@ class RegisterScreen extends StatelessWidget {
     return true;
   }
 }
-

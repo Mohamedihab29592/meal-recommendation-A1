@@ -9,18 +9,25 @@ import 'package:meal_recommendations/features/meal_details/presentation/views/me
 import 'package:meal_recommendations/features/auth/register/persentation/screens/otp_screen.dart';
 import 'package:meal_recommendations/features/auth/register/persentation/screens/register_screen.dart';
 import 'package:meal_recommendations/features/splash_boarding/screens/on_boarding_screen.dart';
-
+import 'package:meal_recommendations/features/splash_boarding/screens/splash_screen.dart';
 import '../../features/auth/Login_Screen/presenation/controller/Login_bloc/bloc/Login BLoc.dart';
 import '../../features/auth/Login_Screen/presenation/screens/LoginScreen.dart';
 import '../../features/auth/register/persentation/controller/sign_up_bloc.dart';
 import '../../features/auth/register/persentation/cubit/otp_auth_cubit.dart';
-import '../../features/layout/presentation/blocs/layout_bloc.dart';
-import '../../features/layout/presentation/views/layout_view.dart';
-import '../services/di.dart';
+
+import '../../features/favourite/presentation/screens/favourite_screen.dart';
+import '../../features/home/businessLogic/meal_cubit.dart';
+import '../../features/home/data/data_source.dart';
+import '../../features/home/persentation/HomeScreen/home_screen.dart';
+
 
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case Routes.splash:
+        return MaterialPageRoute(
+          builder: (_) => const SplashScreen(),
+        );
       case Routes.onBoarding:
         return MaterialPageRoute(
           builder: (_) => const OnboardingScreen(),
@@ -47,14 +54,17 @@ class AppRouter {
             builder: (_) => BlocProvider<OtpAuthCubit>(
                 create: (_) => OtpAuthCubit(), child: const OtpScreen()));
 
-    case Routes.home:
+      case Routes.home:
         return MaterialPageRoute(
-          builder: (_) => const Placeholder(),
-        );
+            builder: (_) => BlocProvider(
+                  create: (context) =>
+                      MealCubit(FirebaseService())..fetchMeals(),
+                  child: const HomeScreen(),
+                ));
 
       case Routes.favourite:
         return MaterialPageRoute(
-          builder: (_) => const Placeholder(),
+          builder: (_) => const FavouriteScreen(),
         );
 
       case Routes.profile:
@@ -69,11 +79,18 @@ class AppRouter {
 
       case Routes.layout:
         return MaterialPageRoute(
-          builder: (_) => BlocProvider<LayoutBloc>(
-            create: (_) => di.get<LayoutBloc>(),
-            child: const LayoutView(),
-          ),
-        );
+            builder: (_) => MultiBlocProvider(providers: [
+                  BlocProvider<LayoutBloc>(
+                    create: (_) => di.get<LayoutBloc>(),
+
+                  ),
+                  BlocProvider(
+                    create: (context) =>
+                        MealCubit(FirebaseService())..fetchMeals(),
+
+                  )
+                ],
+                child: const LayoutView()));
 
       case Routes.mealDetails:
         final args = settings.arguments as Meal;

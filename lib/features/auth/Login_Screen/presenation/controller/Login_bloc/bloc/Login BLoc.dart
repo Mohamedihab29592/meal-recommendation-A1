@@ -1,7 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:get_it/get_it.dart';
 import 'package:meal_recommendations/features/auth/Login_Screen/presenation/controller/Login_bloc/state/login_events.dart';
 import 'package:meal_recommendations/features/auth/Login_Screen/presenation/controller/Login_bloc/state/login_state.dart';
 import '../../../../domain/repositories/BaseLoginRepository.dart';
@@ -9,16 +10,16 @@ import '../../../../domain/repositories/BaseLoginRepository.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginStates> {
   final storage = const FlutterSecureStorage();
 
-  final BaseLoginRepository loginRepository =
-  GetIt.instance<BaseLoginRepository>();
+  final BaseLoginRepository loginRepository;
+
   var formKey = GlobalKey<FormState>();
   var emailController = TextEditingController(text: '');
   var passwordController = TextEditingController(text: '');
   bool isObsecure = true;
 
-  LoginBloc() : super(LoginInitialState()) {
+  LoginBloc(this.loginRepository) : super(LoginInitialState()) {
     on<signInWithEmailAndPasswordEvent>((event, emit) async {
-      if (formKey.currentState?.validate() == true) {
+      if (formKey.currentState!.validate()) {
         emit(LoginLoadingState());
         try {
           var login = await loginRepository.signInWithEmailAndPassword(
@@ -31,13 +32,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginStates> {
             emit(LoginSuccessState(response));
           });
         } catch (e) {
-          emit(LoginErrorState('An unexpected error occurred: ${e.toString()}'));
+          log(e.toString());
+          emit(
+              LoginErrorState('An unexpected error occurred: ${e.toString()}'));
         }
       } else {
-        emit(LoginErrorState('Form validation failed. Please check your inputs.'));
+        emit(LoginErrorState(
+            'Form validation failed. Please check your inputs.'));
       }
     });
-
 
     on<signInGoogleEvent>((event, emit) async {
       emit(LoginLoadingState());
@@ -57,4 +60,3 @@ class LoginBloc extends Bloc<LoginEvent, LoginStates> {
     });
   }
 }
-

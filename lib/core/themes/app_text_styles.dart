@@ -19,6 +19,19 @@ class AppTextStyles {
         fontSize: 18.sp,
         fontWeight: FontWeight.w500,
       );
+
+  static TextStyle get font15MediumGrey => TextStyle(
+    fontSize: 15.sp,
+    fontWeight: FontWeight.w400,
+    color: AppColors.grey
+  );
+
+  static TextStyle get font15MediumBlueGrey => TextStyle(
+      fontSize: 15.sp,
+      fontWeight: FontWeight.w500,
+      color: AppColors.primaryColor
+  );
+
   static TextStyle get font20Regular => TextStyle(
         fontSize: 20.sp,
         fontWeight: FontWeight.w400,
@@ -51,7 +64,9 @@ class AppTextStyles {
   static TextStyle get font18BoldDarkBlue => TextStyle(
         fontSize: 18.sp,);
         static TextStyle get titleOnboarding => TextStyle(
-        fontSize: 17.sp,
+
+
+
         color: AppColors.primaryColor,
         fontWeight: FontWeight.bold,
       );
