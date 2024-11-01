@@ -1,5 +1,3 @@
-
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommendations/features/auth/register/persentation/controller/user_events.dart';
 import 'package:meal_recommendations/features/auth/register/persentation/controller/user_states.dart';
@@ -10,18 +8,18 @@ import '../../domain/base_repo/user_repo.dart';
 class UserBloc extends Bloc<UserEvent, UserState> {
   final UserRepository repository;
 
-
-  UserBloc(this.repository) : super(UserInitialState(isPassword:false )) {
+  UserBloc(this.repository) : super(UserInitialState(isPassword: false)) {
     on<SignUpEvent>((event, emit) async {
       emit(UserLoadingState());
 
       try {
-        final UserModel? userModel = await repository.signUpWithEmailAndPassword(
+        final UserModel? userModel =
+            await repository.signUpWithEmailAndPassword(
           email: event.email,
           password: event.password,
           fullName: event.fullName,
         );
-        emit(UserSuccessState(userModel??UserModel()));
+        emit(UserSuccessState(userModel ?? UserModel()));
       } catch (error) {
         emit(UserErrorState(error.toString()));
       }
@@ -34,7 +32,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     on<ToggleTermsEvent>((event, emit) {
       // Emit the new state with updated termsAccepted value
-      emit(UserInitialState(termsAccepted: event.isAccepted,));
+      emit(UserInitialState(
+        termsAccepted: event.isAccepted,
+      ));
     });
     on<TogglePasswordEvent>((event, emit) {
       // Emit the new state with updated termsAccepted value

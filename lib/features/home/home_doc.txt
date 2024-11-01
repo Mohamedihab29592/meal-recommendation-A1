@@ -1,0 +1,53 @@
+## Home Feature Structure
+- **Data Layer**: Manages data fetching and storage.
+- **Business Logic Layer**: Handles application logic and state.
+- **Presentation Layer**: Renders the user interface.
+
+## Data Layer
+
+### 1. Firebase Service (`data_source.dart`)
+- Fetches meals from Firebase FireStore.
+  - **fetchMeals()**: Retrieves all meals from FireStore and maps them to the `Meal` model.
+
+### 2. Local Data Service (`local_data.dart`)
+- Manages local favorite meals using Hive.
+  - **addMealToFav(Meal meal)**: Adds a meal to the local favorites list.
+  - **removeFavMeal(Meal meal)**: Removes a specific meal from local favorites.
+  - **removeAllMeals()**: Clears all locally stored favorite meals.
+
+## Business Logic Layer (BLoC)
+
+The app uses Bloc for state management to handle user interactions and data processing.
+
+### 1. MealCubit (`meal_cubit.dart`)
+- **fetchMeals()**: Fetches meals from Firebase and emits states based on success or failure.
+- **filterMealsList(String searchQuery)**: Filters meals based on a search query.
+- **addFavMeal(Meal meal)**: Adds a meal to favorites and updates FireStore.
+- **removeFavMeal(Meal meal)**: Removes a meal from favorites and updates FireStore.
+
+#### States:
+- **MealInitial**: Initial state when the app starts.
+- **MealLoading**: State while loading meals from Firebase.
+- **MealLoaded**: State when meals are successfully loaded.
+- **MealError**: State when an error occurs during data loading.
+
+## Presentation Layer
+
+The presentation layer is responsible for displaying the UI components.
+
+### 1. HomeScreen (`home_screen.dart`)
+- Displays a list of recipes with a search bar and a filter option.
+- Integrates BlocConsumer to manage UI changes based on the MealCubit's states.
+
+### 2. RecipeCard (`recipe_card.dart`)
+- Renders each meal card with meal details such as:
+  - **Name**
+  - **Ingredients count**
+  - **Cooking time**
+  - **Favorite button**
+
+### Refactoring
+
+The UI has been refactored to:
+- Use `MediaQuery` for responsive layout.
+- Follow clean code practices for better maintainability and modularity.

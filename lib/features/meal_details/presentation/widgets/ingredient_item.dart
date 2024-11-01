@@ -17,9 +17,9 @@ class IngredientItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: CachedNetworkImage(
-        // imageUrl: ingredients[index].imageUrl ?? '',
-        imageUrl:
-            'https://img.freepik.com/free-photo/different-varieties-kabab-served-with-grilled-eggplants-tomatoes_140725-8134.jpg?t=st=1729945680~exp=1729949280~hmac=4263d5514b20e8769010e757011c73a51448b6a425bf0271341b0552b7612767&w=740',
+        imageUrl: ingredient.imageUrl,
+        // imageUrl:
+        //     'https://img.freepik.com/free-photo/different-varieties-kabab-served-with-grilled-eggplants-tomatoes_140725-8134.jpg?t=st=1729945680~exp=1729949280~hmac=4263d5514b20e8769010e757011c73a51448b6a425bf0271341b0552b7612767&w=740',
         imageBuilder: (_, image) => CircleAvatar(
           backgroundImage: image,
           radius: 16.r,

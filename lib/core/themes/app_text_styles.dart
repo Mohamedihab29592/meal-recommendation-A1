@@ -49,10 +49,10 @@ class AppTextStyles {
         fontWeight: FontWeight.w400,
       );
   static TextStyle get font18BoldDarkBlue => TextStyle(
-        fontSize: 18.sp,
-      );
-  static TextStyle get titleOnboarding => TextStyle(
-        fontSize: 17.sp,
+        fontSize: 18.sp,);
+        static TextStyle get titleOnboarding => TextStyle(
+         fontSize: 17.sp,
+
         color: AppColors.primaryColor,
         fontWeight: FontWeight.bold,
       );

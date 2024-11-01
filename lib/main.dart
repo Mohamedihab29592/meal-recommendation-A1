@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,18 +10,26 @@ import 'package:meal_recommendations/core/routing/routes.dart';
 import 'package:meal_recommendations/core/services/di.dart';
 import 'package:meal_recommendations/core/themes/app_themes.dart';
 import 'package:meal_recommendations/core/utils/strings.dart';
+import 'core/models/meal.dart';
 import 'firebase_options.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupServiceLocator();
+  Firebase.initializeApp();
   Bloc.observer = MyBlocObserver();
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await Hive.initFlutter();
+  Hive.openBox('myFavMeals');
+  Hive.registerAdapter(MealAdapter());
+  Hive.registerAdapter(MealSummaryAdapter());
+  Hive.registerAdapter(MealNutritionAdapter());
+  Hive.registerAdapter(MealIngredientAdapter());
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
 
   runApp(const MyApp());
   FlutterNativeSplash.remove();
@@ -40,7 +49,9 @@ class MyApp extends StatelessWidget {
             title: AppStrings.appTitle,
             debugShowCheckedModeBanner: false,
             theme: AppThemes.lightTheme,
-            initialRoute: Routes.onBoarding,
+            initialRoute: FirebaseAuth.instance.currentUser == null
+                ? Routes.onBoarding
+                : Routes.layout,
           );
         });
   }
