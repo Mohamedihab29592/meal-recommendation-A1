@@ -42,7 +42,6 @@ void setupServiceLocator() {
   di.registerLazySingleton<MealRemoteRepository>(
           ()=> MealRemoteRepository()
   );
-  di.registerLazySingleton<BaseLoginDataSource>(() => LoginDataSourceImpl());
 
   //  use cases
 
