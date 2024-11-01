@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommendations/core/models/meal.dart';
 import 'package:meal_recommendations/core/routing/routes.dart';
 import 'package:meal_recommendations/core/services/di.dart';
+import 'package:meal_recommendations/core/utils/functions/check_if_user_is_logged_in.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_bloc.dart';
 import 'package:meal_recommendations/features/layout/presentation/views/layout_view.dart';
 import 'package:meal_recommendations/features/meal_details/presentation/views/meal_details_view.dart';
@@ -25,6 +26,9 @@ import '../../features/sidebar/presentation/controller/bloc/side_bloc.dart';
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case Routes.initial:
+        return isUserLoggedIn ? _layoutRoute() : _loginRoute();
+
       case Routes.splash:
         return MaterialPageRoute(
           builder: (_) => const SplashScreen(),
@@ -41,19 +45,14 @@ class AppRouter {
         );
 
       case Routes.login:
-        return MaterialPageRoute(
-          builder: (_) {
-            return BlocProvider(
-              create: (_) => di<LoginBloc>(),
-              child:  LoginScreen(),
-            );
-          },
-        );
+        return _loginRoute();
+
 
       case Routes.verifyOtp:
         return MaterialPageRoute(
             builder: (_) => BlocProvider<OtpAuthCubit>(
                 create: (_) => OtpAuthCubit(), child: const OtpScreen()));
+
 
       case Routes.home:
         return MaterialPageRoute(
@@ -79,7 +78,36 @@ class AppRouter {
         );
 
       case Routes.layout:
+        return _layoutRoute();
+
+
+      case Routes.mealDetails:
+        final args = settings.arguments as Meal;
         return MaterialPageRoute(
+          builder: (_) => MealDetailsView(meal: args),
+        );
+
+
+      default:
+        return MaterialPageRoute(
+          builder: (_) => const OnboardingScreen(),
+        );
+    }
+  }
+
+  static MaterialPageRoute<dynamic> _loginRoute() {
+    return MaterialPageRoute(
+      builder: (_) {
+        return BlocProvider(
+          create: (_) => di<LoginBloc>(),
+          child: const LoginScreen(),
+        );
+      },
+    );
+  }
+
+  static MaterialPageRoute<dynamic> _layoutRoute() {
+     return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(
                 providers: [
 
@@ -96,18 +124,5 @@ class AppRouter {
                   )
                 ],
                 child: const LayoutView()));
-
-      case Routes.mealDetails:
-        final args = settings.arguments as Meal;
-        return MaterialPageRoute(
-          builder: (_) => MealDetailsView(meal: args),
-        );
-
-
-      default:
-        return MaterialPageRoute(
-          builder: (_) => const OnboardingScreen(),
-        );
-    }
   }
 }
