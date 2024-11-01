@@ -11,6 +11,8 @@ import 'package:meal_recommendations/features/layout/presentation/widgets/favori
 import 'package:meal_recommendations/features/layout/presentation/widgets/profile_tab_body.dart';
 import 'package:meal_recommendations/features/sidebar/presentation/screens/side_bar_screen.dart';
 
+import '../widgets/home_tab_body.dart';
+
 class LayoutView extends StatelessWidget {
   const LayoutView({super.key});
 

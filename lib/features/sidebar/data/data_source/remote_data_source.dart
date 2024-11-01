@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meal_recommendations/features/sidebar/data/models/header_model.dart';
 
 class RemoteSideBarDataSource {

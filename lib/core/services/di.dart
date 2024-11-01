@@ -68,8 +68,7 @@ void setupServiceLocator() {
   di.registerLazySingleton<MealBloc>(() => MealBloc(di<MealLocalRepository>(), di<MealRemoteRepository>()));
 
 
-  di.registerLazySingleton<LoginBloc>(() =>
-  (LoginBloc()));
+
   di.registerLazySingleton<SideBarBloc>(() =>
   (SideBarBloc(di())));
 

@@ -19,6 +19,7 @@ import '../../features/favourite/presentation/screens/favourite_screen.dart';
 import '../../features/home/businessLogic/meal_cubit.dart';
 import '../../features/home/data/data_source.dart';
 import '../../features/home/persentation/HomeScreen/home_screen.dart';
+import '../../features/sidebar/presentation/controller/bloc/side_bloc.dart';
 
 
 class AppRouter {
@@ -79,7 +80,11 @@ class AppRouter {
 
       case Routes.layout:
         return MaterialPageRoute(
-            builder: (_) => MultiBlocProvider(providers: [
+            builder: (_) => MultiBlocProvider(
+                providers: [
+
+                  BlocProvider(create: (context)=> SideBarBloc(di())),
+
                   BlocProvider<LayoutBloc>(
                     create: (_) => di.get<LayoutBloc>(),
 
