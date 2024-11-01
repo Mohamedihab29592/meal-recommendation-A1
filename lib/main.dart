@@ -1,3 +1,4 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,12 @@ void main() async {
   Bloc.observer = MyBlocObserver();
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  await Hive.initFlutter();
+
+ await Hive.initFlutter();
+ await Hive.openBox('appBox'); 
+ 
+  
+
   Hive.openBox('myFavMeals');
   Hive.registerAdapter(MealAdapter());
   Hive.registerAdapter(MealSummaryAdapter());
@@ -30,7 +36,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
 
   runApp(const MyApp());
   FlutterNativeSplash.remove();
@@ -50,9 +55,8 @@ class MyApp extends StatelessWidget {
             title: AppStrings.appTitle,
             debugShowCheckedModeBanner: false,
             theme: AppThemes.lightTheme,
-            initialRoute: FirebaseAuth.instance.currentUser == null
-                ? Routes.onBoarding
-                : Routes.layout,
+            initialRoute: Routes.splash,
+
           );
         });
   }
