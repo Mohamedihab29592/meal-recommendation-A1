@@ -21,6 +21,7 @@ import '../../features/auth/register/persentation/cubit/otp_auth_cubit.dart';
 import '../../features/favourite/presentation/screens/favourite_screen.dart';
 import '../../features/home/businessLogic/meal_cubit.dart';
 import '../../features/home/data/data_source.dart';
+import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/sidebar/presentation/controller/bloc/side_bloc.dart';
 
 
@@ -62,7 +63,7 @@ class AppRouter {
         );
       case Routes.profile:
         return MaterialPageRoute(
-          builder: (_) => const ProfileScreen(uid: 'ZZg8pccM5ZceMicpUTAFkvZADLT2'),
+          builder: (_) =>  const ProfileScreen(uid: 'ZZg8pccM5ZceMicpUTAFkvZADLT2'),
         );
       case Routes.settings:
         return MaterialPageRoute(

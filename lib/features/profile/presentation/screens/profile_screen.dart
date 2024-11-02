@@ -66,25 +66,7 @@ class ProfileScreenState extends State<ProfileScreen> {
           ProfileDataSourceImpl(FirebaseFirestore.instance))))
         ..add(FetchUserProfile(widget.uid)),
       child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                color: AppColors.primaryColor,
-                iconSize: 30,
-                onPressed: () {},
-                icon: const Icon(Icons.menu),
-              ),
-              const Icon(
-                Icons.notifications,
-                color: AppColors.primaryColor,
-                size: 30,
-              ),
-            ],
-          ),
-        ),
+
         backgroundColor: AppColors.scaffoldBackgroundLightColor,
         body: BlocBuilder<ProfileBloc, ProfileState>(
           builder: (context, state) {

@@ -17,8 +17,6 @@ import 'package:meal_recommendations/features/sidebar/data/data_source/remote_da
 import 'package:meal_recommendations/features/sidebar/data/repoImp/repo_imp.dart';
 import 'package:meal_recommendations/features/sidebar/domain/repo/sidebar_repo.dart';
 import 'package:meal_recommendations/features/sidebar/presentation/controller/bloc/side_bloc.dart';
-
-import '../../features/auth/Login_Screen/data/data_source/LoginDataSourceImpl.dart';
 import '../../features/auth/Login_Screen/data/repository/LoginRepositoryImpl.dart';
 import '../../features/auth/Login_Screen/domain/repositories/BaseLoginDataSource.dart';
 import '../../features/auth/Login_Screen/domain/repositories/BaseLoginRepository.dart';
@@ -35,7 +33,7 @@ void setupServiceLocator() {
       () => RemoteDataSourceFirebase());
   di.registerLazySingleton<ProfileDataSource>(
       () => ProfileDataSourceImpl(di<FirebaseFirestore>()));
-          ()=> RemoteDataSourceFirebase());
+          ()=> RemoteDataSourceFirebase();
   di.registerLazySingleton<RemoteSideBarDataSource>(
           ()=> RemoteSideBarDataSource());
 
@@ -62,7 +60,6 @@ void setupServiceLocator() {
           ()=> MealRemoteRepository()
   );
 
-  di.registerLazySingleton<BaseLoginDataSource>(() => LoginDataSourceImpl());
 
   di.registerLazySingleton<ProfileRepository>(
       () => ProfileRepositoryImpl(di<ProfileDataSource>()));

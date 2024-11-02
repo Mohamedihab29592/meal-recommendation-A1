@@ -8,6 +8,7 @@ import 'package:meal_recommendations/features/layout/presentation/blocs/layout_b
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_event.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_state.dart';
 import 'package:meal_recommendations/features/layout/presentation/widgets/custom_navigation_destination.dart';
+import 'package:meal_recommendations/features/profile/presentation/screens/profile_screen.dart';
 import 'package:meal_recommendations/features/sidebar/presentation/screens/side_bar_screen.dart';
 
 
@@ -25,15 +26,16 @@ class LayoutView extends StatelessWidget {
             builder: (context) {
               return IconButton(onPressed: (){
                 Scaffold.of(context).openDrawer();
-              }, icon:  Icon(Icons.menu),color: AppColors.primaryColor,);
+              }, icon:  const Icon(Icons.menu),color: AppColors.primaryColor,);
             }
           ),
         ),
-        drawer: SideMenu(),
+        drawer: const SideMenu(),
         body: [
           // (Don't use scaffold again in the following widgets)
           const HomeScreen(),
           const FavouriteScreen(),
+          const ProfileScreen(uid: 'ZZg8pccM5ZceMicpUTAFkvZADLT2'),
         ][state.bottomNavIndex],
         bottomNavigationBar: NavigationBar(
           backgroundColor: Colors.white,

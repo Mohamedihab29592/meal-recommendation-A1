@@ -40,9 +40,7 @@ class RegisterScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(height: screenHeight * 0.1),
-                      Container(
-                        child: Image.asset(Assets.AuthLogo, height: screenHeight * 0.09),
-                      ),
+                      Image.asset(Assets.AuthLogo, height: screenHeight * 0.09),
                       SizedBox(height: screenHeight * 0.05),
                       defaultFormField(
                         controller: nameController,
@@ -155,7 +153,7 @@ class RegisterScreen extends StatelessWidget {
                       BlocBuilder<UserBloc, UserState>(
                         builder: (context, state) {
                           if (state is UserLoadingState) {
-                            return CircularProgressIndicator(); // Show loading spinner during registration
+                            return const CircularProgressIndicator(); // Show loading spinner during registration
                           }
                           return SizedBox(
                             width: double.infinity,
@@ -203,7 +201,7 @@ class RegisterScreen extends StatelessWidget {
                             Navigator.pushReplacementNamed(context, Routes.layout);
                           }
                         },
-                        child: SizedBox.shrink(), // No need to return a widget here
+                        child: const SizedBox.shrink(), // No need to return a widget here
 
                       ),
 

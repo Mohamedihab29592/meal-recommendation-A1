@@ -15,6 +15,8 @@ import '../widgets/nav_button.dart';
 
 
 class SideMenu extends StatelessWidget {
+  const SideMenu({super.key});
+
   @override
   Widget build(BuildContext context) {
     // Get screen dimensions

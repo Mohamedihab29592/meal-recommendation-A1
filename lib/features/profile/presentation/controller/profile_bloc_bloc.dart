@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommendations/features/profile/domain/usecases/get_profile_use_case.dart';
 import 'package:meal_recommendations/features/profile/presentation/controller/profile_bloc_event.dart';
 import 'package:meal_recommendations/features/profile/presentation/controller/profile_bloc_state.dart';

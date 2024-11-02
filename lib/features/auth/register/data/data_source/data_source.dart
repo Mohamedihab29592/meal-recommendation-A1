@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../models/user_model.dart';
@@ -74,7 +75,9 @@ class RemoteDataSourceFirebase {
 
       await _firebaseFirestore.collection('users').doc(uid).set(model.toJson());
     } catch (error) {
-      print('Firestore user creation failed: $error');
+      if (kDebugMode) {
+        print('Firestore user creation failed: $error');
+      }
       throw Exception('Firestore user creation failed');
     }
   }
