@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommendations/core/themes/app_colors.dart';
 import 'package:meal_recommendations/core/utils/assets.dart';
+import 'package:meal_recommendations/features/favourite/presentation/screens/favourite_screen.dart';
 import 'package:meal_recommendations/features/home/persentation/HomeScreen/home_screen.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_bloc.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_event.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_state.dart';
 import 'package:meal_recommendations/features/layout/presentation/widgets/custom_navigation_destination.dart';
-import 'package:meal_recommendations/features/layout/presentation/widgets/favorites_tab_body.dart';
-import 'package:meal_recommendations/features/layout/presentation/widgets/profile_tab_body.dart';
 import 'package:meal_recommendations/features/sidebar/presentation/screens/side_bar_screen.dart';
 
-import '../widgets/home_tab_body.dart';
 
 class LayoutView extends StatelessWidget {
   const LayoutView({super.key});
@@ -34,9 +32,8 @@ class LayoutView extends StatelessWidget {
         drawer: SideMenu(),
         body: [
           // (Don't use scaffold again in the following widgets)
-          const HomeTabBody(),
-          const FavoritesTabBody(),
-          const ProfileTabBody(),
+          const HomeScreen(),
+          const FavouriteScreen(),
         ][state.bottomNavIndex],
         bottomNavigationBar: NavigationBar(
           backgroundColor: Colors.white,

@@ -29,9 +29,9 @@ dependencies:
 
   freezed_annotation: ^2.4.4
   flutter_otp_text_field: ^1.2.0
-    # Classes and helper functions that support JSON code generation via the `json_serializable` package.
+  # Classes and helper functions that support JSON code generation via the `json_serializable` package.
   json_annotation: ^4.9.0
-    # To load and cache network images.
+  # To load and cache network images.
   cached_network_image: ^3.4.1
   custom_rating_bar: ^3.0.0
 
@@ -78,6 +78,7 @@ flutter:
   assets:
     - assets/images/
     - assets/svgs/
+    - assets/icons/
 
   fonts:
     - family: Inter
