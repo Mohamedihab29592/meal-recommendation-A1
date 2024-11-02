@@ -1,5 +1,4 @@
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,13 +12,6 @@ import 'package:meal_recommendations/core/services/di.dart';
 import 'package:meal_recommendations/core/themes/app_themes.dart';
 import 'package:meal_recommendations/core/utils/functions/check_if_user_is_logged_in.dart';
 import 'package:meal_recommendations/core/utils/strings.dart';
-import 'package:meal_recommendations/features/auth/Login_Screen/presenation/controller/Login_bloc/bloc/Login%20BLoc.dart';
-import 'package:meal_recommendations/features/auth/register/persentation/controller/sign_up_bloc.dart';
-import 'package:meal_recommendations/features/auth/register/persentation/screens/register_screen.dart';
-import 'package:meal_recommendations/features/sidebar/presentation/screens/side_bar_screen.dart';
-import 'features/layout/presentation/blocs/layout_bloc.dart';
-import 'features/layout/presentation/views/layout_view.dart';
-import 'features/sidebar/presentation/controller/bloc/side_bloc.dart';
 import 'core/models/meal.dart';
 import 'firebase_options.dart';
 
@@ -45,7 +37,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await checkIfUserIsLoggedIn();
-x
+
 
   runApp(const MyApp());
   FlutterNativeSplash.remove();

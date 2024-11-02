@@ -19,7 +19,6 @@ import '../../features/auth/register/persentation/cubit/otp_auth_cubit.dart';
 import '../../features/favourite/presentation/screens/favourite_screen.dart';
 import '../../features/home/businessLogic/meal_cubit.dart';
 import '../../features/home/data/data_source.dart';
-import '../../features/home/persentation/HomeScreen/home_screen.dart';
 import '../../features/sidebar/presentation/controller/bloc/side_bloc.dart';
 
 
@@ -54,13 +53,6 @@ class AppRouter {
                 create: (_) => OtpAuthCubit(), child: const OtpScreen()));
 
 
-      case Routes.home:
-        return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                  create: (context) =>
-                      MealCubit(FirebaseService())..fetchMeals(),
-                  child: const HomeScreen(),
-                ));
 
       case Routes.favourite:
         return MaterialPageRoute(
