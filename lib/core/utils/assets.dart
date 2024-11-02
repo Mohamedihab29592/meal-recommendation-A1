@@ -100,5 +100,11 @@ class Assets {
   /// Assets for imagesSplash
   /// assets/images/splash_icon.png
   static const String imagesSplash = "assets/images/splash_icon.png";
+    /// Assets for editProfile
+  /// assets/images/editProfilepng
+  static const String editProfile = "assets/images/edit.png";
+   /// Assets for profileLogo
+  /// assets/images/profileLogo
+  static const String profileLogo = "assets/images/profile_logo.png";
 }
 

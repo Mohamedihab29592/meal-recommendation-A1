@@ -25,7 +25,6 @@ dependencies:
   get_it: ^8.0.0
   google_sign_in: ^6.2.1
   flutter_bloc: ^8.1.6
-
   freezed_annotation: ^2.4.4
   flutter_otp_text_field: ^1.2.0
   # Classes and helper functions that support JSON code generation via the `json_serializable` package.
@@ -33,14 +32,15 @@ dependencies:
   # To load and cache network images.
   cached_network_image: ^3.4.1
   custom_rating_bar: ^3.0.0
-
   flutter_secure_storage: ^9.2.2
   dartz: ^0.10.1
   flutter_native_splash: ^2.4.0
+  image_picker: ^1.1.2
+  firebase_storage: ^12.3.4
+  permission_handler: ^11.3.1
   cloud_firestore: ^5.4.4
   conditional_builder_null_safety: ^0.0.6
   shimmer: ^3.0.0
-
   flutter_rating_bar: ^4.0.1
   font_awesome_flutter: ^10.7.0
   hive: ^2.2.3

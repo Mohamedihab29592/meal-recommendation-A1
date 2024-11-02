@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:meal_recommendations/features/favourite/data/models/meal.dart';
 
@@ -21,7 +22,9 @@ class MealLocalRepository {
     try {
       await _mealBox.put(meal.id, meal);
     } catch (e) {
-      print('Error saving favorite: $e');
+      if (kDebugMode) {
+        print('Error saving favorite: $e');
+      }
     }
   }
 
@@ -29,7 +32,9 @@ class MealLocalRepository {
     try {
       await _mealBox.delete(id);
     } catch (e) {
-      print('Error removing favorite: $e');
+      if (kDebugMode) {
+        print('Error removing favorite: $e');
+      }
     }
   }
 

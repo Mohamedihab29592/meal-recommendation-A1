@@ -9,7 +9,7 @@ class NavButton extends StatelessWidget {
   final double iconSize;
   final double fontSize;
 
-  const NavButton({
+  const NavButton({super.key,
     required this.title,
     required this.icon,
     required this.isSelected,

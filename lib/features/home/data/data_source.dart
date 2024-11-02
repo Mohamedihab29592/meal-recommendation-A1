@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../../core/models/meal.dart';
 
@@ -15,7 +16,7 @@ class FirebaseService {
 
       return meals;
     } catch (e) {
-      print('Failed to fetch meals: $e');
+      debugPrint('Failed to fetch meals: $e');
       return [];
     }
   }

@@ -8,7 +8,7 @@ import '../../../domain/repo/sidebar_repo.dart';
 
 class SideBarBloc extends Bloc<SideBarEvent,SideBarStates>{
   final SidebarRepo repository;
-  var storage = FlutterSecureStorage();
+  var storage = const FlutterSecureStorage();
   String? image_path;
   String? name;
 

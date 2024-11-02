@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:meal_recommendations/features/home/data/local_data.dart';
 import 'package:meta/meta.dart';
 import '../../../../core/models/meal.dart';
@@ -60,10 +61,14 @@ class MealCubit extends Cubit<MealState> {
 
     if (snapshot.docs.isNotEmpty) {
       String docId = snapshot.docs.first.id;
-      print('Document ID for "$dishName": $docId');
+      if (kDebugMode) {
+        print('Document ID for "$dishName": $docId');
+      }
       return docId;
     } else {
-      print('No document found with the dish_name "$dishName"');
+      if (kDebugMode) {
+        print('No document found with the dish_name "$dishName"');
+      }
       return null;
     }
   }
@@ -75,11 +80,13 @@ class MealCubit extends Cubit<MealState> {
           .collection('meals')
           .doc(docId)
           .update({'is_favourite': !isFav})
-          .then((_) => print("Is Fav updated successfully"))
+          .then((_) => debugPrint("Is Fav updated successfully"))
           .catchError(
-              (error) => print("Failed to update is_favourite: $error"));
+              (error) => debugPrint("Failed to update is_favourite: $error"));
     } else {
-      print("Document ID not found for the dish: $dishName");
+      if (kDebugMode) {
+        print("Document ID not found for the dish: $dishName");
+      }
     }
   }
 
@@ -89,7 +96,7 @@ class MealCubit extends Cubit<MealState> {
       await updateIsFavInFireStore(meal.dishName ?? '', false);
       LocalData().addMealToFav(meal);
     } else {
-      print(
+      debugPrint(
           "Failed to add meal to favorites because it does not exist in FireStore");
     }
   }
@@ -100,7 +107,7 @@ class MealCubit extends Cubit<MealState> {
       await updateIsFavInFireStore(meal.dishName ?? '', true);
       LocalData().removeFavMeal(meal);
     } else {
-      print(
+      debugPrint(
           "Failed to add meal to favorites because it does not exist in FireStore");
     }
   }

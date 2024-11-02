@@ -102,19 +102,16 @@ class _OtpScreenState extends State<OtpScreen> {
         if (state is OtpAuthLoading) {
           _showMyDialog(context);
         } else if (state is OtpAuthSuccess) {
-          print("OTP verified successfully");
           Navigator.pushReplacementNamed(context, '/home');
         } else if (state is OtpAuthFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('OTP verification failed')),
           );
-          print("OTP verification failed");
         }
 
         return GestureDetector(
           onTap: isButtonEnabled
               ? () {
-                  print("Continue button pressed. OTP: $otpCode");
 
                   context.read<OtpAuthCubit>().verifyOtp('', otpCode);
 
