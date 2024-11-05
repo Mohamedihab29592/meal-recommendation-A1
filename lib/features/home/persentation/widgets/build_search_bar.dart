@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../../core/themes/app_colors.dart';
 import '../../../../../core/themes/app_text_styles.dart';
-import '../../../businessLogic/meal_cubit.dart';
+import '../businessLogic/meal_cubit.dart';
 import 'filter_bottom_sheet.dart';
 
 class BuildSearchBar extends StatelessWidget {

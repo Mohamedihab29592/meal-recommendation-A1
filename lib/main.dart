@@ -15,18 +15,23 @@ import 'firebase_options.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+
+  // Register all adapters
+  Hive.registerAdapter(MealAdapter());
+  Hive.registerAdapter(MealSummaryAdapter());
+  Hive.registerAdapter(MealNutritionAdapter());
+  Hive.registerAdapter(MealIngredientAdapter());
+
+  await Hive.openBox('myFavMeals');
   setupServiceLocator();
   Firebase.initializeApp();
   Bloc.observer = MyBlocObserver();
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  await Hive.initFlutter();
-  Hive.openBox('myFavMeals');
-  Hive.registerAdapter(MealAdapter());
-  Hive.registerAdapter(MealSummaryAdapter());
-  Hive.registerAdapter(MealNutritionAdapter());
-  Hive.registerAdapter(MealIngredientAdapter());
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -45,14 +50,11 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (_, child) {
           return MaterialApp(
-            onGenerateRoute: AppRouter.onGenerateRoute,
-            title: AppStrings.appTitle,
-            debugShowCheckedModeBanner: false,
-            theme: AppThemes.lightTheme,
-            initialRoute: FirebaseAuth.instance.currentUser == null
-                ? Routes.onBoarding
-                : Routes.layout,
-          );
+              onGenerateRoute: AppRouter.onGenerateRoute,
+              title: AppStrings.appTitle,
+              debugShowCheckedModeBanner: false,
+              theme: AppThemes.lightTheme,
+              initialRoute: Routes.layout);
         });
   }
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommendations/core/themes/app_text_styles.dart';
-import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/build_meal_card.dart';
 import '../../../../../core/models/meal.dart';
 import '../../../../../core/themes/app_colors.dart';
-import '../../../businessLogic/meal_cubit.dart';
+import '../businessLogic/meal_cubit.dart';
+import 'build_meal_card.dart';
 
 class RecipeCard extends StatefulWidget {
   const RecipeCard({super.key});

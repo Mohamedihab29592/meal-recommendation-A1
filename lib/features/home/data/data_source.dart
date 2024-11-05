@@ -8,7 +8,6 @@ class FirebaseService {
   Future<List<Meal>> fetchMeals() async {
     try {
       QuerySnapshot snapshot = await _fireStore.collection('meals').get();
-
       List<Meal> meals = snapshot.docs.map((doc) {
         return Meal.fromJson(doc.data() as Map<String, dynamic>);
       }).toList();

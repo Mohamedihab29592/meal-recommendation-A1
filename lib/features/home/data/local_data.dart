@@ -11,11 +11,12 @@ class LocalData {
 
   void removeFavMeal(Meal meal) {
     box.delete(meal);
+
     print('Meal deleted successfully');
     print(box.length);
   }
 
-  void removeAllMeals(Meal meal) {
+  void removeAllMeals() {
     box.clear();
     print('All meals deleted successfully');
     print(box.length);

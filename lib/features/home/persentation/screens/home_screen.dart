@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:meal_recommendations/core/themes/app_colors.dart';
-import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/build_ingredient_button.dart';
-import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/build_search_bar.dart';
-import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/build_top_bar.dart';
-import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/recipe_card.dart';
-import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/filter_bottom_sheet.dart';
+import '../widgets/build_ingredient_button.dart';
+import '../widgets/build_search_bar.dart';
+import '../widgets/build_top_bar.dart';
+import '../widgets/filter_bottom_sheet.dart';
+import '../widgets/recipe_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
