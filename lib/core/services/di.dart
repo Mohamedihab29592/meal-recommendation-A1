@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:meal_recommendations/features/auth/Login_Screen/data/data_source/LoginDataSourceImpl.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_bloc.dart';
@@ -11,6 +12,7 @@ import 'package:meal_recommendations/features/profile/data/profile_repository_im
 import 'package:meal_recommendations/features/profile/data/remote/profile_data_source.dart';
 import 'package:meal_recommendations/features/profile/data/remote/profile_data_source_impl.dart';
 import 'package:meal_recommendations/features/profile/domain/profile_repository.dart';
+import 'package:meal_recommendations/features/profile/domain/usecases/change_password_use_case.dart';
 import 'package:meal_recommendations/features/profile/domain/usecases/get_profile_use_case.dart';
 import 'package:meal_recommendations/features/profile/presentation/controller/profile_bloc_bloc.dart';
 import 'package:meal_recommendations/features/sidebar/data/data_source/remote_data_source.dart';
@@ -31,8 +33,7 @@ void setupServiceLocator() {
   //data source
   di.registerLazySingleton<RemoteDataSourceFirebase>(
       () => RemoteDataSourceFirebase());
-  di.registerLazySingleton<ProfileDataSource>(
-      () => ProfileDataSourceImpl(di<FirebaseFirestore>()));
+
           ()=> RemoteDataSourceFirebase();
   di.registerLazySingleton<RemoteSideBarDataSource>(
           ()=> RemoteSideBarDataSource());
@@ -61,24 +62,52 @@ void setupServiceLocator() {
   );
 
 
-  di.registerLazySingleton<ProfileRepository>(
-      () => ProfileRepositoryImpl(di<ProfileDataSource>()));
+
   //  use cases
 
-  di.registerLazySingleton<GetUserProfileUseCase>(
-      () => GetUserProfileUseCase(di<ProfileRepository>()));
+// Register FirebaseAuth
+di.registerLazySingleton<FirebaseAuth>(
+  () => FirebaseAuth.instance,
+);
+
+// Register ChangePasswordUseCase
+di.registerLazySingleton<ChangePasswordUseCase>(
+  () => ChangePasswordUseCase(di<FirebaseAuth>()),
+);
+
+// Register ProfileDataSourceImpl
+di.registerLazySingleton<ProfileDataSource>(
+  () => ProfileDataSourceImpl(FirebaseFirestore.instance, di<ChangePasswordUseCase>()),
+);
+
+// Register ProfileRepositoryImpl
+di.registerLazySingleton<ProfileRepository>(
+  () => ProfileRepositoryImpl(di<ProfileDataSource>()),
+);
+
+// Register GetUserProfileUseCase
+di.registerLazySingleton<GetUserProfileUseCase>(
+  () => GetUserProfileUseCase(di<ProfileRepository>()),
+);
+
+// Register ProfileBloc
+di.registerLazySingleton<ProfileBloc>(
+  () => ProfileBloc(di<GetUserProfileUseCase>(), di<ChangePasswordUseCase>()),
+);
+
 
 
   //  blocs or cubits
   _setupForBlocs();
   di.registerLazySingleton<UserBloc>(() => UserBloc(di()));
 
-  di.registerLazySingleton<ProfileBloc>(
-      () => ProfileBloc(di<GetUserProfileUseCase>()));
+
   di.registerLazySingleton<LoginBloc>(
       () => (LoginBloc(di.get<BaseLoginRepository>())));
   // note :: here meal bloc of favourite screen
   di.registerLazySingleton<MealBloc>(() => MealBloc(di<MealLocalRepository>(), di<MealRemoteRepository>()));
+
+
 
 
 

@@ -10,6 +10,9 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<Map<String, dynamic>> getUserProfile(String uid) {
     return dataSource.getUserProfile(uid);
   }
+
+  @override
+  Future<void> changePassword(String currentPassword, String newPassword) {
+    return dataSource.changePassword(currentPassword, newPassword);
+  }
 }
-
-
