@@ -12,7 +12,7 @@ import '../controller/user_states.dart';
 import '../widgets/overlay.dart';
 
 class RegisterScreen extends StatelessWidget {
-  var formkey = GlobalKey();
+  var formkey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
