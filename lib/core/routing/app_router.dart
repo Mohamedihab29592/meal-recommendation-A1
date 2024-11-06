@@ -20,6 +20,7 @@ import '../../features/favourite/presentation/screens/favourite_screen.dart';
 import '../../features/home/businessLogic/meal_cubit.dart';
 import '../../features/home/data/data_source.dart';
 import '../../features/home/persentation/HomeScreen/home_screen.dart';
+import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/sidebar/presentation/controller/bloc/side_bloc.dart';
 
 
@@ -46,7 +47,7 @@ class AppRouter {
           builder: (_) {
             return BlocProvider(
               create: (_) => di<LoginBloc>(),
-              child:  LoginScreen(),
+              child:  const LoginScreen(),
             );
           },
         );
