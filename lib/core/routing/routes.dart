@@ -10,4 +10,6 @@ class Routes {
   static const String settings = '/settings';
   static const String layout = '/layout';
   static const String mealDetails = '/mealDetails';
+  static const String suggestedMeal = '/suggestedMeal';
+
 }

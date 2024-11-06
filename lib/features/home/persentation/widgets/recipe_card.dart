@@ -26,7 +26,8 @@ class _RecipeCardState extends State<RecipeCard> {
               backgroundColor: AppColors.primaryColor,
               content: Text(
                 state.error,
-                style: AppTextStyles.font16Regular.copyWith(color: Colors.white),
+                style:
+                    AppTextStyles.font16Regular.copyWith(color: Colors.white),
               ),
             ),
           );
@@ -51,7 +52,7 @@ class _RecipeCardState extends State<RecipeCard> {
   Widget _buildMealList(
       BuildContext context, List<Meal> meals, MediaQueryData mediaQuery) {
     return ListView.separated(
-      physics: const AlwaysScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       separatorBuilder: (context, index) =>
           SizedBox(height: mediaQuery.size.height * 0.02),
       itemCount: meals.length,
@@ -61,5 +62,4 @@ class _RecipeCardState extends State<RecipeCard> {
       },
     );
   }
-
 }

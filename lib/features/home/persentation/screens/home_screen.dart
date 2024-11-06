@@ -66,7 +66,7 @@ class HomeScreen extends StatelessWidget {
   Widget _buildRecipeList(MediaQueryData mediaQuery) {
     return SizedBox(
       width: mediaQuery.size.width,
-      height: mediaQuery.size.height * 0.5,
+      height: mediaQuery.size.height ,
       child: const RecipeCard(),
     );
   }
