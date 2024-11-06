@@ -1,4 +1,3 @@
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,10 +22,8 @@ void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
- await Hive.initFlutter();
- await Hive.openBox('appBox'); 
- 
-  
+  await Hive.initFlutter();
+  await Hive.openBox('appBox');
 
   Hive.openBox('myFavMeals');
   Hive.registerAdapter(MealAdapter());
@@ -38,7 +35,6 @@ void main() async {
   );
   await checkIfUserIsLoggedIn();
 
-
   runApp(const MyApp());
   FlutterNativeSplash.remove();
 }
@@ -48,7 +44,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return ScreenUtilInit(
         minTextAdapt: true,
         splitScreenMode: true,
@@ -58,9 +53,7 @@ class MyApp extends StatelessWidget {
             title: AppStrings.appTitle,
             debugShowCheckedModeBanner: false,
             theme: AppThemes.lightTheme,
-
-            initialRoute: Routes.splash,
-
+            initialRoute: Routes.mealSuggestion,
           );
         });
   }

@@ -4,6 +4,8 @@ import 'package:meal_recommendations/core/models/meal.dart';
 import 'package:meal_recommendations/core/routing/routes.dart';
 import 'package:meal_recommendations/core/services/di.dart';
 import 'package:meal_recommendations/core/utils/functions/check_if_user_is_logged_in.dart';
+import 'package:meal_recommendations/features/GeminiAi/Presentation/Screens/gemini_screen.dart';
+import 'package:meal_recommendations/features/GeminiAi/Presentation/cubit/suggested_recipe_cubit.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_bloc.dart';
 import 'package:meal_recommendations/features/layout/presentation/views/layout_view.dart';
 import 'package:meal_recommendations/features/meal_details/presentation/views/meal_details_view.dart';
@@ -17,13 +19,11 @@ import '../../features/auth/Login_Screen/presenation/screens/LoginScreen.dart';
 import '../../features/auth/register/persentation/controller/sign_up_bloc.dart';
 import '../../features/auth/register/persentation/cubit/otp_auth_cubit.dart';
 
-
 import '../../features/favourite/presentation/screens/favourite_screen.dart';
 import '../../features/home/businessLogic/meal_cubit.dart';
 import '../../features/home/data/data_source.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/sidebar/presentation/controller/bloc/side_bloc.dart';
-
 
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -49,13 +49,10 @@ class AppRouter {
       case Routes.login:
         return _loginRoute();
 
-
       case Routes.verifyOtp:
         return MaterialPageRoute(
             builder: (_) => BlocProvider<OtpAuthCubit>(
                 create: (_) => OtpAuthCubit(), child: const OtpScreen()));
-
-
 
       case Routes.favourite:
         return MaterialPageRoute(
@@ -63,7 +60,8 @@ class AppRouter {
         );
       case Routes.profile:
         return MaterialPageRoute(
-          builder: (_) =>  const ProfileScreen(uid: 'ZZg8pccM5ZceMicpUTAFkvZADLT2'),
+          builder: (_) =>
+              const ProfileScreen(uid: 'ZZg8pccM5ZceMicpUTAFkvZADLT2'),
         );
       case Routes.settings:
         return MaterialPageRoute(
@@ -73,13 +71,16 @@ class AppRouter {
       case Routes.layout:
         return _layoutRoute();
 
-
       case Routes.mealDetails:
         final args = settings.arguments as Meal;
         return MaterialPageRoute(
           builder: (_) => MealDetailsView(meal: args),
         );
-
+      case Routes.mealSuggestion:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider<SuggestedRecipeCubit>(
+                create: (_) => SuggestedRecipeCubit(),
+                child: MealSuggestionScreen()));
 
       default:
         return MaterialPageRoute(
@@ -100,22 +101,15 @@ class AppRouter {
   }
 
   static MaterialPageRoute<dynamic> _layoutRoute() {
-     return MaterialPageRoute(
-            builder: (_) => MultiBlocProvider(
-                providers: [
-
-                  BlocProvider(create: (context)=> SideBarBloc(di())),
-
-                  BlocProvider<LayoutBloc>(
-                    create: (_) => di.get<LayoutBloc>(),
-
-                  ),
-                  BlocProvider(
-                    create: (context) =>
-                        MealCubit(FirebaseService())..fetchMeals(),
-
-                  )
-                ],
-                child: const LayoutView()));
+    return MaterialPageRoute(
+        builder: (_) => MultiBlocProvider(providers: [
+              BlocProvider(create: (context) => SideBarBloc(di())),
+              BlocProvider<LayoutBloc>(
+                create: (_) => di.get<LayoutBloc>(),
+              ),
+              BlocProvider(
+                create: (context) => MealCubit(FirebaseService())..fetchMeals(),
+              )
+            ], child: const LayoutView()));
   }
 }
