@@ -16,3 +16,13 @@ class MenuSelectedState extends SideBarStates {
 
   MenuSelectedState(this.selectedMenu);
 }
+
+class SignOutInProgress extends SideBarStates {}
+
+class SignOutSuccess extends SideBarStates {}
+
+class SignOutFailure extends SideBarStates {
+  final String error;
+
+  SignOutFailure(this.error);
+}

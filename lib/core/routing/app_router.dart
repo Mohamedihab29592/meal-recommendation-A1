@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meal_recommendations/core/helpers/cache_keys.dart';
 import 'package:meal_recommendations/core/models/meal.dart';
 import 'package:meal_recommendations/core/routing/routes.dart';
 import 'package:meal_recommendations/core/services/di.dart';
@@ -8,6 +9,7 @@ import 'package:meal_recommendations/features/layout/presentation/views/layout_v
 import 'package:meal_recommendations/features/meal_details/presentation/views/meal_details_view.dart';
 import 'package:meal_recommendations/features/auth/register/persentation/screens/otp_screen.dart';
 import 'package:meal_recommendations/features/auth/register/persentation/screens/register_screen.dart';
+import 'package:meal_recommendations/features/profile/presentation/screens/profile_screen.dart';
 import 'package:meal_recommendations/features/splash_boarding/screens/on_boarding_screen.dart';
 import 'package:meal_recommendations/features/splash_boarding/screens/splash_screen.dart';
 import '../../features/auth/Login_Screen/presenation/controller/Login_bloc/bloc/Login BLoc.dart';
@@ -19,6 +21,7 @@ import '../../features/favourite/presentation/screens/favourite_screen.dart';
 import '../../features/home/businessLogic/meal_cubit.dart';
 import '../../features/home/data/data_source.dart';
 import '../../features/home/persentation/HomeScreen/home_screen.dart';
+import '../../features/profile/presentation/controller/profile_bloc_bloc.dart';
 import '../../features/sidebar/presentation/controller/bloc/side_bloc.dart';
 
 
@@ -55,7 +58,7 @@ class AppRouter {
             builder: (_) => BlocProvider<OtpAuthCubit>(
                 create: (_) => OtpAuthCubit(), child: const OtpScreen()));
 
-      case Routes:
+      case Routes.home:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                   create: (context) =>
@@ -70,7 +73,9 @@ class AppRouter {
 
       case Routes.profile:
         return MaterialPageRoute(
-          builder: (_) => const Placeholder(),
+          builder: (_) => BlocProvider(create: (context)=> di<ProfileBloc>(),
+            child: ProfileScreen(uid: "ZZg8pccM5ZceMicpUTAFkvZADLT2"),
+          ),
         );
 
       case Routes.settings:
