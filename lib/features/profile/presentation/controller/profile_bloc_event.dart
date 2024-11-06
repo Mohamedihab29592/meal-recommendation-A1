@@ -6,4 +6,10 @@ class FetchUserProfile extends ProfileEvent {
   FetchUserProfile(this.uid);
 }
 
+class ChangePassword extends ProfileEvent {
+  final String currentPassword;
+  final String newPassword;
+
+  ChangePassword(this.currentPassword, this.newPassword);
+}
 
