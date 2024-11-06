@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommendations/core/themes/app_colors.dart';
@@ -26,7 +27,7 @@ class LayoutView extends StatelessWidget {
           // (Don't use scaffold again in the following widgets)
           const HomeScreen(),
           const FavouriteScreen(),
-          const ProfileScreen(uid: 'ZZg8pccM5ZceMicpUTAFkvZADLT2'),
+           ProfileScreen(uid: FirebaseAuth.instance.currentUser!.uid),
         ][state.bottomNavIndex],
         bottomNavigationBar: NavigationBar(
           backgroundColor: Colors.white,

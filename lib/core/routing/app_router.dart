@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommendations/core/models/meal.dart';
@@ -70,7 +71,8 @@ class AppRouter {
 
       case Routes.profile:
         return MaterialPageRoute(
-          builder: (_) => const Placeholder(),
+
+          builder: (_) =>   ProfileScreen(uid: FirebaseAuth.instance.currentUser!.uid),
         );
 
       case Routes.settings:
