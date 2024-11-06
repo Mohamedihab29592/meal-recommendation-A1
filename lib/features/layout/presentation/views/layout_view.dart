@@ -22,15 +22,6 @@ class LayoutView extends StatelessWidget {
       buildWhen: (previous, current) =>
           previous.bottomNavIndex != current.bottomNavIndex,
       builder: (context, state) => Scaffold(
-        appBar: AppBar(
-          leading: Builder(
-            builder: (context) {
-              return IconButton(onPressed: (){
-                Scaffold.of(context).openDrawer();
-              }, icon:  const Icon(Icons.menu),color: AppColors.primaryColor,);
-            }
-          ),
-        ),
         drawer: const SideMenu(),
         body: [
           // (Don't use scaffold again in the following widgets)

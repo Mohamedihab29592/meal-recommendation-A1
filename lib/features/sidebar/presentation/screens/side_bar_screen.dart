@@ -43,7 +43,7 @@ class SideMenu extends StatelessWidget {
               children: [
                 // Header
                 ConditionalBuilder(
-                  condition: state is! LoadUserDataState,
+                  condition:  bloc.name != null,
                   builder: (context) => Container(
                     height: screenHeight * 0.25, // 25% of screen height for header
                     color: AppColors.primaryColor,
@@ -56,10 +56,10 @@ class SideMenu extends StatelessWidget {
                         CircleAvatar(
                           radius: avatarRadius,
                           backgroundColor: Colors.grey[300],
-                          backgroundImage: bloc.image_path !=null
-                              ? NetworkImage("${bloc.image_path}")
+                          backgroundImage: bloc.imagePath !=null
+                              ? NetworkImage("${bloc.imagePath}")
                               : null,
-                          child: bloc.image_path == null
+                          child: bloc.imagePath == null
                               ? Icon(Icons.person, size: iconSize, color: Colors.white)
                               : null,
                         ),
@@ -76,17 +76,25 @@ class SideMenu extends StatelessWidget {
                     ),
                   ),
                   fallback: (context) => Shimmer.fromColors(
-                    baseColor: Colors.grey.shade300,
+                    baseColor: Colors.grey.shade600 ,
                     highlightColor: Colors.grey.shade100,
                     enabled: true,
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          radius: avatarRadius,
-                        ),
-                        SizedBox(width: padding,),
-                        SizedBox(height: fontSize,),
-                      ],
+                    child: Container(
+                      height: screenHeight * 0.25, // 25% of screen height for header
+                      color: AppColors.primaryColor,
+                      padding:  EdgeInsets.symmetric(
+                      vertical: padding,
+                      horizontal: padding,
+                    ),
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            radius: avatarRadius,
+                          ),
+                          SizedBox(width: padding,),
+                          SizedBox(height: fontSize,),
+                        ],
+                      ),
                     ),
 
                   ),

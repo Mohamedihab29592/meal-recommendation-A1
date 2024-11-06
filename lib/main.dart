@@ -10,8 +10,8 @@ import 'package:meal_recommendations/core/routing/app_router.dart';
 import 'package:meal_recommendations/core/routing/routes.dart';
 import 'package:meal_recommendations/core/services/di.dart';
 import 'package:meal_recommendations/core/themes/app_themes.dart';
-import 'package:meal_recommendations/core/utils/functions/check_if_user_is_logged_in.dart';
 import 'package:meal_recommendations/core/utils/strings.dart';
+import 'core/utils/functions/check_if_user_is_logged_in.dart';
 import 'core/models/meal.dart';
 import 'firebase_options.dart';
 import 'package:device_preview/device_preview.dart';
@@ -35,6 +35,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   await checkIfUserIsLoggedIn();
 
   runApp(const MyApp());
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
   
     return DevicePreview(
      enabled: !kReleaseMode,
