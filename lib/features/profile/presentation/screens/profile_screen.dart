@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:meal_recommendations/core/themes/app_colors.dart';
 import 'package:meal_recommendations/features/profile/data/profile_repository_impl.dart';
+import 'package:meal_recommendations/features/profile/domain/usecases/change_password_use_case.dart';
 import 'package:meal_recommendations/features/profile/domain/usecases/get_profile_use_case.dart';
 import 'package:meal_recommendations/features/profile/presentation/controller/profile_bloc_bloc.dart';
 import 'package:meal_recommendations/features/profile/presentation/controller/profile_bloc_event.dart';
@@ -61,11 +63,18 @@ class ProfileScreenState extends State<ProfileScreen> {
     final screenSize = MediaQuery.of(context).size;
     final double padding = screenSize.width * 0.06;
 
-    return BlocProvider(
-      create: (_) => ProfileBloc(GetUserProfileUseCase(ProfileRepositoryImpl(
-          ProfileDataSourceImpl(FirebaseFirestore.instance))))
-        ..add(FetchUserProfile(widget.uid)),
-      child: Scaffold(
+     return BlocProvider(
+    create: (_) {
+      final firestore = FirebaseFirestore.instance; 
+      final auth = FirebaseAuth.instance;
+      final profileDataSource = ProfileDataSourceImpl(firestore, ChangePasswordUseCase(auth));
+      final profileRepository = ProfileRepositoryImpl(profileDataSource);
+      final getUserProfileUseCase = GetUserProfileUseCase(profileRepository);
+
+      return ProfileBloc(getUserProfileUseCase, ChangePasswordUseCase(auth))
+        ..add(FetchUserProfile(widget.uid));
+    },
+    child: Scaffold(
 
         backgroundColor: AppColors.scaffoldBackgroundLightColor,
         body: BlocBuilder<ProfileBloc, ProfileState>(

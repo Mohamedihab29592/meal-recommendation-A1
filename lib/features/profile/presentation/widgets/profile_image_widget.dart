@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:meal_recommendations/core/themes/app_colors.dart';
 import 'package:meal_recommendations/core/utils/assets.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -12,22 +13,23 @@ class ProfileImageWidget extends StatefulWidget {
   final String uid;
   final String? initialImageUrl;
   final ValueChanged<String?> onImageUrlChanged;
-  final VoidCallback onEditTapped; 
+  final VoidCallback onEditTapped;
 
   const ProfileImageWidget({
     super.key,
     required this.uid,
     this.initialImageUrl,
     required this.onImageUrlChanged,
-    required this.onEditTapped, 
+    required this.onEditTapped,
   });
 
   @override
-  ProfileImageWidgetState createState() => ProfileImageWidgetState(); 
+  ProfileImageWidgetState createState() => ProfileImageWidgetState();
 }
 
 class ProfileImageWidgetState extends State<ProfileImageWidget> {
   late String? _profileImageUrl;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -36,7 +38,9 @@ class ProfileImageWidgetState extends State<ProfileImageWidget> {
   }
 
   ImageProvider _getProfileImage() {
-    if (_profileImageUrl != null && _profileImageUrl!.isNotEmpty) {
+    if (_isLoading) {
+      return AssetImage('assets/images/loading_placeholder.png');
+    } else if (_profileImageUrl != null && _profileImageUrl!.isNotEmpty) {
       return NetworkImage(_profileImageUrl!);
     } else {
       return const NetworkImage(
@@ -45,6 +49,10 @@ class ProfileImageWidgetState extends State<ProfileImageWidget> {
   }
 
   Future<void> _uploadImageToFirebase(XFile imageFile) async {
+    setState(() {
+      _isLoading = true;
+    });
+
     try {
       // Upload image to Firebase Storage
       final storageRef = FirebaseStorage.instance
@@ -64,6 +72,7 @@ class ProfileImageWidgetState extends State<ProfileImageWidget> {
       // Update the image URL in the widget
       setState(() {
         _profileImageUrl = downloadUrl;
+        _isLoading = false;
       });
       widget.onImageUrlChanged(downloadUrl);
 
@@ -71,6 +80,9 @@ class ProfileImageWidgetState extends State<ProfileImageWidget> {
         const SnackBar(content: Text("Profile image updated successfully.")),
       );
     } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Failed to upload image: $e")),
       );
@@ -103,22 +115,32 @@ class ProfileImageWidgetState extends State<ProfileImageWidget> {
         height: avatarSize,
         child: Stack(
           children: [
-            CircleAvatar(
-              radius: avatarSize / 2,
-              backgroundImage: _getProfileImage(),
-              onBackgroundImageError: (error, stackTrace) {
-                setState(() {
-                  _profileImageUrl = null;
-                });
-              },
-            ),
+            _isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(
+                    backgroundColor: Colors.black,
+                  ))
+                : CircleAvatar(
+                    backgroundColor: AppColors.scaffoldBackgroundLightColor,
+                    radius: avatarSize / 2,
+                    backgroundImage: _getProfileImage(),
+                    onBackgroundImageError: (error, stackTrace) {
+                      setState(() {
+                        _profileImageUrl = null;
+                      });
+                    },
+                  ),
+            if (_isLoading)
+              const Center(
+                child: CircularProgressIndicator(),
+              ),
             Positioned(
               bottom: 0,
               right: 0,
               child: InkWell(
                 onTap: () {
-                  widget.onEditTapped(); 
-                  _pickImage(); 
+                  widget.onEditTapped();
+                  _pickImage();
                 },
                 child: Container(
                   width: iconButtonSize,
