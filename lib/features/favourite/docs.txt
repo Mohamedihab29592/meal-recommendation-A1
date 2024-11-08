@@ -1,0 +1,53 @@
+
+Favorite Meals Feature
+
+Feature Overview:
+The favorite meals feature allows users to:
+- View their list of favorite meals
+- Remove meals from their favorites
+
+
+The feature uses:
+- Hive for local data storage
+- Bloc for state management
+- Repository pattern for data abstraction
+
+Project Structure:
+The project is organized into different layers:
+1. core/
+   - models/           # Contains the Meal model
+   - repositories/     # Contains the FavoriteRepository
+   - blocs/            # Contains the FavoriteBloc, events, and states
+2. ui/
+   - favorite_screen.dart  # Screen to display favorite meals
+   - meal_card.dart        # Card widget to display each meal
+
+
+Core Meal Model (meal.dart):
+- The Meal model defines the properties of a meal such as dishName, name, ingredients, cook time, etc.
+- It is annotated with HiveType to store the data in Hive.
+
+Favorite Repository (favorite_repository.dart):
+- The repository abstracts the data operations related to favorites (fetch , remove).
+- It uses the Hive box to store the favorite meals.
+
+Favorite Bloc (favorite_bloc.dart):
+- The FavoriteBloc handles three main events: FetchFavorites, RemoveFavorite.
+- It listens to these events, interacts with the repository, and emits corresponding states.
+
+Favorite Events (favorite_event.dart):
+- FetchFavorites: Event to fetch all favorite meals.
+- RemoveFavorite: Event to remove a meal from the favorites.
+
+
+Favorite States (favorite_state.dart):
+- FavoriteInitial: Initial state when the app is loading.
+- FavoriteLoading: State when data is being loaded.
+- FavoriteLoaded: State when data has been successfully loaded.
+- FavoriteError: State when there is an error.
+
+UI Implementation:
+1. Meal Card (meal_card.dart): Displays meal details and allows toggling the favorite status.
+2. Favorite Screen (favorite_screen.dart): Displays the list of favorite meals and listens to changes in the state.
+
+

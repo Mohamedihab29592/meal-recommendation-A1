@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommendations/core/models/meal.dart';
 import 'package:meal_recommendations/core/routing/routes.dart';
 import 'package:meal_recommendations/core/services/di.dart';
+import 'package:meal_recommendations/features/favourite/presentation/controller/favorite_bloc.dart';
+import 'package:meal_recommendations/features/favourite/presentation/controller/favorite_state.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_bloc.dart';
 import 'package:meal_recommendations/features/layout/presentation/views/layout_view.dart';
 import 'package:meal_recommendations/features/meal_details/presentation/views/meal_details_view.dart';
@@ -14,7 +16,7 @@ import '../../features/auth/Login_Screen/presenation/controller/Login_bloc/bloc/
 import '../../features/auth/Login_Screen/presenation/screens/LoginScreen.dart';
 import '../../features/auth/register/persentation/controller/sign_up_bloc.dart';
 import '../../features/auth/register/persentation/cubit/otp_auth_cubit.dart';
-import '../../features/favourite/presentation/screens/favourite_screen.dart';
+import '../../features/favourite/presentation/screens/favorite_screen.dart';
 import '../../features/home/businessLogic/meal_cubit.dart';
 import '../../features/home/data/data_source.dart';
 import '../../features/home/persentation/HomeScreen/home_screen.dart';
@@ -58,7 +60,11 @@ class AppRouter {
 
       case Routes.favourite:
         return MaterialPageRoute(
-          builder: (_) => const FavouriteScreen(),
+          builder: (_) => BlocProvider(
+            create: (context) => di.get<FavoriteBloc>(),
+            child:  const FavoriteScreen(),
+          ),
+
         );
 
       case Routes.profile:
@@ -82,7 +88,15 @@ class AppRouter {
                     create: (context) =>
                         MealCubit(FirebaseService())..fetchMeals(),
 
-                  )
+                  ),
+
+              BlocProvider(
+                create: (context) => di.get<FavoriteBloc>(),
+
+                child: const FavoriteScreen(),
+              ),
+
+
                 ],
                 child: const LayoutView()));
 

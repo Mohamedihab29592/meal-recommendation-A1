@@ -1,5 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:meal_recommendations/core/models/meal.dart';
+import 'package:meal_recommendations/features/favourite/data/repository/favourite_repository.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_bloc.dart';
 import 'package:meal_recommendations/features/auth/register/data/data_source/data_source.dart';
 import 'package:meal_recommendations/features/auth/register/data/repo/repo.dart';
@@ -11,13 +15,11 @@ import '../../features/auth/Login_Screen/data/data_source/LoginDataSourceImpl.da
 import '../../features/auth/Login_Screen/data/repository/LoginRepositoryImpl.dart';
 import '../../features/auth/Login_Screen/domain/repositories/BaseLoginDataSource.dart';
 import '../../features/auth/Login_Screen/domain/repositories/BaseLoginRepository.dart';
-import '../../features/favourite/data/repository/local/meal_local_repository.dart';
-import '../../features/favourite/data/repository/remote/meal_remote_repository.dart';
-import '../../features/favourite/presentation/controller/fav_meal_bloc.dart';
+import '../../features/favourite/presentation/controller/favorite_bloc.dart';
 
 final GetIt di = GetIt.instance;
 
-void setupServiceLocator() {
+void setupServiceLocator()async {
 
   //data source
   di.registerLazySingleton<RemoteDataSourceFirebase>(
@@ -35,19 +37,6 @@ void setupServiceLocator() {
         () => LoginRepositoryImpl(loginDataSource: di<BaseLoginDataSource>()),
   );
 
-  di.registerLazySingleton<MealLocalRepository>(
-          ()=> MealLocalRepository()
-  );
-
-  di.registerLazySingleton<MealRemoteRepository>(
-          ()=> MealRemoteRepository()
-  );
-
-  //  use cases
-
-
-
-
 
   //  blocs or cubits
   _setupForBlocs();
@@ -56,7 +45,16 @@ void setupServiceLocator() {
   di.registerLazySingleton<LoginBloc>(
       () => (LoginBloc(di.get<BaseLoginRepository>())));
   // note :: here meal bloc of favourite screen
-  di.registerLazySingleton<MealBloc>(() => MealBloc(di<MealLocalRepository>(), di<MealRemoteRepository>()));
+  // di.registerLazySingleton<MealBloc>(() => MealBloc(di<MealLocalRepository>(), di<MealRemoteRepository>()));
+  // Make sure you initialize Hive and open the box first
+  await Hive.initFlutter();
+  Box<Meal> favoriteBox = await Hive.openBox<Meal>('myFavMeals');
+
+  // Register favorite box as a singleton
+  di.registerLazySingleton(() => FavoriteRepository(favoriteBox));
+
+  // Register FavoriteBloc with the Hive box
+  di.registerFactory(() => FavoriteBloc(di.get<FavoriteRepository>()));
 
 
 

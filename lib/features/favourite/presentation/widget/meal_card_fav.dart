@@ -1,12 +1,12 @@
 import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:meal_recommendations/core/helpers/extensions.dart';
+import 'package:meal_recommendations/core/models/meal.dart';
 import 'package:meal_recommendations/core/themes/app_colors.dart';
 import 'package:meal_recommendations/core/themes/app_text_styles.dart';
-import 'package:meal_recommendations/features/favourite/data/models/meal.dart';
 
 class MealCard extends StatelessWidget {
-  final FavMealModel meal;
+  final Meal meal;
   final VoidCallback onFavoritePressed;
 
   const MealCard({
@@ -48,46 +48,45 @@ class MealCard extends StatelessWidget {
             child: ListTile(
               leading: CircleAvatar(
                 radius: screenWidth * 0.08,
-                foregroundImage: NetworkImage(meal.imageUrl),
+                foregroundImage: NetworkImage(meal.imageUrl!),
               ),
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    meal.dishName,
+                    meal.mealType!,
                     style: AppTextStyles.font15MediumGrey.copyWith(
                       fontSize: screenWidth * 0.04,
                     ),
                   ),
                   Text(
-                    meal.title,
+                    meal.name!,
                     style: AppTextStyles.font20Bold.copyWith(
-                      fontSize: screenWidth * 0.05,
+                      fontSize: screenWidth * 0.04,
                     ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '${meal.noOfIngredients} ingredients',
+                        '${meal.ingredients!.length} ingredients',
                         style: AppTextStyles.font15MediumGrey.copyWith(
                           fontSize: screenWidth * 0.04,
                         ),
                       ),
                       Text(
-                        meal.noHours,
+                        "${meal.cookTime} min",
                         style: AppTextStyles.font15MediumBlueGrey.copyWith(
                           fontSize: screenWidth * 0.04,
                         ),
                       ),
                     ],
                   ),
-                  RatingBar(
+                  RatingBar.readOnly(
                     size: screenWidth * 0.05,
                     filledIcon: Icons.star,
                     emptyIcon: Icons.star_border,
-                    onRatingChanged: (value) => debugPrint('$value'),
-                    initialRating: meal.rating,
+                    initialRating: meal.rating!,
                     maxRating: 5,
                   ),
                 ],

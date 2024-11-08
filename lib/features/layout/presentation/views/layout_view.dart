@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommendations/core/utils/assets.dart';
+import 'package:meal_recommendations/features/favourite/presentation/screens/favorite_screen.dart';
 import 'package:meal_recommendations/features/home/persentation/HomeScreen/home_screen.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_bloc.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_event.dart';
@@ -22,7 +23,7 @@ class LayoutView extends StatelessWidget {
           body: [
             // (Don't use scaffold again in the following widgets)
             const HomeScreen(),
-            const FavoritesTabBody(),
+            const FavoriteScreen(),
             const ProfileTabBody(),
           ][state.bottomNavIndex],
           bottomNavigationBar: NavigationBar(

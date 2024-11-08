@@ -21,8 +21,8 @@ void main() async {
   Bloc.observer = MyBlocObserver();
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  await Hive.initFlutter();
-  Hive.openBox('myFavMeals');
+  // await Hive.initFlutter();
+  // Hive.openBox('myFavMeals');
   Hive.registerAdapter(MealAdapter());
   Hive.registerAdapter(MealSummaryAdapter());
   Hive.registerAdapter(MealNutritionAdapter());
