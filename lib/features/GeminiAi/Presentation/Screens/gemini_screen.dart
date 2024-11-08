@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meal_recommendations/core/themes/app_text_styles.dart';
 
+import '../../../../core/themes/app_colors.dart';
 import '../cubit/suggested_recipe_cubit.dart';
+import '../cubit/suggested_recipe_state.dart';
 
 class MealSuggestionScreen extends StatelessWidget {
   final TextEditingController ingredientController = TextEditingController();
@@ -12,8 +15,12 @@ class MealSuggestionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Recipe Suggestion'),
-        backgroundColor: Colors.greenAccent.shade700,
+        centerTitle: true,
+        title: Text(
+          'Recipe Suggestion',
+          style: AppTextStyles.font18BoldDarkBlue.copyWith(color: Colors.white),
+        ),
+        backgroundColor: AppColors.primaryColor,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -71,12 +78,15 @@ class MealSuggestionScreen extends StatelessWidget {
                   .fetchSuggestedRecipe(ingredients);
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.greenAccent.shade700,
+              backgroundColor: AppColors.primaryColor,
               padding: const EdgeInsets.symmetric(vertical: 15),
             ),
             child: const Text(
               'Get Recipe Suggestion',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -117,10 +127,10 @@ class MealSuggestionScreen extends StatelessWidget {
   Widget _buildSectionHeader(String title) {
     return Text(
       title,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.bold,
-        color: Colors.greenAccent.shade700,
+        color: AppColors.primaryColor,
       ),
     );
   }
@@ -170,7 +180,8 @@ class MealSuggestionScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 4.0),
                   child: Row(
                     children: [
-                      const Icon(Icons.check, size: 18, color: Colors.green),
+                      const Icon(Icons.check,
+                          size: 18, color: AppColors.primaryColor),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(

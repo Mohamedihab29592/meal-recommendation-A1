@@ -4,12 +4,14 @@ import 'package:meal_recommendations/core/models/meal.dart';
 import 'package:meal_recommendations/core/routing/routes.dart';
 import 'package:meal_recommendations/core/services/di.dart';
 import 'package:meal_recommendations/core/utils/functions/check_if_user_is_logged_in.dart';
+import 'package:meal_recommendations/features/GeminiAi/Data/Repo/recipeRepo.dart';
+import 'package:meal_recommendations/features/GeminiAi/Data/data_sorce/suggested_meal.dart';
+import 'package:meal_recommendations/features/GeminiAi/Domain/UseCase/getRecipeSuggestionUseCase.dart';
 import 'package:meal_recommendations/features/GeminiAi/Presentation/Screens/gemini_screen.dart';
 import 'package:meal_recommendations/features/GeminiAi/Presentation/cubit/suggested_recipe_cubit.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_bloc.dart';
 import 'package:meal_recommendations/features/layout/presentation/views/layout_view.dart';
 import 'package:meal_recommendations/features/meal_details/presentation/views/meal_details_view.dart';
-
 import 'package:meal_recommendations/features/auth/register/persentation/screens/otp_screen.dart';
 import 'package:meal_recommendations/features/auth/register/persentation/screens/register_screen.dart';
 import 'package:meal_recommendations/features/splash_boarding/screens/on_boarding_screen.dart';
@@ -18,7 +20,6 @@ import '../../features/auth/Login_Screen/presenation/controller/Login_bloc/bloc/
 import '../../features/auth/Login_Screen/presenation/screens/LoginScreen.dart';
 import '../../features/auth/register/persentation/controller/sign_up_bloc.dart';
 import '../../features/auth/register/persentation/cubit/otp_auth_cubit.dart';
-
 import '../../features/favourite/presentation/screens/favourite_screen.dart';
 import '../../features/home/businessLogic/meal_cubit.dart';
 import '../../features/home/data/data_source.dart';
@@ -79,7 +80,8 @@ class AppRouter {
       case Routes.mealSuggestion:
         return MaterialPageRoute(
             builder: (_) => BlocProvider<SuggestedRecipeCubit>(
-                create: (_) => SuggestedRecipeCubit(),
+                create: (_) => SuggestedRecipeCubit(GetRecipeSuggestionUseCase(
+                    RecipeRepository(RecipeRemoteDatasource()))),
                 child: MealSuggestionScreen()));
 
       default:

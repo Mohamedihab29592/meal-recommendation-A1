@@ -1,19 +1,16 @@
-import 'package:bloc/bloc.dart';
-import 'package:meal_recommendations/features/GeminiAi/Data/data_sorce/suggested_meal.dart';
-import 'package:meta/meta.dart';
-
-import '../../Data/models/suggested_meal_model.dart';
-
-part 'suggested_recipe_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meal_recommendations/features/GeminiAi/Presentation/cubit/suggested_recipe_state.dart';
+import '../../Domain/UseCase/getRecipeSuggestionUseCase.dart';
 
 class SuggestedRecipeCubit extends Cubit<SuggestedRecipeState> {
-  SuggestedRecipeCubit() : super(SuggestedRecipeInitial());
+  final GetRecipeSuggestionUseCase getRecipeSuggestionUseCase;
+
+  SuggestedRecipeCubit(this.getRecipeSuggestionUseCase) : super(SuggestedRecipeInitial());
 
   Future<void> fetchSuggestedRecipe(String ingredient) async {
     emit(SuggestedRecipeLoading());
     try {
-      final recipe =
-          await RecipeRemoteDatasource().getRecipeSuggestions(ingredient);
+      final recipe = await getRecipeSuggestionUseCase(ingredient);
       emit(SuggestedRecipeSuccess(recipe));
     } catch (e) {
       emit(SuggestedRecipeError(errorMessage: e.toString()));

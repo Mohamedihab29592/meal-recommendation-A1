@@ -15,7 +15,6 @@ class RecipeRemoteDatasource {
       final content = [Content.text(prompt)];
 
       final response = await gemini.generateContent(content);
-      print(response.text);
       return RecipeParser().parseRecipe(response.text!);
     } catch (e) {
       throw Exception('Error fetching data: $e');
