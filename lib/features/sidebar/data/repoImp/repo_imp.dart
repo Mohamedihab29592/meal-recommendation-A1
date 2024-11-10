@@ -1,3 +1,4 @@
+import 'package:meal_recommendations/core/helpers/cache_keys.dart';
 import 'package:meal_recommendations/features/sidebar/data/data_source/remote_data_source.dart';
 import 'package:meal_recommendations/features/sidebar/data/models/header_model.dart';
 
@@ -20,8 +21,12 @@ class SidebarRepoImp  implements SidebarRepo {
 
   @override
   Future<void> signOut() async {
-    await remoteDataSource.signOut();
+   await remoteDataSource.signOut();
+   // CacheKeys.cachedUserId == null;
+
   }
+
+
 
 
 }

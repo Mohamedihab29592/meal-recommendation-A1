@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommendations/core/models/meal.dart';
@@ -15,12 +14,10 @@ import '../../features/auth/Login_Screen/presenation/controller/Login_bloc/bloc/
 import '../../features/auth/Login_Screen/presenation/screens/LoginScreen.dart';
 import '../../features/auth/register/persentation/controller/sign_up_bloc.dart';
 import '../../features/auth/register/persentation/cubit/otp_auth_cubit.dart';
-
 import '../../features/favourite/presentation/screens/favourite_screen.dart';
 import '../../features/home/businessLogic/meal_cubit.dart';
 import '../../features/home/data/data_source.dart';
 import '../../features/home/persentation/HomeScreen/home_screen.dart';
-import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/sidebar/presentation/controller/bloc/side_bloc.dart';
 
 
@@ -57,7 +54,7 @@ class AppRouter {
             builder: (_) => BlocProvider<OtpAuthCubit>(
                 create: (_) => OtpAuthCubit(), child: const OtpScreen()));
 
-      case Routes:
+      case Routes.home:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                   create: (context) =>
@@ -68,12 +65,6 @@ class AppRouter {
       case Routes.favourite:
         return MaterialPageRoute(
           builder: (_) => const FavouriteScreen(),
-        );
-
-      case Routes.profile:
-        return MaterialPageRoute(
-
-          builder: (_) =>   ProfileScreen(uid: FirebaseAuth.instance.currentUser!.uid),
         );
 
       case Routes.settings:
