@@ -3,7 +3,7 @@ import 'package:meal_recommendations/features/profile/domain/usecases/change_pas
 import 'package:meal_recommendations/features/profile/domain/usecases/get_profile_use_case.dart';
 import 'package:meal_recommendations/features/profile/presentation/controller/profile_bloc_event.dart';
 import 'package:meal_recommendations/features/profile/presentation/controller/profile_bloc_state.dart';
-
+import 'package:meal_recommendations/core/firebase/firebase_error_handler.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final GetUserProfileUseCase getUserProfileUseCase;
@@ -16,8 +16,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       try {
         final profileData = await getUserProfileUseCase(event.uid);
         emit(ProfileLoaded(profileData));
-      } catch (e) {
-        emit(ProfileError("Failed to load profile"));
+      } catch (error) {
+        final firebaseError = FirebaseErrorHandler.handleError(error);
+        emit(ProfileError(firebaseError.error));
       }
     });
 
@@ -26,8 +27,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       try {
         await changePasswordUseCase(event.currentPassword, event.newPassword);
         emit(PasswordChangeSuccess("Password updated successfully"));
-      } catch (e) {
-        emit(ProfileError(e.toString())); 
+      } catch (error) {
+        final firebaseError = FirebaseErrorHandler.handleError(error);
+        emit(ProfileError(firebaseError.error));
       }
     });
   }
