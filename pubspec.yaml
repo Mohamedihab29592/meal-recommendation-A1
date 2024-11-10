@@ -47,6 +47,8 @@ dependencies:
   hive_flutter: ^1.1.0
   google_generative_ai: ^0.4.6
 
+  device_preview: ^1.2.0
+
 
 dev_dependencies:
   flutter_test:

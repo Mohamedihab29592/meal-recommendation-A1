@@ -24,18 +24,18 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final box = Hive.box('appBox');
-
   var formKey = GlobalKey<FormState>();
-  var emailController = TextEditingController(text: '');
-  var passwordController = TextEditingController(text: '');
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LoginBloc, LoginStates>(
       listener: (context, state) {
         if (state is LoginSuccessState) {
-          // Set the login status
-          box.put('isLoggedIn', true);
+            // Set the login status 
+           box.put('isLoggedIn', true); 
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.green,
             content: Text(
@@ -104,8 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   color: Colors.white,
                                 ),
                                 hintText: 'User Name',
-                                controller:
-                                    emailController, // Use BLoC's controller
+                                controller: emailController, // Use BLoC's controller
                                 validator: (text) {
                                   if (text == null || text.trim().isEmpty) {
                                     return 'Please Enter Email Address';
@@ -143,8 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 isObsecure: bloc
                                     .isObsecure, // Toggle password visibility
-                                controller:
-                                    passwordController, // Use BLoC's controller
+                                controller: passwordController, // Use BLoC's controller
                                 validator: (text) {
                                   if (text == null || text.trim().isEmpty) {
                                     return 'Please Enter Password';
@@ -164,14 +162,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               CustomButton(
                                 title: 'Login',
                                 onPressed: () {
-                                  if (formKey.currentState!.validate()) {
-                                    bloc.add(
-                                      signInWithEmailAndPasswordEvent(
-                                        emailController.text,
-                                        passwordController.text,
-                                      ),
-                                    );
-                                  }
+                                  bloc.add(
+                                    signInWithEmailAndPasswordEvent(
+                                      emailController.text,
+                                      passwordController.text,
+                                    ),
+                                  );
                                 },
                               ),
                             ],
@@ -206,3 +202,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+

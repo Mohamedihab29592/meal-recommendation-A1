@@ -9,6 +9,7 @@ import 'package:meal_recommendations/features/GeminiAi/Data/data_sorce/suggested
 import 'package:meal_recommendations/features/GeminiAi/Domain/UseCase/getRecipeSuggestionUseCase.dart';
 import 'package:meal_recommendations/features/GeminiAi/Presentation/Screens/gemini_screen.dart';
 import 'package:meal_recommendations/features/GeminiAi/Presentation/cubit/suggested_recipe_cubit.dart';
+
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_bloc.dart';
 import 'package:meal_recommendations/features/layout/presentation/views/layout_view.dart';
 import 'package:meal_recommendations/features/meal_details/presentation/views/meal_details_view.dart';
@@ -23,15 +24,12 @@ import '../../features/auth/register/persentation/cubit/otp_auth_cubit.dart';
 import '../../features/favourite/presentation/screens/favourite_screen.dart';
 import '../../features/home/businessLogic/meal_cubit.dart';
 import '../../features/home/data/data_source.dart';
-import '../../features/profile/presentation/screens/profile_screen.dart';
+import '../../features/home/persentation/HomeScreen/home_screen.dart';
 import '../../features/sidebar/presentation/controller/bloc/side_bloc.dart';
 
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case Routes.initial:
-        return isUserLoggedIn ? _layoutRoute() : _loginRoute();
-
       case Routes.splash:
         return MaterialPageRoute(
           builder: (_) => const SplashScreen(),
@@ -50,10 +48,20 @@ class AppRouter {
       case Routes.login:
         return _loginRoute();
 
+
       case Routes.verifyOtp:
         return MaterialPageRoute(
             builder: (_) => BlocProvider<OtpAuthCubit>(
                 create: (_) => OtpAuthCubit(), child: const OtpScreen()));
+
+<
+      case Routes.home:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) =>
+                      MealCubit(FirebaseService())..fetchMeals(),
+                  child: const HomeScreen(),
+                ));
 
       case Routes.favourite:
         return MaterialPageRoute(
@@ -64,6 +72,7 @@ class AppRouter {
           builder: (_) =>
               const ProfileScreen(uid: 'ZZg8pccM5ZceMicpUTAFkvZADLT2'),
         );
+
       case Routes.settings:
         return MaterialPageRoute(
           builder: (_) => const Placeholder(),
@@ -113,5 +122,6 @@ class AppRouter {
                 create: (context) => MealCubit(FirebaseService())..fetchMeals(),
               )
             ], child: const LayoutView()));
+
   }
 }
