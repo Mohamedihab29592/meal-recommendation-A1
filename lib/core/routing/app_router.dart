@@ -15,6 +15,7 @@ import 'package:meal_recommendations/features/layout/presentation/views/layout_v
 import 'package:meal_recommendations/features/meal_details/presentation/views/meal_details_view.dart';
 import 'package:meal_recommendations/features/auth/register/persentation/screens/otp_screen.dart';
 import 'package:meal_recommendations/features/auth/register/persentation/screens/register_screen.dart';
+import 'package:meal_recommendations/features/profile/presentation/screens/profile_screen.dart';
 import 'package:meal_recommendations/features/splash_boarding/screens/on_boarding_screen.dart';
 import 'package:meal_recommendations/features/splash_boarding/screens/splash_screen.dart';
 import '../../features/auth/Login_Screen/presenation/controller/Login_bloc/bloc/Login BLoc.dart';
@@ -48,13 +49,11 @@ class AppRouter {
       case Routes.login:
         return _loginRoute();
 
-
       case Routes.verifyOtp:
         return MaterialPageRoute(
             builder: (_) => BlocProvider<OtpAuthCubit>(
                 create: (_) => OtpAuthCubit(), child: const OtpScreen()));
 
-<
       case Routes.home:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
@@ -122,6 +121,5 @@ class AppRouter {
                 create: (context) => MealCubit(FirebaseService())..fetchMeals(),
               )
             ], child: const LayoutView()));
-
   }
 }

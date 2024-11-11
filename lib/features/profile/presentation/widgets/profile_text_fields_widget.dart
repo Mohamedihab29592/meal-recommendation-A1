@@ -41,28 +41,27 @@ class ProfileTextFields extends StatelessWidget {
                 ),
               ),
             ),
-           style:  AppTextStyles.font14Regular,
+            style: AppTextStyles.font14Regular,
           ),
         ),
         const SizedBox(height: 22),
         SizedBox(
           width: double.infinity,
           child: TextFormField(
-            controller: emailController,
-            readOnly: !isEditing,
-            decoration: InputDecoration(
-              labelText: 'Email',
-              labelStyle: TextStyle(fontSize: fontSize),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.0),
-                borderSide: const BorderSide(
-                  color: AppColors.textFormColor,
-                  width: 2.0,
+              controller: emailController,
+              readOnly: !isEditing,
+              decoration: InputDecoration(
+                labelText: 'Email',
+                labelStyle: TextStyle(fontSize: fontSize),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: const BorderSide(
+                    color: AppColors.textFormColor,
+                    width: 2.0,
+                  ),
                 ),
               ),
-            ),
-            style:  AppTextStyles.font14Regular),
-     
+              style: AppTextStyles.font14Regular),
         ),
         const SizedBox(height: 22),
         SizedBox(
@@ -81,7 +80,7 @@ class ProfileTextFields extends StatelessWidget {
                 ),
               ),
             ),
-          style:  AppTextStyles.font14Regular,
+            style: AppTextStyles.font14Regular,
           ),
         ),
       ],
