@@ -40,3 +40,36 @@ extension MediaQueryExtension on BuildContext {
   double get screenHeight => MediaQuery.sizeOf(this).height;
   double get screenWidth => MediaQuery.sizeOf(this).width;
 }
+
+extension PopTopMostRoute on BuildContext {
+  void popTop() => Navigator.of(this, rootNavigator: true).pop();
+}
+
+enum SnackbarType { error, success, warning }
+
+extension ShowSnackBar on BuildContext {
+  Color _getSnackbarColor(SnackbarType type) {
+    switch (type) {
+      case SnackbarType.error:
+        return Colors.red;
+      case SnackbarType.success:
+        return Colors.green;
+      case SnackbarType.warning:
+        return Colors.yellow;
+    }
+  }
+
+  void showSnackBar({
+    required String message,
+    required SnackbarType type,
+  }) {
+    final snackBar = SnackBar(
+      content: Text(
+        message,
+        style: const TextStyle(fontSize: 16),
+      ),
+      backgroundColor: _getSnackbarColor(type),
+    );
+    ScaffoldMessenger.of(this).showSnackBar(snackBar);
+  }
+}
