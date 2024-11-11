@@ -2,7 +2,7 @@ abstract class LoginEvent {}
 
 final class Login extends LoginEvent {}
 
-final class TogglePasswordVisibilityEvent extends LoginEvent {}
+final class TogglePasswordVisibility extends LoginEvent {}
 
 final class GoogleLogin extends LoginEvent {}
 

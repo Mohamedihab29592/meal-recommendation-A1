@@ -13,26 +13,18 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc(this._loginRepo) : super(LoginState.initial()) {
     on<Login>(_login);
     on<GoogleLogin>(_googleLogin);
-    on<TogglePasswordVisibilityEvent>(_togglePassVisibility);
+    on<TogglePasswordVisibility>(_togglePassVisibility);
     on<AlwaysAutovalidateMode>(_alwaysAutovalidateMode);
     _initFormAttributes();
   }
 
   late final TextEditingController emailController;
   late final TextEditingController passwordController;
-  late final FocusNode emailFocusNode;
-  late final FocusNode passwordFocusNode;
   late final GlobalKey<FormState> formKey;
 
   void _initFormAttributes() {
     _initControllers();
-    _initFocusNodes();
     formKey = GlobalKey<FormState>();
-  }
-
-  void _initFocusNodes() {
-    emailFocusNode = FocusNode();
-    passwordFocusNode = FocusNode();
   }
 
   void _initControllers() {
@@ -62,9 +54,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     );
   }
 
-  void login() {
+  void validateAndLogin() {
     if (formKey.currentState!.validate()) {
       add(Login());
+    } else {
+      add(AlwaysAutovalidateMode());
     }
   }
 
@@ -108,15 +102,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     ));
   }
 
-  void _disposeFormAttributes() {
-    _disposeController();
-    _disposeFocusNodes();
-  }
-
-  void _disposeFocusNodes() {
-    emailFocusNode.dispose();
-    passwordFocusNode.dispose();
-  }
+  void _cacheUserId(String userId) {}
 
   void _disposeController() {
     emailController.dispose();
@@ -125,7 +111,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   @override
   Future<void> close() {
-    _disposeFormAttributes();
+    _disposeController();
     return super.close();
   }
 }
