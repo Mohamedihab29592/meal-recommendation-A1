@@ -7,7 +7,7 @@ import 'package:meal_recommendations/features/auth/login/presenation/widgets/NoA
 import 'package:meal_recommendations/features/auth/login/presenation/widgets/OrLoginWith.dart';
 import 'package:meal_recommendations/features/auth/login/presenation/widgets/google_login_bloc_listener.dart';
 import 'package:meal_recommendations/features/auth/login/presenation/widgets/login_bloc_listener.dart';
-import 'package:meal_recommendations/features/auth/login/presenation/widgets/login_form.dart';
+import 'package:meal_recommendations/features/auth/login/presenation/widgets/login_form_bloc_selector.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});

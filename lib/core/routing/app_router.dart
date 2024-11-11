@@ -13,7 +13,7 @@ import 'package:meal_recommendations/features/auth/register/persentation/screens
 import 'package:meal_recommendations/features/auth/register/persentation/screens/register_screen.dart';
 import 'package:meal_recommendations/features/splash_boarding/screens/on_boarding_screen.dart';
 import 'package:meal_recommendations/features/splash_boarding/screens/splash_screen.dart';
-import '../../features/auth/login/presenation/screens/LoginScreen.dart';
+import '../../features/auth/login/presenation/screens/login_screen.dart';
 import '../../features/auth/register/persentation/controller/sign_up_bloc.dart';
 import '../../features/auth/register/persentation/cubit/otp_auth_cubit.dart';
 
