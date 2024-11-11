@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:meal_recommendations/core/network/internet_checker.dart';
 import 'package:meal_recommendations/features/auth/Login_Screen/data/data_source/LoginDataSourceImpl.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_bloc.dart';
 import 'package:meal_recommendations/features/auth/register/data/data_source/data_source.dart';
@@ -27,39 +29,32 @@ import '../../features/favourite/presentation/controller/fav_meal_bloc.dart';
 final GetIt di = GetIt.instance;
 
 void setupServiceLocator() {
+  _setupForCore();
 
   //data source
   di.registerLazySingleton<RemoteDataSourceFirebase>(
       () => RemoteDataSourceFirebase());
   di.registerLazySingleton<ProfileDataSource>(
       () => ProfileDataSourceImpl(di<FirebaseFirestore>()));
-          ()=> RemoteDataSourceFirebase();
+  () => RemoteDataSourceFirebase();
   di.registerLazySingleton<RemoteSideBarDataSource>(
-          ()=> RemoteSideBarDataSource());
+      () => RemoteSideBarDataSource());
 
   di.registerLazySingleton<BaseLoginDataSource>(() => LoginDataSourceImpl());
 
   //  repositories
-  di.registerLazySingleton<UserRepository>(
-          ()=> UserRepositoryImpl(di())
-  );
-
+  di.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(di()));
 
   di.registerLazySingleton<BaseLoginRepository>(
-        () => LoginRepositoryImpl(loginDataSource: di()),
+    () => LoginRepositoryImpl(loginDataSource: di()),
   );
   di.registerLazySingleton<SidebarRepo>(
-        () => SidebarRepoImp(di()),
+    () => SidebarRepoImp(di()),
   );
 
-  di.registerLazySingleton<MealLocalRepository>(
-          ()=> MealLocalRepository()
-  );
+  di.registerLazySingleton<MealLocalRepository>(() => MealLocalRepository());
 
-  di.registerLazySingleton<MealRemoteRepository>(
-          ()=> MealRemoteRepository()
-  );
-
+  di.registerLazySingleton<MealRemoteRepository>(() => MealRemoteRepository());
 
   di.registerLazySingleton<ProfileRepository>(
       () => ProfileRepositoryImpl(di<ProfileDataSource>()));
@@ -67,7 +62,6 @@ void setupServiceLocator() {
 
   di.registerLazySingleton<GetUserProfileUseCase>(
       () => GetUserProfileUseCase(di<ProfileRepository>()));
-
 
   //  blocs or cubits
   _setupForBlocs();
@@ -78,24 +72,27 @@ void setupServiceLocator() {
   di.registerLazySingleton<LoginBloc>(
       () => (LoginBloc(di.get<BaseLoginRepository>())));
   // note :: here meal bloc of favourite screen
-  di.registerLazySingleton<MealBloc>(() => MealBloc(di<MealLocalRepository>(), di<MealRemoteRepository>()));
+  di.registerLazySingleton<MealBloc>(
+      () => MealBloc(di<MealLocalRepository>(), di<MealRemoteRepository>()));
 
-
-
-  di.registerLazySingleton<SideBarBloc>(() =>
-  (SideBarBloc(di())));
-
+  di.registerLazySingleton<SideBarBloc>(() => (SideBarBloc(di())));
 
   //External Libraries like dio
 
-  di.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
+  _setupForExternal();
+}
 
+void _setupForExternal() {
+  di.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
+  di.registerLazySingleton<InternetConnection>(() => InternetConnection());
+}
+
+void _setupForCore() {
+  di.registerLazySingleton<InternetChecker>(
+    () => InternetChecker(di.get<InternetConnection>()),
+  );
 }
 
 void _setupForBlocs() {
   di.registerLazySingleton<LayoutBloc>(() => LayoutBloc());
 }
-
-
-
-
