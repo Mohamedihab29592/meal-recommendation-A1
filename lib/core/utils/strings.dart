@@ -13,4 +13,12 @@ class AppStrings {
   static const String totalIngredients = 'Total ingredients';
   static const String totalSteps = 'Total steps';
   static const String step = 'Step';
+  static const String username = 'User name';
+  static const String emailRequired = 'Email is required';
+  static const String emailInvalid = 'Email is invalid';
+  static const String password = 'Password';
+  static const passwordRequired = 'Password is required';
+  static const String passwordInvalidLength =
+      'Password must be at least 8 characters';
+  static const String login = 'Login';
 }
