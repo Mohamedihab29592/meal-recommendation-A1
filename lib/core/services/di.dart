@@ -3,13 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:meal_recommendations/core/network/internet_checker.dart';
-import 'package:meal_recommendations/features/auth/Login_Screen/data/data_source/login_datasource.dart';
+import 'package:meal_recommendations/features/auth/login/data/data_source/login_datasource.dart';
+import 'package:meal_recommendations/features/auth/login/presenation/bloc/login_bloc.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_bloc.dart';
 import 'package:meal_recommendations/features/auth/register/data/data_source/data_source.dart';
 import 'package:meal_recommendations/features/auth/register/data/repo/repo.dart';
 import 'package:meal_recommendations/features/auth/register/domain/base_repo/user_repo.dart';
 import 'package:meal_recommendations/features/auth/register/persentation/controller/sign_up_bloc.dart';
-import 'package:meal_recommendations/features/auth/Login_Screen/presenation/controller/Login_bloc/bloc/Login%20BLoc.dart';
 import 'package:meal_recommendations/features/profile/data/profile_repository_impl.dart';
 import 'package:meal_recommendations/features/profile/data/remote/profile_data_source.dart';
 import 'package:meal_recommendations/features/profile/data/remote/profile_data_source_impl.dart';
@@ -20,9 +20,8 @@ import 'package:meal_recommendations/features/sidebar/data/data_source/remote_da
 import 'package:meal_recommendations/features/sidebar/data/repoImp/repo_imp.dart';
 import 'package:meal_recommendations/features/sidebar/domain/repo/sidebar_repo.dart';
 import 'package:meal_recommendations/features/sidebar/presentation/controller/bloc/side_bloc.dart';
-import '../../features/auth/Login_Screen/data/repository/login_repo.dart';
-import '../../features/auth/Login_Screen/domain/repositories/BaseLoginDataSource.dart';
-import '../../features/auth/Login_Screen/domain/repositories/BaseLoginRepository.dart';
+import '../../features/auth/login/data/repository/login_repo.dart';
+
 import '../../features/favourite/data/repository/local/meal_local_repository.dart';
 import '../../features/favourite/data/repository/remote/meal_remote_repository.dart';
 import '../../features/favourite/presentation/controller/fav_meal_bloc.dart';
@@ -41,13 +40,15 @@ void setupServiceLocator() {
   di.registerLazySingleton<RemoteSideBarDataSource>(
       () => RemoteSideBarDataSource());
 
-  di.registerLazySingleton<BaseLoginDataSource>(() => LoginDataSource());
+  di.registerLazySingleton<LoginDataSource>(
+    () => LoginDataSource(di.get<FirebaseAuth>()),
+  );
 
   //  repositories
   di.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(di()));
 
-  di.registerLazySingleton<BaseLoginRepository>(
-    () => LoginRepo(loginDataSource: di()),
+  di.registerLazySingleton<LoginRepo>(
+    () => LoginRepo(di.get<LoginDataSource>()),
   );
   di.registerLazySingleton<SidebarRepo>(
     () => SidebarRepoImp(di()),
@@ -70,8 +71,7 @@ void setupServiceLocator() {
 
   di.registerLazySingleton<ProfileBloc>(
       () => ProfileBloc(di<GetUserProfileUseCase>()));
-  di.registerLazySingleton<LoginBloc>(
-      () => (LoginBloc(di.get<BaseLoginRepository>())));
+  di.registerLazySingleton<LoginBloc>(() => (LoginBloc(di.get<LoginRepo>())));
   // note :: here meal bloc of favourite screen
   di.registerLazySingleton<MealBloc>(
       () => MealBloc(di<MealLocalRepository>(), di<MealRemoteRepository>()));

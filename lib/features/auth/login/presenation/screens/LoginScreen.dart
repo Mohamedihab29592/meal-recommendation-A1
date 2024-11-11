@@ -5,15 +5,15 @@ import 'package:hive/hive.dart';
 import 'package:meal_recommendations/core/themes/app_colors.dart';
 import 'package:meal_recommendations/core/utils/assets.dart';
 import 'package:meal_recommendations/features/auth/Login_Screen/presenation/controller/Login_bloc/state/login_events.dart';
-import 'package:meal_recommendations/features/auth/Login_Screen/presenation/widgets/CustomFormField.dart';
-import 'package:meal_recommendations/features/auth/Login_Screen/presenation/widgets/CustomButton.dart';
-import 'package:meal_recommendations/features/auth/Login_Screen/presenation/widgets/CustomCheckBox.dart';
-import 'package:meal_recommendations/features/auth/Login_Screen/presenation/widgets/NoAccountText.dart';
-import 'package:meal_recommendations/features/auth/Login_Screen/presenation/widgets/OrLoginWith.dart';
-import 'package:meal_recommendations/features/auth/Login_Screen/presenation/widgets/SocalCard.dart';
+import 'package:meal_recommendations/features/auth/login/presenation/widgets/CustomFormField.dart';
+import 'package:meal_recommendations/features/auth/login/presenation/widgets/CustomButton.dart';
+import 'package:meal_recommendations/features/auth/login/presenation/widgets/CustomCheckBox.dart';
+import 'package:meal_recommendations/features/auth/login/presenation/widgets/NoAccountText.dart';
+import 'package:meal_recommendations/features/auth/login/presenation/widgets/OrLoginWith.dart';
+import 'package:meal_recommendations/features/auth/login/presenation/widgets/SocalCard.dart';
 import '../../../../../core/routing/routes.dart';
-import '../controller/Login_bloc/bloc/Login BLoc.dart';
-import '../controller/Login_bloc/state/login_state.dart';
+import '../../../Login_Screen/presenation/controller/Login_bloc/bloc/Login BLoc.dart';
+import '../../../Login_Screen/presenation/controller/Login_bloc/state/login_state.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

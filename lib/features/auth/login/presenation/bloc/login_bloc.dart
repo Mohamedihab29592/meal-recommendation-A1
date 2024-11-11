@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommendations/core/models/auth_action_params.dart';
-import 'package:meal_recommendations/features/auth/Login_Screen/data/repository/login_repo.dart';
-import 'package:meal_recommendations/features/auth/Login_Screen/presenation/bloc/login_event.dart';
-import 'package:meal_recommendations/features/auth/Login_Screen/presenation/bloc/login_state.dart';
+import 'package:meal_recommendations/features/auth/login/data/repository/login_repo.dart';
+import 'package:meal_recommendations/features/auth/login/presenation/bloc/login_event.dart';
+import 'package:meal_recommendations/features/auth/login/presenation/bloc/login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final LoginRepo _loginRepo;
