@@ -6,6 +6,8 @@ import 'package:meal_recommendations/features/home/persentation/HomeScreen/widge
 import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/recipe_card.dart';
 import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/filter_bottom_sheet.dart';
 
+import '../../../../core/routing/routes.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -51,12 +53,17 @@ class HomeScreen extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        Text(
-          'See all',
-          style: TextStyle(
-            color: AppColors.primaryColor,
-            fontSize: mediaQuery.size.width * 0.045,
-            fontWeight: FontWeight.w500,
+        InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, Routes.seeAll);
+          },
+          child: Text(
+            'See all',
+            style: TextStyle(
+              color: AppColors.primaryColor,
+              fontSize: mediaQuery.size.width * 0.045,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ],
