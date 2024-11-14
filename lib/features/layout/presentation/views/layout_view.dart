@@ -27,7 +27,7 @@ class LayoutView extends StatelessWidget {
           // (Don't use scaffold again in the following widgets)
           const HomeScreen(),
           const FavouriteScreen(),
-           ProfileScreen(uid: FirebaseAuth.instance.currentUser!.uid),
+          const ProfileScreen(),
         ][state.bottomNavIndex],
         bottomNavigationBar: NavigationBar(
           backgroundColor: Colors.white,
