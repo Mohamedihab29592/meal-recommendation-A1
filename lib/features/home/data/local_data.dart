@@ -3,21 +3,30 @@ import 'package:hive/hive.dart';
 import 'package:meal_recommendations/core/models/meal.dart';
 
 class LocalData {
-  var box = Hive.box('myFavMeals');
-  void addMealToFav(Meal meal) {
-    box.add(meal);
+
+
+  void addMealToFav(Meal meal)async {
+    var box = Hive.isBoxOpen('myFavMeals')
+        ? Hive.box<Meal>('myFavMeals')
+        : await Hive.openBox<Meal>('myFavMeals');
+    box.put(meal.dishName , meal);
     debugPrint('Meal added to favorites');
     debugPrint(box.length.toString());
   }
 
-  void removeFavMeal(Meal meal) {
-    box.delete(meal);
+  void removeFavMeal(Meal meal) async {
+    var box = Hive.isBoxOpen('myFavMeals')
+        ? Hive.box<Meal>('myFavMeals')
+        : await Hive.openBox<Meal>('myFavMeals');
+    box.delete(meal.dishName);
     debugPrint('Meal deleted successfully');
     debugPrint(box.length.toString());
   }
 
-  void removeAllMeals(Meal meal) {
-    box.clear();
+  void removeAllMeals(Meal meal) async {
+    var box = Hive.isBoxOpen('myFavMeals')
+        ? Hive.box<Meal>('myFavMeals')
+        : await Hive.openBox<Meal>('myFavMeals');
     debugPrint('All meals deleted successfully');
     debugPrint(box.length.toString());
   }
