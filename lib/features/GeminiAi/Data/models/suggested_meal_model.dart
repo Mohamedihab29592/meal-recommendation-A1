@@ -54,7 +54,7 @@ class RecipeParser {
         } else if (currentSection == 'instructions') {
           instructions.add(line.replaceAll(RegExp(r'^\d+\. '), '').trim());
         } else if (currentSection == 'nutritionalInformation') {
-          nutritionalInformation = (nutritionalInformation ?? '') + '\n' + line;
+          nutritionalInformation = '${nutritionalInformation ?? ''}\n$line';
         }
       }
     }

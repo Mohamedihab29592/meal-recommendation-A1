@@ -17,21 +17,23 @@ class HomeScreen extends StatelessWidget {
       horizontal: mediaQuery.size.width * 0.04,
     );
 
-    return SingleChildScrollView(
-      child: Padding(
-        padding: padding,
-        child: Column(
-          children: [
-            const BuildTopBar(),
-            SizedBox(height: mediaQuery.size.height * 0.02),
-            const BuildSearchBar(),
-            SizedBox(height: mediaQuery.size.height * 0.03),
-            const BuildIngredientButton(),
-            SizedBox(height: mediaQuery.size.height * 0.03),
-            _buildTopRecipesHeader(context),
-            SizedBox(height: mediaQuery.size.height * 0.02),
-            _buildRecipeList(mediaQuery),
-          ],
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: padding,
+          child: Column(
+            children: [
+              const BuildTopBar(),
+              SizedBox(height: mediaQuery.size.height * 0.02),
+              const BuildSearchBar(),
+              SizedBox(height: mediaQuery.size.height * 0.03),
+              const BuildIngredientButton(),
+              SizedBox(height: mediaQuery.size.height * 0.03),
+              _buildTopRecipesHeader(context),
+              SizedBox(height: mediaQuery.size.height * 0.02),
+              _buildRecipeList(mediaQuery),
+            ],
+          ),
         ),
       ),
     );

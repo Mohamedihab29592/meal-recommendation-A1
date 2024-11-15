@@ -1,0 +1,41 @@
+import 'package:flutter/material.dart';
+
+import '../Screens/gemini_screen.dart';
+import '../cubit/suggested_recipe_state.dart';
+import 'card_content.dart';
+import 'ingredientList.dart';
+import 'instructionList.dart';
+
+class RecipeDetails extends StatelessWidget {
+  final SuggestedRecipeSuccess state;
+
+  const RecipeDetails({required this.state, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final recipe = state.suggestedRecipe;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 20),
+        const SectionHeader(title: 'Meal Name'),
+        CardContent(content: recipe.mealName),
+        const SizedBox(height: 10),
+        const SectionHeader(title: 'Description'),
+        CardContent(content: recipe.description),
+        const SizedBox(height: 10),
+        const SectionHeader(title: 'Ingredients'),
+        IngredientList(ingredients: recipe.ingredients),
+        const SizedBox(height: 10),
+        const SectionHeader(title: 'Instructions'),
+        InstructionList(instructions: recipe.instructions),
+        if (recipe.nutritionalInformation != null) ...[
+          const SizedBox(height: 10),
+          const SectionHeader(title: 'Nutritional Information'),
+          CardContent(content: recipe.nutritionalInformation!),
+        ],
+      ],
+    );
+  }
+}

@@ -11,10 +11,11 @@ class RecipeRemoteDatasource {
   Future<SuggestedRecipe> getRecipeSuggestions(String ingredients) async {
     try {
       final prompt =
-          'Suggest a recipe for $ingredients ,i need the data in just five sections (Name,Nutritional information, description, ingredients,instructions,) nothing more';
+          'Suggest a recipe for $ingredients ,i need the data in just five sections (Name,Nutritional information, description, ingredients,instructions)';
       final content = [Content.text(prompt)];
 
       final response = await gemini.generateContent(content);
+      print(response);
       return RecipeParser().parseRecipe(response.text!);
     } catch (e) {
       throw Exception('Error fetching data: $e');

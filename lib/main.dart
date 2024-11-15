@@ -19,24 +19,21 @@ import 'package:device_preview/device_preview.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupServiceLocator();
+  await Hive.initFlutter();
+  Hive.registerAdapter(MealAdapter());
+  Hive.registerAdapter(MealSummaryAdapter());
+  Hive.registerAdapter(MealNutritionAdapter());
+  Hive.registerAdapter(MealIngredientAdapter());
+  await Hive.openBox('myFavMeals');
+
   await Firebase.initializeApp();
   Bloc.observer = MyBlocObserver();
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  await Hive.initFlutter();
-  await Hive.openBox('appBox');
-
-  await Hive.openBox('myFavMeals');
-  Hive.registerAdapter(MealAdapter());
-  Hive.registerAdapter(MealSummaryAdapter());
-  Hive.registerAdapter(MealNutritionAdapter());
-  Hive.registerAdapter(MealIngredientAdapter());
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
 
   await checkIfUserIsLoggedIn();
 
@@ -49,26 +46,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
-  
-    return DevicePreview(
-     enabled: !kReleaseMode,
-      builder: (context) {
+    // return DevicePreview(
+    //   enabled: !kReleaseMode,
+    //   builder: (context) {
         return ScreenUtilInit(
-          minTextAdapt: true,
-          splitScreenMode: true,
-          builder: (_, child) {
-            return MaterialApp(
-              onGenerateRoute: AppRouter.onGenerateRoute,
-              title: AppStrings.appTitle,
-              debugShowCheckedModeBanner: false,
-              theme: AppThemes.lightTheme,
-              initialRoute: Routes.splash,
-            );
-          }
-        );
-      },
-    );
+            minTextAdapt: true,
+            splitScreenMode: true,
+            builder: (_, child) {
+              return MaterialApp(
+                onGenerateRoute: AppRouter.onGenerateRoute,
+                title: AppStrings.appTitle,
+                debugShowCheckedModeBanner: false,
+                theme: AppThemes.lightTheme,
+                initialRoute: Routes.home,
+              );
+            });
+   //   },
+    //);
   }
 }
