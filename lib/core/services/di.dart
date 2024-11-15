@@ -1,7 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
+import 'package:meal_recommendations/features/SeeAllScreen/data/data_source/SeeallDataSourceImpl.dart';
+import 'package:meal_recommendations/features/SeeAllScreen/data/repository/SeeAllRepositoryImpl.dart';
+import 'package:meal_recommendations/features/SeeAllScreen/domain/repositories/BaseSeeAllDataSource.dart';
+import 'package:meal_recommendations/features/SeeAllScreen/domain/repositories/BaseSeeAllRepository.dart';
 import 'package:meal_recommendations/features/auth/Login_Screen/data/data_source/LoginDataSourceImpl.dart';
+import 'package:meal_recommendations/features/home/data/data_source.dart';
 import 'package:meal_recommendations/features/favourite/data/repository/fetch_save_meal_repo_impl.dart';
 import 'package:meal_recommendations/features/favourite/domain/repositories/fetch_save_fav_repository.dart';
 import 'package:meal_recommendations/features/favourite/domain/use_cases/fetch_save_fav_use_case.dart';
@@ -41,6 +46,7 @@ void setupServiceLocator() {
           ()=> RemoteSideBarDataSource());
 
   di.registerLazySingleton<BaseLoginDataSource>(() => LoginDataSourceImpl());
+  di.registerLazySingleton<BaseSeeAllDataSource>(() => SeeAllDataSourceImpl());
 
   //  repositories
   di.registerLazySingleton<UserRepository>(
@@ -50,6 +56,9 @@ void setupServiceLocator() {
 
   di.registerLazySingleton<BaseLoginRepository>(
         () => LoginRepositoryImpl(loginDataSource: di()),
+  );
+  di.registerLazySingleton<BaseSeeAllRepository>(
+        () => SeeAllRepositoryImpl(seeAllDataSource: di()),
   );
   di.registerLazySingleton<SidebarRepo>(
         () => SidebarRepoImp(di()),
@@ -115,6 +124,7 @@ di.registerLazySingleton<ProfileBloc>(
 
 
   //External Libraries like dio
+  di.registerLazySingleton<FirebaseService>(() => FirebaseService());
 
   di.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
 
