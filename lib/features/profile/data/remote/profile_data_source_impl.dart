@@ -10,7 +10,7 @@ class ProfileDataSourceImpl implements ProfileDataSource {
   ProfileDataSourceImpl(this.firestore, this.changePasswordUseCase);
 
   @override
-    Future<Map<String, dynamic>> getUserProfile(String uid) async {
+  Future<Map<String, dynamic>> getUserProfile(String uid) async {
     try {
       final doc = await firestore.collection('users').doc(uid).get();
       if (doc.exists) {

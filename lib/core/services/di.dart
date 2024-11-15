@@ -69,27 +69,22 @@ void setupServiceLocator() {
 di.registerLazySingleton<FirebaseAuth>(
   () => FirebaseAuth.instance,
 );
-
 // Register ChangePasswordUseCase
 di.registerLazySingleton<ChangePasswordUseCase>(
   () => ChangePasswordUseCase(di<FirebaseAuth>()),
 );
-
 // Register ProfileDataSourceImpl
 di.registerLazySingleton<ProfileDataSource>(
   () => ProfileDataSourceImpl(FirebaseFirestore.instance, di<ChangePasswordUseCase>()),
 );
-
 // Register ProfileRepositoryImpl
 di.registerLazySingleton<ProfileRepository>(
   () => ProfileRepositoryImpl(di<ProfileDataSource>()),
 );
-
 // Register GetUserProfileUseCase
 di.registerLazySingleton<GetUserProfileUseCase>(
   () => GetUserProfileUseCase(di<ProfileRepository>()),
 );
-
 // Register ProfileBloc
 di.registerLazySingleton<ProfileBloc>(
   () => ProfileBloc(di<GetUserProfileUseCase>(), di<ChangePasswordUseCase>()),

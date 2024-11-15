@@ -11,16 +11,18 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   ProfileBloc(this.getUserProfileUseCase, this.changePasswordUseCase)
       : super(ProfileInitial()) {
-    on<FetchUserProfile>((event, emit) async {
-      emit(ProfileLoading());
-      try {
-        final profileData = await getUserProfileUseCase(event.uid);
-        emit(ProfileLoaded(profileData));
-      } catch (error) {
-        final firebaseError = FirebaseErrorHandler.handleError(error);
-        emit(ProfileError(firebaseError.error));
-      }
-    });
+ on<FetchUserProfile>((event, emit) async {
+  emit(ProfileLoading());
+  try {
+    print("Fetching profile data for UID: ${event.uid}"); 
+    final profileData = await getUserProfileUseCase(event.uid);
+    print("Profile data retrieved: $profileData");
+    emit(ProfileLoaded(profileData));
+  } catch (error) {
+    final firebaseError = FirebaseErrorHandler.handleError(error);
+    emit(ProfileError(firebaseError.error));
+  }
+});
 
     on<ChangePassword>((event, emit) async {
       emit(ProfileLoading());
