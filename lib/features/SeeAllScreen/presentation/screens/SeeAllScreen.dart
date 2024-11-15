@@ -44,7 +44,7 @@ class SeeAllScreen extends StatelessWidget {
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.22,
+                    height: MediaQuery.of(context).size.height * 0.24,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: state.meals.length,

@@ -22,6 +22,7 @@ class RecommendedRecipesItem extends StatelessWidget {
         children: [
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.2,
+            width: double.infinity,
             child: AspectRatio(
               aspectRatio: 2.1 / 1,
               child: Container(
@@ -64,6 +65,7 @@ class RecommendedRecipesItem extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: Row(
               children: [
+
                 Icon(
                   Icons.star,
                   color: Colors.yellow,
