@@ -50,6 +50,7 @@ class AppRouter {
         return _loginRoute();
 
 
+
       case Routes.verifyOtp:
         return MaterialPageRoute(
             builder: (_) => BlocProvider<OtpAuthCubit>(
@@ -70,8 +71,7 @@ class AppRouter {
         );
       case Routes.profile:
         return MaterialPageRoute(
-          builder: (_) =>
-               ProfileScreen(uid: FirebaseAuth.instance.currentUser!.uid),
+          builder: (_) => const ProfileScreen(),
         );
 
       case Routes.settings:
@@ -123,6 +123,5 @@ class AppRouter {
                 create: (context) => MealCubit(FirebaseService())..fetchMeals(),
               )
             ], child: const LayoutView()));
-
   }
 }
