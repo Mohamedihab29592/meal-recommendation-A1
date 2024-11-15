@@ -26,7 +26,7 @@ class LayoutView extends StatelessWidget {
         body: [
           // (Don't use scaffold again in the following widgets)
           const HomeScreen(),
-          const FavouriteScreen(),
+          const FavoriteScreen(),
           const ProfileScreen(),
         ][state.bottomNavIndex],
         bottomNavigationBar: NavigationBar(

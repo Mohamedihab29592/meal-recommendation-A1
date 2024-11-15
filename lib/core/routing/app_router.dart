@@ -67,7 +67,7 @@ class AppRouter {
 
       case Routes.favourite:
         return MaterialPageRoute(
-          builder: (_) => const FavouriteScreen(),
+          builder: (_) => const FavoriteScreen(),
         );
       case Routes.profile:
         return MaterialPageRoute(
