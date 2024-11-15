@@ -23,8 +23,17 @@ class SideBarBloc extends Bloc<SideBarEvent, SideBarStates> {
     on<LoadUserData>((event, emit) async {
       await _fetchUserData(emit);
     });
-    _loadUserData();
 
+    on<SignOutEvent>((event, emit) async {
+      emit(SignOutInProgress());
+      try {
+        await repository.signOut(); // assuming `signOut` is defined in your `repository`
+        emit(SignOutSuccess());
+      } catch (e) {
+        emit(SignOutFailure(e.toString()));
+      }
+    });
+    _loadUserData();
   }
 
   // Method to load user data immediately upon bloc creation

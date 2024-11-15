@@ -12,8 +12,4 @@ class SelectMenuEvent extends SideBarEvent {
   SelectMenuEvent(this.selectedMenu);
 }
 
-
-
-
-
 class SignOutEvent extends SideBarEvent {}

@@ -10,8 +10,10 @@ class Routes {
   static const String settings = '/settings';
   static const String layout = '/layout';
   static const String mealDetails = '/mealDetails';
-  static const String splach = '/splach';
   static const String seeAll = '/seeAll';
   static const String mealSuggestion = '/mealSuggestion';
   static const String home = '/home';
+  static const String mealSuggestion = '/mealSuggestion';
+  static const String home = '/home';
+
 }

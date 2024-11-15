@@ -1,20 +1,32 @@
-import 'package:meal_recommendations/features/favourite/data/models/meal.dart';
 
+import 'package:equatable/equatable.dart';
+import 'package:meal_recommendations/core/models/meal.dart';
 
-abstract class MealState {}
+abstract class FavMealState extends Equatable {
+  const FavMealState();
 
-class MealInitial extends MealState {}
-
-class MealLoading extends MealState {}
-
-class MealLoaded extends MealState {
-  final List<FavMealModel> favorites;
-
-  MealLoaded({required this.favorites});
+  @override
+  List<Object> get props => [];
 }
 
-class MealError extends MealState {
+class FavMealInitial extends FavMealState {}
+
+class FavMealLoading extends FavMealState {}
+
+class FavMealLoaded extends FavMealState {
+  final List<Meal> meals;
+
+  const FavMealLoaded(this.meals);
+
+  @override
+  List<Object> get props => [meals];
+}
+
+class FavMealError extends FavMealState {
   final String message;
 
-  MealError({required this.message});
+  const FavMealError(this.message);
+
+  @override
+  List<Object> get props => [message];
 }

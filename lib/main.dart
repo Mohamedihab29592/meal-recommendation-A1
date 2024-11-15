@@ -26,15 +26,16 @@ void main() async {
 
   await Hive.initFlutter();
   await Hive.openBox('appBox');
-  await Hive.openBox('myFavMeals');
   Hive.registerAdapter(MealAdapter());
   Hive.registerAdapter(MealSummaryAdapter());
   Hive.registerAdapter(MealNutritionAdapter());
   Hive.registerAdapter(MealIngredientAdapter());
+  await Hive.openBox<Meal>('myFavMeals');
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
 
   await checkIfUserIsLoggedIn();
 
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
 
   
     return DevicePreview(
