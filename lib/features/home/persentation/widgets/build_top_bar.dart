@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../../core/themes/app_colors.dart';
+
 class BuildTopBar extends StatelessWidget {
   const BuildTopBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return      Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
@@ -22,7 +24,7 @@ class BuildTopBar extends StatelessWidget {
         IconButton(
           onPressed: () {},
           icon: Icon(
-            Icons.notifications,
+            FontAwesomeIcons.robot,
             color: AppColors.primaryColor,
             size: MediaQuery.of(context).size.width * 0.08,
           ),
