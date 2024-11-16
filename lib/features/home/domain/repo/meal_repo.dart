@@ -7,4 +7,6 @@ abstract class MealRepository {
   Stream<List<Meal>> listenToMeals();
   void removeAllMeals();
   void updateIsFavInFireStore(String dishName, bool isFav);
+  void removeMealFromFireStore(String dishName);
+
 }

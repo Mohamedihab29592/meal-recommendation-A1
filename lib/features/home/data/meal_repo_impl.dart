@@ -63,4 +63,26 @@ class MealRepositoryImpl implements MealRepository {
       print("Failed to update is_favourite: $e");
     }
   }
+
+  @override
+  Future<void> removeMealFromFireStore(String dishName) async {
+    try {
+      QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection('meals')
+          .where('dish_name', isEqualTo: dishName)
+          .get();
+      if (snapshot.docs.isNotEmpty) {
+        String docId = snapshot.docs.first.id;
+        await FirebaseFirestore.instance
+            .collection('meals')
+            .doc(docId)
+            .delete();
+        print("$dishName deleted successfully");
+      } else {
+        print("No document found with the dish_name $dishName");
+      }
+    } catch (e) {
+      print("Failed to delete $dishName : $e");
+    }
+  }
 }

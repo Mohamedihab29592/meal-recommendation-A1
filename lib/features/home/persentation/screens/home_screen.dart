@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meal_recommendations/core/helpers/bloc_observer.dart';
 import 'package:meal_recommendations/core/themes/app_colors.dart';
+import 'package:meal_recommendations/features/home/persentation/businessLogic/meal_cubit.dart';
 import '../widgets/build_ingredient_button.dart';
 import '../widgets/build_search_bar.dart';
 import '../widgets/build_top_bar.dart';
@@ -30,7 +33,7 @@ class HomeScreen extends StatelessWidget {
             SizedBox(height: mediaQuery.size.height * 0.03),
             _buildTopRecipesHeader(context),
             SizedBox(height: mediaQuery.size.height * 0.02),
-            _buildRecipeList(mediaQuery),
+            _buildRecipeList(mediaQuery, context),
           ],
         ),
       ),
@@ -63,13 +66,14 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildRecipeList(MediaQueryData mediaQuery) {
+  Widget _buildRecipeList(MediaQueryData mediaQuery, BuildContext context) {
     return SizedBox(
       width: mediaQuery.size.width,
-      height: mediaQuery.size.height,
-      child: const RecipeCard(),
+      height: mediaQuery.size.height*0.5,
+      child:  const RecipeCard()
     );
   }
+
 
 // TODO THIS FUNCTION NOT COMPLETED AND IT WILL BE COMPLETED IN THE NEXT TASK.
   void _showModalBottomSheet(BuildContext context) {

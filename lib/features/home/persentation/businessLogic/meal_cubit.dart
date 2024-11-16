@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meal_recommendations/features/home/data/local_data.dart';
+import 'package:meal_recommendations/features/home/domain/usecase/remove_meal_from_fireStore.dart';
 import 'package:meta/meta.dart';
 import '../../../../core/models/meal.dart';
 import '../../domain/usecase/add_meal_to_fav.dart';
@@ -14,12 +15,14 @@ class MealCubit extends Cubit<MealState> {
   final AddMealToFav addMealToFavoritesUseCase;
   final RemoveMeal removeFavoriteMealUseCase;
   final UpdateIsFavInFirestore updateIsFavUseCase;
+  final RemoveMealFromFirestore removeMealFromFirestore;
 
   MealCubit(
       {required this.fetchMealsUseCase,
       required this.addMealToFavoritesUseCase,
       required this.removeFavoriteMealUseCase,
       required this.updateIsFavUseCase,
+      required this.removeMealFromFirestore,
       required LocalData localData})
       : super(MealInitial()) {
     _listenToMeals();
@@ -80,6 +83,15 @@ class MealCubit extends Cubit<MealState> {
     try {
       await updateIsFavUseCase(meal.dishName!, meal.isFavourite);
       await removeFavoriteMealUseCase(meal);
+      emit(MealLoaded([...myMeals]));
+    } catch (e) {
+      print("Failed to remove meal from favorites: $e");
+    }
+  }
+
+  Future<void> removeMealFireStore(Meal meal) async {
+    try {
+      await removeMealFromFirestore(meal.dishName!);
       emit(MealLoaded([...myMeals]));
     } catch (e) {
       print("Failed to remove meal from favorites: $e");

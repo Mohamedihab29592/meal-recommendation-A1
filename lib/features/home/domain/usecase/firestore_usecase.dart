@@ -6,6 +6,6 @@ class UpdateIsFavInFirestore {
   UpdateIsFavInFirestore(this.repository);
 
   Future<void> call(String dishName, bool isFav) async {
-     repository.updateIsFavInFireStore(dishName, isFav);
+    repository.updateIsFavInFireStore(dishName, isFav);
   }
 }

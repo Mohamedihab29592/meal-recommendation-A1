@@ -9,6 +9,7 @@ import 'package:meal_recommendations/features/home/domain/usecase/add_meal_to_fa
 import 'package:meal_recommendations/features/home/domain/usecase/fetch_meals.dart';
 import 'package:meal_recommendations/features/home/domain/usecase/firestore_usecase.dart';
 import 'package:meal_recommendations/features/home/domain/usecase/remove_meal.dart';
+import 'package:meal_recommendations/features/home/domain/usecase/remove_meal_from_fireStore.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_bloc.dart';
 import 'package:meal_recommendations/features/layout/presentation/views/layout_view.dart';
 import 'package:meal_recommendations/features/meal_details/presentation/views/meal_details_view.dart';
@@ -64,7 +65,9 @@ class AppRouter {
                         MealRepositoryImpl(FirebaseService(), LocalData());
 
                     return MealCubit(
-                      localData: LocalData(),
+                        removeMealFromFirestore:
+                            RemoveMealFromFirestore(mealRepository),
+                        localData: LocalData(),
                         fetchMealsUseCase: FetchMeals(mealRepository),
                         addMealToFavoritesUseCase: AddMealToFav(mealRepository),
                         removeFavoriteMealUseCase: RemoveMeal(mealRepository),
@@ -102,7 +105,9 @@ class AppRouter {
                           MealRepositoryImpl(FirebaseService(), LocalData());
 
                       return MealCubit(
-                        localData: LocalData(),
+                          removeMealFromFirestore:
+                              RemoveMealFromFirestore(mealRepository),
+                          localData: LocalData(),
                           fetchMealsUseCase: FetchMeals(mealRepository),
                           addMealToFavoritesUseCase:
                               AddMealToFav(mealRepository),

@@ -58,8 +58,37 @@ class _RecipeCardState extends State<RecipeCard> {
       itemCount: meals.length,
       itemBuilder: (context, index) {
         final meal = meals[index];
-        return BuildMealCard(meal: meal);
+        return GestureDetector(
+            onLongPress: () => _showDeleteMealDialog(context, meal.dishName!),
+            child: BuildMealCard(meal: meal));
       },
+    );
+  }
+
+  void _showDeleteMealDialog(BuildContext parentContext, String dishName) {
+    showDialog(
+      context: parentContext,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Delete Meal'),
+        content: const Text('Are you sure you want to delete this meal?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('No'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: AppColors.primaryColor,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+              parentContext.read<MealCubit>().removeMealFromFirestore(dishName);
+            },
+            child: const Text('Yes'),
+          ),
+        ],
+      ),
     );
   }
 }
