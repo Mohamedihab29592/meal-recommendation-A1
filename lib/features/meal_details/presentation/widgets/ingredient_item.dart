@@ -18,11 +18,18 @@ class IngredientItem extends StatelessWidget {
     return ListTile(
       leading: CachedNetworkImage(
         imageUrl: ingredient.imageUrl,
-        // imageUrl:
-        //     'https://img.freepik.com/free-photo/different-varieties-kabab-served-with-grilled-eggplants-tomatoes_140725-8134.jpg?t=st=1729945680~exp=1729949280~hmac=4263d5514b20e8769010e757011c73a51448b6a425bf0271341b0552b7612767&w=740',
         imageBuilder: (_, image) => CircleAvatar(
           backgroundImage: image,
+          radius: 16.r, 
+        ),
+        placeholder: (_, __) => CircleAvatar(
           radius: 16.r,
+          backgroundColor: Colors.grey[300],
+        ),
+        errorWidget: (_, __, ___) => CircleAvatar(
+          radius: 16.r,
+          backgroundColor: Colors.red,
+          child: Icon(Icons.error, size: 16.r),
         ),
       ),
       title: Text(
