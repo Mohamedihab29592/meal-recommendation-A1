@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:meal_recommendations/features/GeminiAi/Data/models/suggested_meal_model.dart';
 
 import '../../../../core/themes/app_colors.dart';
+
 class IngredientList extends StatelessWidget {
-  final List<String> ingredients;
+  final List<Ingredient> ingredients;
 
   const IngredientList({required this.ingredients, super.key});
 
@@ -13,10 +15,17 @@ class IngredientList extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: ingredients
             .map((ingredient) => ListTile(
-          leading: const Icon(Icons.check,
-              size: 18, color: AppColors.primaryColor),
-          title: Text(ingredient),
-        ))
+                leading: const Icon(Icons.check,
+                    size: 18, color: AppColors.primaryColor),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    //TODO IMAGES NOT COMPLETED
+                    //TODO Image.network(ingredient.image),
+                    Text(ingredient.quantity),
+                    Text(ingredient.name),
+                  ],
+                )))
             .toList(),
       ),
     );

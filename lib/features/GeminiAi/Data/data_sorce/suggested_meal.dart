@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:meal_recommendations/features/GeminiAi/Data/models/suggested_meal_model.dart';
 
@@ -8,17 +9,52 @@ class RecipeRemoteDatasource {
     apiKey: 'AIzaSyC7KGMLOwzuPM6hZXCz7QAnBXG5bqsUiII',
   );
 
-  Future<SuggestedRecipe> getRecipeSuggestions(String ingredients) async {
+  String extractJson(String responseText) {
+    final jsonStart = responseText.indexOf('{');
+    final jsonEnd = responseText.lastIndexOf('}');
+    if (jsonStart == -1 || jsonEnd == -1) {
+      throw Exception('JSON data not found in the response');
+    }
+    return responseText.substring(jsonStart, jsonEnd + 1);
+  }
+
+  Future<AIMeal> getRecipeSuggestions(String ingredients) async {
     try {
-      final prompt =
-          'Suggest a recipe for $ingredients ,i need the data in just five sections (Name,Nutritional information, description, ingredients,instructions)';
+      const prompt = '''
+      I need a recipe suggestion for breakfast in JSON format that matches the structure of the model I provided below. The JSON should include the following sections: 
+      - `name` (recipe name),
+      - `meal_type` (type of meal),
+      - `rating` (rating of the recipe),
+      - `cook_time` (time to cook in minutes),
+      - `serving_size` (number of servings),
+      - `summary` (includes a description and a list of nutritional information),
+      - `ingredients` (list of ingredients with names, image URLs, and quantity in pieces),
+      - `meal_steps` (list of cooking instructions).
+
+      Return the response strictly in JSON format without any additional text or comments.
+      Ensure the JSON response strictly adheres to the JSON standard:
+- All keys and string values must be enclosed in double quotes.
+- Fractions or mixed strings like `1/2` must be quoted as `"1/2"`.
+      ''';
+
       final content = [Content.text(prompt)];
 
       final response = await gemini.generateContent(content);
-      print(response);
-      return RecipeParser().parseRecipe(response.text!);
+
+      final jsonString = extractJson(response.text!.trim());
+      final jsonMap = jsonDecode(jsonString) as Map<String, dynamic>;
+      void printLongText(String text) {
+        final pattern = RegExp('.{1,800}');
+        for (final match in pattern.allMatches(text)) {
+          print(match.group(0));
+        }
+      }
+
+      printLongText(jsonString);
+      return AIMeal.fromJson(jsonMap);
     } catch (e) {
-      throw Exception('Error fetching data: $e');
+      print('Error: $e');
+      throw Exception('Error fetching recipe suggestions: $e');
     }
   }
 }

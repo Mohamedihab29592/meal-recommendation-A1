@@ -15,27 +15,19 @@ class RecipeDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     final recipe = state.suggestedRecipe;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 20),
-        const SectionHeader(title: 'Meal Name'),
-        CardContent(content: recipe.mealName),
-        const SizedBox(height: 10),
-        const SectionHeader(title: 'Description'),
-        CardContent(content: recipe.description),
-        const SizedBox(height: 10),
-        const SectionHeader(title: 'Ingredients'),
-        IngredientList(ingredients: recipe.ingredients),
-        const SizedBox(height: 10),
-        const SectionHeader(title: 'Instructions'),
-        InstructionList(instructions: recipe.instructions),
-        if (recipe.nutritionalInformation != null) ...[
-          const SizedBox(height: 10),
-          const SectionHeader(title: 'Nutritional Information'),
-          CardContent(content: recipe.nutritionalInformation!),
-        ],
-      ],
-    );
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const SizedBox(height: 20),
+      const SectionHeader(title: 'Meal Name'),
+      CardContent(content: recipe.name),
+      const SizedBox(height: 10),
+      const SectionHeader(title: 'Description'),
+      CardContent(content: recipe.summary),
+      const SizedBox(height: 10),
+      const SectionHeader(title: 'Ingredients'),
+      IngredientList(ingredients: recipe.ingredients),
+      const SizedBox(height: 10),
+      const SectionHeader(title: 'Instructions'),
+      InstructionList(instructions: recipe.mealSteps),
+    ]);
   }
 }
