@@ -68,21 +68,10 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildRecipeList(MediaQueryData mediaQuery, BuildContext context) {
     return SizedBox(
-      width: mediaQuery.size.width,
-      height: mediaQuery.size.height*0.5,
-      child:  const RecipeCard()
-    );
+        width: mediaQuery.size.width,
+        height: mediaQuery.size.height * 0.5,
+        child: const RecipeCard());
   }
 
 
-// TODO THIS FUNCTION NOT COMPLETED AND IT WILL BE COMPLETED IN THE NEXT TASK.
-  void _showModalBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-      ),
-      builder: (context) => const ShowFilterMealsBottomSheet(),
-    );
-  }
 }

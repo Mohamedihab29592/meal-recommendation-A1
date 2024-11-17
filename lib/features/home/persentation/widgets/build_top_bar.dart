@@ -13,20 +13,22 @@ class BuildTopBar extends StatelessWidget {
       children: [
         IconButton(
           onPressed: () {
-            Scaffold.of(context).openDrawer();
+            //todo openDrawer
           },
           icon: Icon(
             Icons.menu,
             color: AppColors.primaryColor,
-            size: MediaQuery.of(context).size.width * 0.08,
+            size: MediaQuery.of(context).size.width * 0.073,
           ),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            //todo  Navigator.pushNamed(context, '/suggestedMeal');
+          },
           icon: Icon(
             FontAwesomeIcons.robot,
             color: AppColors.primaryColor,
-            size: MediaQuery.of(context).size.width * 0.08,
+            size: MediaQuery.of(context).size.width * 0.073,
           ),
         ),
       ],

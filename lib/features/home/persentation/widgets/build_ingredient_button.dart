@@ -12,7 +12,7 @@ class BuildIngredientButton extends StatelessWidget {
       alignment: Alignment.centerRight,
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, '/suggestedMeal');
+          //todo  Navigator.pushNamed(context, '/suggestedMeal');
         },
         child: Container(
           width: mediaQuery.size.width * 0.45,
