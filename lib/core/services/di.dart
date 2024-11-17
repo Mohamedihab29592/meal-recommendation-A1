@@ -21,6 +21,7 @@ import 'package:meal_recommendations/features/profile/data/remote/profile_data_s
 import 'package:meal_recommendations/features/profile/domain/profile_repository.dart';
 import 'package:meal_recommendations/features/profile/domain/usecases/change_password_use_case.dart';
 import 'package:meal_recommendations/features/profile/domain/usecases/get_profile_use_case.dart';
+import 'package:meal_recommendations/features/profile/domain/usecases/logout_use_case.dart';
 import 'package:meal_recommendations/features/profile/presentation/controller/profile_bloc_bloc.dart';
 import 'package:meal_recommendations/features/sidebar/data/data_source/remote_data_source.dart';
 import 'package:meal_recommendations/features/sidebar/data/repoImp/repo_imp.dart';
@@ -78,6 +79,7 @@ void setupServiceLocator() {
 
   //  use cases
 
+
 // Register FirebaseAuth
 di.registerLazySingleton<FirebaseAuth>(
   () => FirebaseAuth.instance,
@@ -100,9 +102,11 @@ di.registerLazySingleton<GetUserProfileUseCase>(
 );
 // Register ProfileBloc
 di.registerLazySingleton<ProfileBloc>(
-  () => ProfileBloc(di<GetUserProfileUseCase>(), di<ChangePasswordUseCase>()),
+  () => ProfileBloc(di<GetUserProfileUseCase>(), di<ChangePasswordUseCase>(),
+   di<LogoutUseCase>(),
+   ),
 );
-
+di.registerLazySingleton<LogoutUseCase>(() => LogoutUseCase());
 
 
   //  blocs or cubits

@@ -128,14 +128,17 @@ class AppRouter {
 
   static MaterialPageRoute<dynamic> _layoutRoute() {
     return MaterialPageRoute(
-        builder: (_) => MultiBlocProvider(providers: [
+        builder: (_) => 
+        MultiBlocProvider(providers: [
               BlocProvider(create: (context) => SideBarBloc(di())),
-              BlocProvider<LayoutBloc>(
-                create: (_) => di.get<LayoutBloc>(),
-              ),
+              // BlocProvider<LayoutBloc>(
+              //   create: (_) => di.get<LayoutBloc>(),
+              // ),
               BlocProvider(
                 create: (context) => MealCubit(FirebaseService())..fetchMeals(),
               )
-            ], child: const LayoutView()));
+            ], 
+            child: 
+            const LayoutView()));
   }
 }

@@ -20,3 +20,12 @@ class PasswordChangeSuccess extends ProfileState {
 
   PasswordChangeSuccess(this.message);
 }
+class LogoutSuccess extends ProfileState {}
+
+class LogoutError extends ProfileState {
+  final String message;
+
+  LogoutError(this.message);
+}
+
+class LogoutLoading extends ProfileState {}

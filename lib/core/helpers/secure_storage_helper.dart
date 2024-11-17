@@ -21,4 +21,9 @@ class SecureStorageHelper {
     debugPrint('FlutterSecureStorage : getSecuredString with $key :');
     return await flutterSecureStorage.delete(key: key);
   }
+  static Future<void> deleteSecuredString(String key) async {
+  const flutterSecureStorage = FlutterSecureStorage();
+  debugPrint('FlutterSecureStorage : deleteSecuredString with $key');
+  await flutterSecureStorage.delete(key: key);
+}
 }

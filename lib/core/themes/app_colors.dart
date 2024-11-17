@@ -9,4 +9,6 @@ class AppColors {
   static const Color textFormColor = Color(0xff838383);
   static const Color grey = Color(0xff8A8A8A);
   static const Color inActiveDots = Color(0xFFD9D9D9);
+  static const Color logoutColor = Color(0xFFFF0000); 
+
 }
