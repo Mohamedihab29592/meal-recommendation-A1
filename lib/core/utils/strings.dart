@@ -13,4 +13,13 @@ class AppStrings {
   static const String totalIngredients = 'Total ingredients';
   static const String totalSteps = 'Total steps';
   static const String step = 'Step';
+  static const String mealsCollection="meals";
+  static const String isFavorite="is_favourite";
+  static const String faveLocalHiveId="myFavMeals";
+  static const String errorFetching= "Error fetching and saving favorite meals";
+  static const String noMeals= "No favorite meals";
+  static const String noMealsAvailable= "No favorite meals available";
+
+
+
 }

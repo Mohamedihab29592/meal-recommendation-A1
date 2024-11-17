@@ -1,20 +1,11 @@
 
-import 'package:meal_recommendations/features/favourite/data/models/meal.dart';
+import 'package:equatable/equatable.dart';
 
-abstract class MealEvent {}
+abstract class FavMealEvent extends Equatable {
+   const FavMealEvent();
 
-class LoadFavoritesEvent extends MealEvent {}
-
-class AddFavoriteEvent extends MealEvent {
-  final FavMealModel meal;
-  final String userId;
-
-  AddFavoriteEvent({required this.meal, required this.userId});
+  @override
+  List<Object> get props => [];
 }
 
-class RemoveFavoriteEvent extends MealEvent {
-  final int id;
-  final String userId;
-
-  RemoveFavoriteEvent({required this.id, required this.userId});
-}
+class FetchAndSaveFavMealsEvent extends FavMealEvent {}

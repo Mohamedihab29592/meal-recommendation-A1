@@ -1,12 +1,13 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive/hive.dart';
+import 'package:meal_recommendations/core/helpers/cache_keys.dart';
+import 'package:meal_recommendations/core/helpers/secure_storage_helper.dart';
 import 'package:meal_recommendations/core/themes/app_colors.dart';
-import 'package:meal_recommendations/features/profile/data/profile_repository_impl.dart';
-import 'package:meal_recommendations/features/profile/domain/usecases/change_password_use_case.dart';
-import 'package:meal_recommendations/features/profile/domain/usecases/get_profile_use_case.dart';
+import 'package:meal_recommendations/core/themes/app_text_styles.dart';
 import 'package:meal_recommendations/features/profile/presentation/controller/profile_bloc_bloc.dart';
 import 'package:meal_recommendations/features/profile/presentation/controller/profile_bloc_event.dart';
 import 'package:meal_recommendations/features/profile/presentation/controller/profile_bloc_state.dart';
@@ -14,22 +15,55 @@ import 'package:meal_recommendations/features/profile/presentation/widgets/chang
 import 'package:meal_recommendations/features/profile/presentation/widgets/profile_image_widget.dart';
 import 'package:meal_recommendations/features/profile/presentation/widgets/profile_text_fields_widget.dart';
 import 'package:meal_recommendations/features/profile/presentation/widgets/save_button_widget.dart';
-import '../../data/remote/profile_data_source_impl.dart';
+// import 'package:meal_recommendations/features/profile/presentation/widgets/logout_button_widget.dart';
 
-// ignore_for_file: use_build_context_synchronously, prefer_const_constructors
+import 'package:meal_recommendations/core/services/di.dart' as di;
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key, required this.uid});
-
-  final String uid;
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
 
   @override
-  ProfileScreenState createState() => ProfileScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => ProfileBloc(di.di(), di.di(), di.di()),
+      child: const ProfileBody(),
+    );
+  }
 }
 
-class ProfileScreenState extends State<ProfileScreen> {
+class ProfileBody extends StatefulWidget {
+  const ProfileBody({super.key});
+
+  @override
+  State<ProfileBody> createState() => _ProfileBodyState();
+}
+
+class _ProfileBodyState extends State<ProfileBody> {
   bool _isEditing = false;
   String? _profileImageUrl;
+  String? _uid;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      _loadUid();
+    });
+  }
+
+  Future<void> _loadUid() async {
+    await SecureStorageHelper.getSecuredString(CacheKeys.cachedUserId)
+        .then((value) {
+      _loadProfileData(value);
+    });
+  }
+
+  void _loadProfileData(String? uid) {
+    if (uid != null && mounted) {
+      _uid = uid;
+      context.read<ProfileBloc>().add(FetchUserProfile(uid));
+    }
+  }
 
   void _toggleEditing() {
     setState(() {
@@ -49,8 +83,7 @@ class ProfileScreenState extends State<ProfileScreen> {
         'email': email,
         'phone': phone,
       });
-
-      BlocProvider.of<ProfileBloc>(context).add(FetchUserProfile(uid));
+      context.read<ProfileBloc>().add(FetchUserProfile(uid));
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Failed to update profile: $e")),
@@ -63,42 +96,38 @@ class ProfileScreenState extends State<ProfileScreen> {
     final screenSize = MediaQuery.of(context).size;
     final double padding = screenSize.width * 0.06;
 
-     return BlocProvider(
-    create: (_) {
-      final firestore = FirebaseFirestore.instance; 
-      final auth = FirebaseAuth.instance;
-      final profileDataSource = ProfileDataSourceImpl(firestore, ChangePasswordUseCase(auth));
-      final profileRepository = ProfileRepositoryImpl(profileDataSource);
-      final getUserProfileUseCase = GetUserProfileUseCase(profileRepository);
+    return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundLightColor,
+      body: BlocConsumer<ProfileBloc, ProfileState>(
+        listener: (context, state) {
+          if (state is LogoutSuccess) {
+            Navigator.pushReplacementNamed(context, '/login');
+          } else if (state is LogoutError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Logout failed: ${state.message}')),
+            );
+          }
+        },
+        builder: (context, state) {
+          if (state is ProfileLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is ProfileLoaded) {
+            final data = state.profileData;
+            final nameController = TextEditingController(text: data['name']);
+            final emailController = TextEditingController(text: data['email']);
+            final phoneController = TextEditingController(text: data['phone']);
 
-      return ProfileBloc(getUserProfileUseCase, ChangePasswordUseCase(auth))
-        ..add(FetchUserProfile(widget.uid));
-    },
-    child: Scaffold(
+            _profileImageUrl = data['profileImage'];
 
-        backgroundColor: AppColors.scaffoldBackgroundLightColor,
-        body: BlocBuilder<ProfileBloc, ProfileState>(
-          builder: (context, state) {
-            if (state is ProfileLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is ProfileLoaded) {
-              final data = state.profileData;
-              final nameController = TextEditingController(text: data['name']);
-              final emailController =
-                  TextEditingController(text: data['email']);
-              final phoneController =
-                  TextEditingController(text: data['phone']);
-
-              _profileImageUrl = data['profileImage'];
-
-              return SingleChildScrollView(
+            return SafeArea(
+              child: SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: padding, vertical: padding),
                   child: Column(
                     children: [
                       ProfileImageWidget(
-                        uid: widget.uid,
+                        uid: _uid!,
                         initialImageUrl: _profileImageUrl,
                         onImageUrlChanged: (url) {
                           setState(() {
@@ -123,7 +152,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                         onSavePressed: () async {
                           await _saveProfileData(
                             context,
-                            widget.uid,
+                            _uid!,
                             nameController.text,
                             emailController.text,
                             phoneController.text,
@@ -133,16 +162,54 @@ class ProfileScreenState extends State<ProfileScreen> {
                           });
                         },
                       ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
+                        width: 150,
+                        child: OutlinedButton(
+                          onPressed: () {
+                            context.read<ProfileBloc>().add(LogoutRequested());
+                          },
+                          style: OutlinedButton.styleFrom(
+                            side: const BorderSide(
+                              color: AppColors.logoutColor,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Logout',
+                                style: AppTextStyles.font16Bold.copyWith(
+                                  color: AppColors.logoutColor,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              const Icon(
+                                Icons.logout,
+                                size: 20,
+                                color: AppColors.logoutColor,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-              );
-            } else if (state is ProfileError) {
-              return Center(child: Text(state.message));
-            }
-            return Container();
-          },
-        ),
+              ),
+            );
+          } else if (state is ProfileError) {
+            return Center(child: Text(state.message));
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
       ),
     );
   }

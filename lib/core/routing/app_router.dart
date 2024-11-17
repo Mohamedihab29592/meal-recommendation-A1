@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommendations/core/models/meal.dart';
@@ -13,8 +14,13 @@ import 'package:meal_recommendations/features/layout/presentation/views/layout_v
 import 'package:meal_recommendations/features/meal_details/presentation/views/meal_details_view.dart';
 import 'package:meal_recommendations/features/auth/register/persentation/screens/otp_screen.dart';
 import 'package:meal_recommendations/features/auth/register/persentation/screens/register_screen.dart';
+import 'package:meal_recommendations/features/profile/presentation/screens/profile_screen.dart';
 import 'package:meal_recommendations/features/splash_boarding/screens/on_boarding_screen.dart';
 import 'package:meal_recommendations/features/splash_boarding/screens/splash_screen.dart';
+import '../../features/SeeAllScreen/domain/repositories/BaseSeeAllRepository.dart';
+import '../../features/SeeAllScreen/presentation/controller/Bloc/SeeAll BLoc.dart';
+import '../../features/SeeAllScreen/presentation/controller/State/SeeAll events.dart';
+import '../../features/SeeAllScreen/presentation/screens/SeeAllScreen.dart';
 import '../../features/auth/Login_Screen/presenation/controller/Login_bloc/bloc/Login BLoc.dart';
 import '../../features/auth/Login_Screen/presenation/screens/LoginScreen.dart';
 import '../../features/auth/register/persentation/controller/sign_up_bloc.dart';
@@ -45,7 +51,9 @@ class AppRouter {
         );
 
       case Routes.login:
+
         return _loginRoute();
+
 
 
       case Routes.verifyOtp:
@@ -64,12 +72,12 @@ class AppRouter {
 
       case Routes.favourite:
         return MaterialPageRoute(
-          builder: (_) => const FavouriteScreen(),
+          builder: (_) => const FavoriteScreen(),
         );
       case Routes.profile:
         return MaterialPageRoute(
-          builder: (_) =>
-              const ProfileScreen(uid: 'ZZg8pccM5ZceMicpUTAFkvZADLT2'),
+
+          builder: (_) => const ProfileScreen(),
         );
 
       case Routes.settings:
@@ -78,6 +86,7 @@ class AppRouter {
         );
 
       case Routes.layout:
+
         return _layoutRoute();
 
       case Routes.mealDetails:
@@ -85,13 +94,20 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => MealDetailsView(meal: args),
         );
+      case Routes.seeAll:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => SeeAllBloc(di<BaseSeeAllRepository>())..add(FetchTrendingRecipesEvent()),
+            child: SeeAllScreen(seeAllRepository: di<BaseSeeAllRepository>()),
+          ),
+        );
+
       case Routes.mealSuggestion:
         return MaterialPageRoute(
             builder: (_) => BlocProvider<SuggestedRecipeCubit>(
                 create: (_) => SuggestedRecipeCubit(GetRecipeSuggestionUseCase(
                     RecipeRepository(RecipeRemoteDatasource()))),
                 child: MealSuggestionScreen()));
-
       default:
         return MaterialPageRoute(
           builder: (_) => const OnboardingScreen(),
@@ -112,15 +128,17 @@ class AppRouter {
 
   static MaterialPageRoute<dynamic> _layoutRoute() {
     return MaterialPageRoute(
-        builder: (_) => MultiBlocProvider(providers: [
+        builder: (_) => 
+        MultiBlocProvider(providers: [
               BlocProvider(create: (context) => SideBarBloc(di())),
-              BlocProvider<LayoutBloc>(
-                create: (_) => di.get<LayoutBloc>(),
-              ),
+              // BlocProvider<LayoutBloc>(
+              //   create: (_) => di.get<LayoutBloc>(),
+              // ),
               BlocProvider(
                 create: (context) => MealCubit(FirebaseService())..fetchMeals(),
               )
-            ], child: const LayoutView()));
-
+            ], 
+            child: 
+            const LayoutView()));
   }
 }

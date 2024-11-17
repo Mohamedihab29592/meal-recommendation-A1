@@ -24,7 +24,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final box = Hive.box('appBox');
-  var formKey = GlobalKey<FormState>();
+  final loginFormKey = GlobalKey<FormState>(); // Unique key
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -95,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: MediaQuery.of(context).size.height * 0.06,
                         ),
                         Form(
-                          key: formKey, // Use BLoC's formKey
+                          key: loginFormKey, // Use BLoC's formKey
                           child: Column(
                             children: [
                               CustomTextFormField(
