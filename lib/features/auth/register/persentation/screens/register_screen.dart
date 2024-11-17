@@ -12,7 +12,7 @@ import '../controller/user_states.dart';
 import '../widgets/overlay.dart';
 
 class RegisterScreen extends StatelessWidget {
-  var formkey = GlobalKey<FormState>();
+  final registerFormKey = GlobalKey<FormState>(); // Unique key for RegisterScreen
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -35,7 +35,7 @@ class RegisterScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06), // Padding based on screen width
                 child: Form(
-                  key: formkey,
+                  key: registerFormKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
