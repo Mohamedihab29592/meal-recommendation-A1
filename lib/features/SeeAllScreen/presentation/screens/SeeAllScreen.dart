@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:meal_recommendations/features/SeeAllScreen/presentation/Widgets/Recommended%20Recipes%20Item.dart';
 import 'package:meal_recommendations/features/SeeAllScreen/presentation/Widgets/Trending%20Recipes%20Item.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:redacted/redacted.dart';
 import '../../../../core/themes/app_colors.dart';
 import '../../../../core/themes/app_text_styles.dart';
 import '../../domain/repositories/BaseSeeAllRepository.dart';
+import '../Widgets/LoadingScreen.dart';
 import '../controller/Bloc/SeeAll BLoc.dart';
 import '../controller/State/SeeAll events.dart';
 import '../controller/State/SeeAll state.dart';
@@ -21,18 +23,26 @@ class SeeAllScreen extends StatelessWidget {
           SeeAllBloc(seeAllRepository)..add(FetchTrendingRecipesEvent()),
       child: Scaffold(
         appBar: AppBar(
-          leading: const Icon(Icons.menu, color: AppColors.primaryColor,size: 32,),
+          leading: const Icon(
+            Icons.menu,
+            color: AppColors.primaryColor,
+            size: 32,
+          ),
           actions: const [
             Padding(
               padding: EdgeInsets.all(8.0),
-              child: Icon(Icons.notifications, color: AppColors.primaryColor,size: 32,),
+              child: Icon(
+                Icons.notifications,
+                color: AppColors.primaryColor,
+                size: 32,
+              ),
             ),
           ],
         ),
         body: BlocBuilder<SeeAllBloc, SeeAllStates>(
           builder: (context, state) {
             if (state is SeeAllLoadingState) {
-              return const Center(child: CircularProgressIndicator());
+               LoadingSeeAllScreen().redacted(context: context, redact: true);
             } else if (state is SeeAllSuccessState) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -68,11 +78,11 @@ class SeeAllScreen extends StatelessWidget {
                       itemCount: state.meals.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 14, horizontal: 11),
-                          child:
-                              RecommendedRecipesItem(meal: state.meals[index]),
-                        );
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 14, horizontal: 11),
+                            child: RecommendedRecipesItem(
+                              meal: state.meals[index],
+                            ));
                       },
                     ),
                   ),

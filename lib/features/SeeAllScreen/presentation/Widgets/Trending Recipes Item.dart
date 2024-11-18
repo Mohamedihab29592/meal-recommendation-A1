@@ -1,20 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:redacted/redacted.dart';
 import '../../../../core/models/meal.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/themes/app_text_styles.dart';
 
 class TrendingRecipesItem extends StatelessWidget {
-  TrendingRecipesItem({super.key, required this.meal});
-  Meal meal;
+  const TrendingRecipesItem({super.key, required this.meal});
+  final Meal meal;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
         Navigator.pushNamed(context, Routes.mealDetails,arguments: meal);
-
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +59,7 @@ class TrendingRecipesItem extends StatelessWidget {
             ),
           ),
         ],
-      ),
+      )
     );
   }
 }
