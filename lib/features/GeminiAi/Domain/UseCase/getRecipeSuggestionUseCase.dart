@@ -6,7 +6,7 @@ class GetRecipeSuggestionUseCase {
 
   GetRecipeSuggestionUseCase(this.recipeRepository);
 
-  Future<SuggestedRecipe> call(String ingredients) {
+  Future<AIMeal> call(String ingredients) {
     return recipeRepository.getRecipeSuggestions(ingredients);
   }
 }

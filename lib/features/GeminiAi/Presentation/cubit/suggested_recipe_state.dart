@@ -5,7 +5,7 @@ abstract class SuggestedRecipeState {}
 class SuggestedRecipeInitial extends SuggestedRecipeState {}
 
 class SuggestedRecipeSuccess extends SuggestedRecipeState {
-  final SuggestedRecipe suggestedRecipe;
+  final AIMeal suggestedRecipe;
 
   SuggestedRecipeSuccess(this.suggestedRecipe);
 }

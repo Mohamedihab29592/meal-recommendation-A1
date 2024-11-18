@@ -1,33 +1,27 @@
-import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 import 'package:meal_recommendations/core/models/meal.dart';
 
 class LocalData {
-
-
-  void addMealToFav(Meal meal)async {
-    var box = Hive.isBoxOpen('myFavMeals')
-        ? Hive.box<Meal>('myFavMeals')
-        : await Hive.openBox<Meal>('myFavMeals');
-    box.put(meal.dishName , meal);
-    debugPrint('Meal added to favorites');
-    debugPrint(box.length.toString());
+  var box = Hive.box('myFavMeals');
+  void addMealToFav(Meal meal) {
+    box.put(meal.name, meal);
+    print('Meal added to favorites');
+    print(box.length);
   }
 
-  void removeFavMeal(Meal meal) async {
-    var box = Hive.isBoxOpen('myFavMeals')
-        ? Hive.box<Meal>('myFavMeals')
-        : await Hive.openBox<Meal>('myFavMeals');
-    box.delete(meal.dishName);
-    debugPrint('Meal deleted successfully');
-    debugPrint(box.length.toString());
+  Future<void> removeFavMeal(Meal meal) async {
+    if (box.containsKey(meal.name)) {
+      await box.delete(meal.name);
+      print('${meal.name} deleted successfully');
+    } else {
+      print('${meal.name} not found in favorites');
+    }
+    print('Total favorite meals: ${box.length}');
   }
 
-  void removeAllMeals(Meal meal) async {
-    var box = Hive.isBoxOpen('myFavMeals')
-        ? Hive.box<Meal>('myFavMeals')
-        : await Hive.openBox<Meal>('myFavMeals');
-    debugPrint('All meals deleted successfully');
-    debugPrint(box.length.toString());
+  void removeAllMeals() {
+    box.clear();
+    print('All meals deleted successfully');
+    print(box.length);
   }
 }

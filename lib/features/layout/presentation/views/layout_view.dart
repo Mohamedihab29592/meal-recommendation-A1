@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommendations/core/utils/assets.dart';
 import 'package:meal_recommendations/features/favourite/presentation/screens/favourite_screen.dart';
-import 'package:meal_recommendations/features/home/persentation/HomeScreen/home_screen.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_bloc.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_event.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_state.dart';
 import 'package:meal_recommendations/features/layout/presentation/widgets/custom_navigation_destination.dart';
 import 'package:meal_recommendations/features/profile/presentation/screens/profile_screen.dart';
 import 'package:meal_recommendations/features/sidebar/presentation/screens/side_bar_screen.dart';
+
+import '../../../home/persentation/screens/home_screen.dart';
 
 class LayoutView extends StatelessWidget {
   const LayoutView({super.key});

@@ -10,6 +10,14 @@ import 'package:meal_recommendations/features/GeminiAi/Data/data_sorce/suggested
 import 'package:meal_recommendations/features/GeminiAi/Domain/UseCase/getRecipeSuggestionUseCase.dart';
 import 'package:meal_recommendations/features/GeminiAi/Presentation/Screens/gemini_screen.dart';
 import 'package:meal_recommendations/features/GeminiAi/Presentation/cubit/suggested_recipe_cubit.dart';
+import 'package:meal_recommendations/features/home/data/local_data.dart';
+import 'package:meal_recommendations/features/home/data/meal_repo_impl.dart';
+import 'package:meal_recommendations/features/home/domain/repo/meal_repo.dart';
+import 'package:meal_recommendations/features/home/domain/usecase/add_meal_to_fav.dart';
+import 'package:meal_recommendations/features/home/domain/usecase/fetch_meals.dart';
+import 'package:meal_recommendations/features/home/domain/usecase/firestore_usecase.dart';
+import 'package:meal_recommendations/features/home/domain/usecase/remove_meal.dart';
+import 'package:meal_recommendations/features/home/domain/usecase/remove_meal_from_fireStore.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_bloc.dart';
 import 'package:meal_recommendations/features/layout/presentation/views/layout_view.dart';
 import 'package:meal_recommendations/features/meal_details/presentation/views/meal_details_view.dart';
@@ -27,9 +35,9 @@ import '../../features/auth/Login_Screen/presenation/screens/LoginScreen.dart';
 import '../../features/auth/register/persentation/controller/sign_up_bloc.dart';
 import '../../features/auth/register/persentation/cubit/otp_auth_cubit.dart';
 import '../../features/favourite/presentation/screens/favourite_screen.dart';
-import '../../features/home/businessLogic/meal_cubit.dart';
 import '../../features/home/data/data_source.dart';
-import '../../features/home/persentation/HomeScreen/home_screen.dart';
+import '../../features/home/persentation/businessLogic/meal_cubit.dart';
+import '../../features/home/persentation/screens/home_screen.dart';
 import '../../features/sidebar/presentation/controller/bloc/side_bloc.dart';
 
 class AppRouter {
@@ -66,7 +74,7 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                   create: (context) =>
-                      MealCubit(FirebaseService())..fetchMeals(),
+                      MealCubit(fetchMealsUseCase:FetchMeals(MealRepositoryImpl(FirebaseService(), LocalData())) , addMealToFavoritesUseCase: AddMealToFav(MealRepositoryImpl(FirebaseService(), LocalData())), removeFavoriteMealUseCase: RemoveMeal(MealRepositoryImpl(FirebaseService(),LocalData())), updateIsFavUseCase: UpdateIsFavInFirestore(MealRepositoryImpl(FirebaseService(),LocalData())), removeMealFromFirestore: RemoveMealFromFirestore(MealRepositoryImpl(FirebaseService(), LocalData())), localData: LocalData())..fetchMeals(),
                   child: const HomeScreen(),
                 ));
 
@@ -131,11 +139,10 @@ class AppRouter {
         builder: (_) => 
         MultiBlocProvider(providers: [
               BlocProvider(create: (context) => SideBarBloc(di())),
-              // BlocProvider<LayoutBloc>(
-              //   create: (_) => di.get<LayoutBloc>(),
-              // ),
+
               BlocProvider(
-                create: (context) => MealCubit(FirebaseService())..fetchMeals(),
+                create: (context) =>                       MealCubit(fetchMealsUseCase:FetchMeals(MealRepositoryImpl(FirebaseService(), LocalData())) , addMealToFavoritesUseCase: AddMealToFav(MealRepositoryImpl(FirebaseService(), LocalData())), removeFavoriteMealUseCase: RemoveMeal(MealRepositoryImpl(FirebaseService(),LocalData())), updateIsFavUseCase: UpdateIsFavInFirestore(MealRepositoryImpl(FirebaseService(),LocalData())), removeMealFromFirestore: RemoveMealFromFirestore(MealRepositoryImpl(FirebaseService(), LocalData())), localData: LocalData())..fetchMeals(),
+
               )
             ], 
             child: 
