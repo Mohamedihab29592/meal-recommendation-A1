@@ -22,10 +22,12 @@ class IngredientsTab extends StatelessWidget {
             color: AppColors.primaryColor,
           ),
         ),
-        Expanded(
+        // SizedBox(height: 8.h),
+        SizedBox(
+          height: 300.h,
           child: ListView.separated(
             padding: EdgeInsetsDirectional.only(end: 19.w, top: 19.h),
-            physics: const NeverScrollableScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             itemBuilder: (_, index) =>
                 IngredientItem(ingredient: ingredients[index]),
             separatorBuilder: (_, __) => const Divider(

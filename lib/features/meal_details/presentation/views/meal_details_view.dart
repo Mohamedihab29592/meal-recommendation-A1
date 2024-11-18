@@ -30,9 +30,10 @@ class MealDetailsView extends StatelessWidget {
                 ),
               ),
               SliverToBoxAdapter(
-                child: MealName(
-                  mealName: meal.name!,
-                ),
+                // child: MealName(
+                //   mealName: meal.name!,
+                // ),
+                child: MealName(mealName: meal.name ?? 'Unknown Meal'),
               ),
               SliverToBoxAdapter(
                 child: MealDataRow(
@@ -53,7 +54,9 @@ class MealDetailsView extends StatelessWidget {
                 sliver: SliverFillViewport(
                   viewportFraction: 1.0,
                   delegate: SliverChildBuilderDelegate(
-                    (_, __) => MealDetailsTabBarView(meal: meal),
+                    (_, __) => MealDetailsTabBarView(
+                      meal: meal,
+                    ),
                     childCount: 1,
                   ),
                 ),
