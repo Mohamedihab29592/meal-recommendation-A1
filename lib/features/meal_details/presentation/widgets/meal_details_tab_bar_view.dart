@@ -19,7 +19,9 @@ class MealDetailsTabBarView extends StatelessWidget {
         SummaryTab(
           mealSummary: meal.summary!,
         ),
-        IngredientsTab(ingredients: meal.ingredients!),
+      IngredientsTab(
+      ingredients: meal.ingredients ?? [],
+    ),
         DirectionTab(steps: meal.mealSteps!),
       ],
     );
