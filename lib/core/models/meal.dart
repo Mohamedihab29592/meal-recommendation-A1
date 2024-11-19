@@ -12,39 +12,43 @@ const int mealIngredientAdapterId = 3;
 @JsonSerializable(explicitToJson: true, fieldRename: FieldRename.snake)
 class Meal {
   @HiveField(0)
-  final String? imageUrl;
+  final String? id; // Added unique ID field
 
   @HiveField(1)
-  final String? name;
+  final String? imageUrl;
 
   @HiveField(2)
-  final String? dishName;
+  final String? name;
 
   @HiveField(3)
-  final String? mealType;
+  final String? dishName;
 
   @HiveField(4)
-  final double? rating;
+  final String? mealType;
 
   @HiveField(5)
-  final int? cookTime;
+  final double? rating;
 
   @HiveField(6)
-  final int? servingSize;
+  final int? cookTime;
 
   @HiveField(7)
-  final MealSummary? summary;
+  final int? servingSize;
 
   @HiveField(8)
-  final List<MealIngredient>? ingredients;
+  final MealSummary? summary; // MealSummary type
 
   @HiveField(9)
-  final List<String>? mealSteps;
+  final List<MealIngredient>? ingredients;
 
   @HiveField(10)
+  final List<String>? mealSteps;
+
+  @HiveField(11)
   final bool isFavourite;
 
   Meal({
+    this.id, // Include in constructor
     this.imageUrl,
     this.name,
     this.dishName,

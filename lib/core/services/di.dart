@@ -6,10 +6,13 @@ import 'package:meal_recommendations/features/SeeAllScreen/data/repository/SeeAl
 import 'package:meal_recommendations/features/SeeAllScreen/domain/repositories/BaseSeeAllDataSource.dart';
 import 'package:meal_recommendations/features/SeeAllScreen/domain/repositories/BaseSeeAllRepository.dart';
 import 'package:meal_recommendations/features/auth/Login_Screen/data/data_source/LoginDataSourceImpl.dart';
+import 'package:meal_recommendations/features/home/businessLogic/meal_cubit.dart';
 import 'package:meal_recommendations/features/home/data/data_source.dart';
 import 'package:meal_recommendations/features/favourite/data/repository/fetch_save_meal_repo_impl.dart';
 import 'package:meal_recommendations/features/favourite/domain/repositories/fetch_save_fav_repository.dart';
 import 'package:meal_recommendations/features/favourite/domain/use_cases/fetch_save_fav_use_case.dart';
+import 'package:meal_recommendations/features/home/domain/add_meal_repository.dart';
+import 'package:meal_recommendations/features/home/domain/usecases/meal_usecase.dart';
 import 'package:meal_recommendations/features/layout/presentation/blocs/layout_bloc.dart';
 import 'package:meal_recommendations/features/auth/register/data/data_source/data_source.dart';
 import 'package:meal_recommendations/features/auth/register/domain/base_repo/user_repo.dart';
@@ -33,6 +36,7 @@ import '../../features/auth/Login_Screen/domain/repositories/BaseLoginRepository
 import '../../features/auth/register/data/repo/repo.dart';
 
 import '../../features/favourite/presentation/controller/fav_meal_bloc.dart';
+import '../../features/home/data/add_meal_repository_impl.dart';
 
 final GetIt di = GetIt.instance;
 
@@ -78,7 +82,11 @@ void setupServiceLocator() {
 
 
   //  use cases
+ // Register MealRepository
+  di.registerLazySingleton<AddMealRepository>(() => AddMealRepositoryImpl(FirebaseFirestore.instance));
 
+  // Register MealUseCase, which depends on MealRepository
+  di.registerLazySingleton<MealUseCase>(() => MealUseCase(di<AddMealRepository>()));
 
 // Register FirebaseAuth
 di.registerLazySingleton<FirebaseAuth>(

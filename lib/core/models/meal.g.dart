@@ -17,45 +17,48 @@ class MealAdapter extends TypeAdapter<Meal> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Meal(
-      imageUrl: fields[0] as String?,
-      name: fields[1] as String?,
-      dishName: fields[2] as String?,
-      cookTime: fields[5] as int?,
-      servingSize: fields[6] as int?,
-      summary: fields[7] as MealSummary?,
-      ingredients: (fields[8] as List?)?.cast<MealIngredient>(),
-      mealSteps: (fields[9] as List?)?.cast<String>(),
-      mealType: fields[3] as String?,
-      rating: fields[4] as double?,
-      isFavourite: fields[10] as bool,
+      id: fields[0] as String?,
+      imageUrl: fields[1] as String?,
+      name: fields[2] as String?,
+      dishName: fields[3] as String?,
+      cookTime: fields[6] as int?,
+      servingSize: fields[7] as int?,
+      summary: fields[8] as MealSummary?,
+      ingredients: (fields[9] as List?)?.cast<MealIngredient>(),
+      mealSteps: (fields[10] as List?)?.cast<String>(),
+      mealType: fields[4] as String?,
+      rating: fields[5] as double?,
+      isFavourite: fields[11] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, Meal obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(12)
       ..writeByte(0)
-      ..write(obj.imageUrl)
+      ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.name)
+      ..write(obj.imageUrl)
       ..writeByte(2)
-      ..write(obj.dishName)
+      ..write(obj.name)
       ..writeByte(3)
-      ..write(obj.mealType)
+      ..write(obj.dishName)
       ..writeByte(4)
-      ..write(obj.rating)
+      ..write(obj.mealType)
       ..writeByte(5)
-      ..write(obj.cookTime)
+      ..write(obj.rating)
       ..writeByte(6)
-      ..write(obj.servingSize)
+      ..write(obj.cookTime)
       ..writeByte(7)
-      ..write(obj.summary)
+      ..write(obj.servingSize)
       ..writeByte(8)
-      ..write(obj.ingredients)
+      ..write(obj.summary)
       ..writeByte(9)
-      ..write(obj.mealSteps)
+      ..write(obj.ingredients)
       ..writeByte(10)
+      ..write(obj.mealSteps)
+      ..writeByte(11)
       ..write(obj.isFavourite);
   }
 
@@ -189,6 +192,7 @@ class MealIngredientAdapter extends TypeAdapter<MealIngredient> {
 // **************************************************************************
 
 Meal _$MealFromJson(Map<String, dynamic> json) => Meal(
+      id: json['id'] as String?,
       imageUrl: json['image_url'] as String?,
       name: json['name'] as String?,
       dishName: json['dish_name'] as String?,
@@ -209,6 +213,7 @@ Meal _$MealFromJson(Map<String, dynamic> json) => Meal(
     );
 
 Map<String, dynamic> _$MealToJson(Meal instance) => <String, dynamic>{
+      'id': instance.id,
       'image_url': instance.imageUrl,
       'name': instance.name,
       'dish_name': instance.dishName,

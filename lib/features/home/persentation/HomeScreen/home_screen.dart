@@ -3,13 +3,16 @@ import 'package:meal_recommendations/core/themes/app_colors.dart';
 import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/build_ingredient_button.dart';
 import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/build_search_bar.dart';
 import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/build_top_bar.dart';
+import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/meal_widget.dart';
 import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/recipe_card.dart';
 import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/filter_bottom_sheet.dart';
+import 'package:meal_recommendations/features/home/persentation/add_meal_screen.dart';
 
 import '../../../../core/routing/routes.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+
+  const HomeScreen({super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,8 @@ class HomeScreen extends StatelessWidget {
             SizedBox(height: mediaQuery.size.height * 0.03),
             _buildTopRecipesHeader(context),
             SizedBox(height: mediaQuery.size.height * 0.02),
-            _buildRecipeList(mediaQuery),
+            // _buildRecipeList(mediaQuery),
+            const MealWidget(),
           ],
         ),
       ),
@@ -53,6 +57,12 @@ class HomeScreen extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+        ElevatedButton(
+              onPressed: () {
+                _showAddMealDialog(context); // Navigate to AddMealScreen
+              },
+              child: const Icon(Icons.add),
+            ),
         InkWell(
           onTap: () {
             Navigator.pushNamed(context, Routes.seeAll);
@@ -69,7 +79,13 @@ class HomeScreen extends StatelessWidget {
       ],
     );
   }
-
+ void _showAddMealDialog(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => const AddMealScreen(),
+      ),
+    );
+  }
   Widget _buildRecipeList(MediaQueryData mediaQuery) {
     return SizedBox(
       width: mediaQuery.size.width,
