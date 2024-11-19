@@ -131,9 +131,9 @@ class AppRouter {
         builder: (_) => 
         MultiBlocProvider(providers: [
               BlocProvider(create: (context) => SideBarBloc(di())),
-              // BlocProvider<LayoutBloc>(
-              //   create: (_) => di.get<LayoutBloc>(),
-              // ),
+              BlocProvider<LayoutBloc>(
+                create: (_) => di.get<LayoutBloc>(),
+              ),
               BlocProvider(
                 create: (context) => MealCubit(FirebaseService())..fetchMeals(),
               )
