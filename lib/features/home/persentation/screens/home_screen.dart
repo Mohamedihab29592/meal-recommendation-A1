@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommendations/core/helpers/bloc_observer.dart';
 import 'package:meal_recommendations/core/themes/app_colors.dart';
 import 'package:meal_recommendations/features/home/persentation/businessLogic/meal_cubit.dart';
+import '../../../../core/routing/routes.dart';
 import '../widgets/build_ingredient_button.dart';
 import '../widgets/build_search_bar.dart';
 import '../widgets/build_top_bar.dart';
@@ -54,12 +55,17 @@ class HomeScreen extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        Text(
-          'See all',
-          style: TextStyle(
-            color: AppColors.primaryColor,
-            fontSize: mediaQuery.size.width * 0.045,
-            fontWeight: FontWeight.w500,
+        GestureDetector(
+          onTap: () => Navigator.pushNamed(context, Routes.seeAll),
+          child: Text(
+            'See all',
+
+            style: TextStyle(
+              decoration: TextDecoration.underline,
+              color: AppColors.primaryColor,
+              fontSize: mediaQuery.size.width * 0.045,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ],
@@ -72,6 +78,4 @@ class HomeScreen extends StatelessWidget {
         height: mediaQuery.size.height * 0.5,
         child: const RecipeCard());
   }
-
-
 }

@@ -27,6 +27,7 @@ class MealSuggestionScreen extends StatelessWidget {
           children: [
             IngredientInputField(
               controller: ingredientController,
+
               onGetSuggestionPressed: () {
                 final ingredients = ingredientController.text.trim();
                 if (ingredients.isNotEmpty) {

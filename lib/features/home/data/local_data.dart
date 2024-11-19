@@ -2,11 +2,22 @@ import 'package:hive/hive.dart';
 import 'package:meal_recommendations/core/models/meal.dart';
 
 class LocalData {
-  var box = Hive.box('myFavMeals');
+  late Box<Meal> box;
+  LocalData() {
+    _initializeBox();
+  }
   void addMealToFav(Meal meal) {
     box.put(meal.name, meal);
     print('Meal added to favorites');
     print(box.length);
+  }
+
+  Future<void> _initializeBox() async {
+    if (!Hive.isBoxOpen('myFavMeals')) {
+      box = await Hive.openBox<Meal>('myFavMeals');
+    } else {
+      box = Hive.box<Meal>('myFavMeals');
+    }
   }
 
   Future<void> removeFavMeal(Meal meal) async {

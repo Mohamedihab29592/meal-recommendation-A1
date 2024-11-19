@@ -19,8 +19,12 @@ class IngredientInputField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextField(
+          onSubmitted: (value) {
+
+          },
           controller: controller,
           decoration: const InputDecoration(
+
             labelText: 'Enter ingredients',
             hintText: 'E.g., chicken, rice, tomato...',
             border: OutlineInputBorder(),

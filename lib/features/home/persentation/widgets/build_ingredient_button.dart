@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/themes/app_colors.dart';
+import '../../../../core/routing/routes.dart';
 
 class BuildIngredientButton extends StatelessWidget {
   const BuildIngredientButton({super.key});
@@ -12,7 +13,8 @@ class BuildIngredientButton extends StatelessWidget {
       alignment: Alignment.centerRight,
       child: GestureDetector(
         onTap: () {
-          //todo  Navigator.pushNamed(context, '/suggestedMeal');
+           Navigator.pushNamed(context, Routes.mealSuggestion);
+
         },
         child: Container(
           width: mediaQuery.size.width * 0.45,

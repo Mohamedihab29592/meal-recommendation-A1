@@ -28,7 +28,7 @@ class RecipeRemoteDatasource {
       - `cook_time` (time to cook in minutes),
       - `serving_size` (number of servings),
       - `summary` (includes a description and a list of nutritional information),
-      - `ingredients` (list of ingredients with names, image URLs, and quantity in pieces),
+      - `ingredients` (list of ingredients with names,image_url,and quantity in pieces),
       - `meal_steps` (list of cooking instructions).
 
       Return the response strictly in JSON format without any additional text or comments.

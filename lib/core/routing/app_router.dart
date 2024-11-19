@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:meal_recommendations/core/models/meal.dart';
 import 'package:meal_recommendations/core/routing/routes.dart';
 import 'package:meal_recommendations/core/services/di.dart';
@@ -59,24 +60,31 @@ class AppRouter {
         );
 
       case Routes.login:
-
         return _loginRoute();
-
-
 
       case Routes.verifyOtp:
         return MaterialPageRoute(
             builder: (_) => BlocProvider<OtpAuthCubit>(
                 create: (_) => OtpAuthCubit(), child: const OtpScreen()));
 
-
-      case Routes.home:
-        return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                  create: (context) =>
-                      MealCubit(fetchMealsUseCase:FetchMeals(MealRepositoryImpl(FirebaseService(), LocalData())) , addMealToFavoritesUseCase: AddMealToFav(MealRepositoryImpl(FirebaseService(), LocalData())), removeFavoriteMealUseCase: RemoveMeal(MealRepositoryImpl(FirebaseService(),LocalData())), updateIsFavUseCase: UpdateIsFavInFirestore(MealRepositoryImpl(FirebaseService(),LocalData())), removeMealFromFirestore: RemoveMealFromFirestore(MealRepositoryImpl(FirebaseService(), LocalData())), localData: LocalData())..fetchMeals(),
-                  child: const HomeScreen(),
-                ));
+      // case Routes.home:
+      //   return MaterialPageRoute(
+      //       builder: (_) => BlocProvider(
+      //             create: (context) => MealCubit(
+      //                 fetchMealsUseCase: FetchMeals(
+      //                     MealRepositoryImpl(FirebaseService(), LocalData())),
+      //                 addMealToFavoritesUseCase: AddMealToFav(
+      //                     MealRepositoryImpl(FirebaseService(), LocalData())),
+      //                 removeFavoriteMealUseCase: RemoveMeal(
+      //                     MealRepositoryImpl(FirebaseService(), LocalData())),
+      //                 updateIsFavUseCase: UpdateIsFavInFirestore(
+      //                     MealRepositoryImpl(FirebaseService(), LocalData())),
+      //                 removeMealFromFirestore: RemoveMealFromFirestore(
+      //                     MealRepositoryImpl(FirebaseService(), LocalData())),
+      //                 localData: LocalData())
+      //               ..fetchMeals(),
+      //             child: const HomeScreen(),
+      //           ));
 
       case Routes.favourite:
         return MaterialPageRoute(
@@ -84,7 +92,6 @@ class AppRouter {
         );
       case Routes.profile:
         return MaterialPageRoute(
-
           builder: (_) => const ProfileScreen(),
         );
 
@@ -94,7 +101,6 @@ class AppRouter {
         );
 
       case Routes.layout:
-
         return _layoutRoute();
 
       case Routes.mealDetails:
@@ -105,7 +111,8 @@ class AppRouter {
       case Routes.seeAll:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (context) => SeeAllBloc(di<BaseSeeAllRepository>())..add(FetchTrendingRecipesEvent()),
+            create: (context) => SeeAllBloc(di<BaseSeeAllRepository>())
+              ..add(FetchTrendingRecipesEvent()),
             child: SeeAllScreen(seeAllRepository: di<BaseSeeAllRepository>()),
           ),
         );
@@ -136,16 +143,23 @@ class AppRouter {
 
   static MaterialPageRoute<dynamic> _layoutRoute() {
     return MaterialPageRoute(
-        builder: (_) => 
-        MultiBlocProvider(providers: [
+        builder: (_) => MultiBlocProvider(providers: [
               BlocProvider(create: (context) => SideBarBloc(di())),
-
               BlocProvider(
-                create: (context) =>                       MealCubit(fetchMealsUseCase:FetchMeals(MealRepositoryImpl(FirebaseService(), LocalData())) , addMealToFavoritesUseCase: AddMealToFav(MealRepositoryImpl(FirebaseService(), LocalData())), removeFavoriteMealUseCase: RemoveMeal(MealRepositoryImpl(FirebaseService(),LocalData())), updateIsFavUseCase: UpdateIsFavInFirestore(MealRepositoryImpl(FirebaseService(),LocalData())), removeMealFromFirestore: RemoveMealFromFirestore(MealRepositoryImpl(FirebaseService(), LocalData())), localData: LocalData())..fetchMeals(),
-
+                create: (context) => MealCubit(
+                    fetchMealsUseCase: FetchMeals(
+                        MealRepositoryImpl(FirebaseService(), LocalData())),
+                    addMealToFavoritesUseCase: AddMealToFav(
+                        MealRepositoryImpl(FirebaseService(), LocalData())),
+                    removeFavoriteMealUseCase: RemoveMeal(
+                        MealRepositoryImpl(FirebaseService(), LocalData())),
+                    updateIsFavUseCase: UpdateIsFavInFirestore(
+                        MealRepositoryImpl(FirebaseService(), LocalData())),
+                    removeMealFromFirestore: RemoveMealFromFirestore(
+                        MealRepositoryImpl(FirebaseService(), LocalData())),
+                    localData: LocalData())
+                  ..fetchMeals(),
               )
-            ], 
-            child: 
-            const LayoutView()));
+            ], child: const LayoutView()));
   }
 }

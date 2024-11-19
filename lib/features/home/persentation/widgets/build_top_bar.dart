@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../../core/themes/app_colors.dart';
+import '../../../../core/routing/routes.dart';
 
 class BuildTopBar extends StatelessWidget {
   const BuildTopBar({super.key});
@@ -23,7 +24,8 @@ class BuildTopBar extends StatelessWidget {
         ),
         IconButton(
           onPressed: () {
-            //todo  Navigator.pushNamed(context, '/suggestedMeal');
+             Navigator.pushNamed(context, Routes.mealSuggestion);
+
           },
           icon: Icon(
             FontAwesomeIcons.robot,

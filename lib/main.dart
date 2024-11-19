@@ -25,16 +25,15 @@ void main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await Hive.initFlutter();
-  await Hive.openBox('appBox');
+ // await Hive.openBox('appBox');
   Hive.registerAdapter(MealAdapter());
   Hive.registerAdapter(MealSummaryAdapter());
   Hive.registerAdapter(MealNutritionAdapter());
   Hive.registerAdapter(MealIngredientAdapter());
-  await Hive.openBox<Meal>('myFavMeals');
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await Hive.openBox<Meal>('myFavMeals');
 
 
   await checkIfUserIsLoggedIn();
@@ -63,7 +62,7 @@ class MyApp extends StatelessWidget {
               title: AppStrings.appTitle,
               debugShowCheckedModeBanner: false,
               theme: AppThemes.lightTheme,
-              initialRoute: Routes.splash,
+              initialRoute: Routes.layout,
             );
           }
         );
