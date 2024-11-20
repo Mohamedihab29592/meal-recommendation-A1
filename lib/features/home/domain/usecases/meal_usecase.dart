@@ -3,19 +3,20 @@ import 'package:meal_recommendations/features/home/domain/add_meal_repository.da
 
 
 class MealUseCase {
-  final AddMealRepository mealRepository;
+  final AddMealRepository addMealRepository;
 
-  MealUseCase(this.mealRepository);
+
+  MealUseCase(this.addMealRepository,);
 
   Future<List<Meal>> fetchUserMeals(String userId) async {
-    return await mealRepository.getMeals(userId);
+    return await addMealRepository.getMeals(userId);
   }
 
   Future<void> addMeal(String userId, Meal meal) async {
-    await mealRepository.addMeal(userId, meal);
+    await addMealRepository.addMeal(userId, meal);
   }
 
   Future<void> deleteMeal(String userId, String mealId) async {
-    await mealRepository.deleteMeal(userId, mealId);
+    await addMealRepository.deleteMeal(userId, mealId);
   }
 }

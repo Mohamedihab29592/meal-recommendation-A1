@@ -10,54 +10,54 @@ class AddMealRepositoryImpl implements AddMealRepository {
   @override
   Future<List<Meal>> getMeals(String userId) async {
     try {
-      final snapshot =
-          await fireStore.collection('users').doc(userId).get();
+      final snapshot = await fireStore.collection('users').doc(userId).get();
       final data = snapshot.data();
-
       if (data != null && data['meals'] != null) {
         return (data['meals'] as List<dynamic>)
             .map((meal) => Meal.fromJson(meal))
             .toList();
       }
+      return [];
     } catch (e) {
-      throw Exception('Error fetching meals: $e');
+      throw Exception('Error fetching meals for user $userId: $e');
     }
-    return [];
   }
 
- @override
-Future<void> addMeal(String userId, Meal meal) async {
-  try {
-    final userRef = fireStore.collection('users').doc(userId);
-    final userSnapshot = await userRef.get();
+  @override
+  Future<void> addMeal(String userId, Meal meal) async {
+    try {
+      final userRef = fireStore.collection('users').doc(userId);
+      final userSnapshot = await userRef.get();
 
-    if (userSnapshot.exists) {
-      final data = userSnapshot.data() as Map<String, dynamic>;
-      final meals = (data['meals'] as List<dynamic>? ?? [])
-        ..add(meal.toJson());
-      await userRef.update({'meals': meals});
+      if (userSnapshot.exists) {
+        final data = userSnapshot.data() as Map<String, dynamic>;
+        final meals = (data['meals'] as List<dynamic>? ?? []);
+        meals.add(meal.toJson());
+        await userRef.update({'meals': meals});
+      } else {
+        throw Exception('User not found for userId: $userId');
+      }
+    } catch (e) {
+      throw Exception('Error adding meal for user $userId: $e');
     }
-  } catch (e) {
-    throw Exception('Error adding meal: $e');
   }
-}
 
- @override
-Future<void> deleteMeal(String userId, String mealId) async {
-  try {
-    final userRef = fireStore.collection('users').doc(userId);
-    final userSnapshot = await userRef.get();
+  @override
+  Future<void> deleteMeal(String userId, String mealId) async {
+    try {
+      final userRef = fireStore.collection('users').doc(userId);
+      final userSnapshot = await userRef.get();
 
-    if (userSnapshot.exists) {
-      final data = userSnapshot.data() as Map<String, dynamic>;
-      final meals = (data['meals'] as List<dynamic>? ?? [])
-          .where((meal) => Meal.fromJson(meal).id != mealId)
-          .toList();
-      await userRef.update({'meals': meals});
+      if (userSnapshot.exists) {
+        final data = userSnapshot.data() as Map<String, dynamic>;
+        final meals = (data['meals'] as List<dynamic>? ?? []);
+        final updatedMeals = meals.where((meal) => Meal.fromJson(meal).id != mealId).toList();
+        await userRef.update({'meals': updatedMeals});
+      } else {
+        throw Exception('User not found for userId: $userId');
+      }
+    } catch (e) {
+      throw Exception('Error deleting meal for user $userId: $e');
     }
-  } catch (e) {
-    throw Exception('Error deleting meal: $e');
   }
-}
-
 }

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meal_recommendations/core/services/di.dart';
 import 'package:meal_recommendations/core/themes/app_colors.dart';
+import 'package:meal_recommendations/features/home/businessLogic/bloc/meal_bloc.dart';
+import 'package:meal_recommendations/features/home/domain/usecases/meal_usecase.dart';
 import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/build_ingredient_button.dart';
 import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/build_search_bar.dart';
 import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/build_top_bar.dart';
 import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/meal_widget.dart';
 import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/recipe_card.dart';
 import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/filter_bottom_sheet.dart';
-import 'package:meal_recommendations/features/home/persentation/add_meal_screen.dart';
+
 
 import '../../../../core/routing/routes.dart';
 
@@ -21,7 +25,7 @@ class HomeScreen extends StatelessWidget {
       vertical: mediaQuery.size.height * 0.02,
       horizontal: mediaQuery.size.width * 0.04,
     );
-
+  final mealUseCase = di<MealUseCase>();
     return SingleChildScrollView(
       child: Padding(
         padding: padding,
@@ -36,7 +40,10 @@ class HomeScreen extends StatelessWidget {
             _buildTopRecipesHeader(context),
             SizedBox(height: mediaQuery.size.height * 0.02),
             // _buildRecipeList(mediaQuery),
-            const MealWidget(),
+             BlocProvider<MealBloc>(
+              create: (context) => MealBloc(mealUseCase),
+              child: const MealWidget(),
+            ),
           ],
         ),
       ),
@@ -57,12 +64,7 @@ class HomeScreen extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        ElevatedButton(
-              onPressed: () {
-                _showAddMealDialog(context); // Navigate to AddMealScreen
-              },
-              child: const Icon(Icons.add),
-            ),
+       
         InkWell(
           onTap: () {
             Navigator.pushNamed(context, Routes.seeAll);
@@ -79,13 +81,8 @@ class HomeScreen extends StatelessWidget {
       ],
     );
   }
- void _showAddMealDialog(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => const AddMealScreen(),
-      ),
-    );
-  }
+
+
   Widget _buildRecipeList(MediaQueryData mediaQuery) {
     return SizedBox(
       width: mediaQuery.size.width,

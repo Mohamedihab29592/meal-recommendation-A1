@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -12,7 +13,7 @@ const int mealIngredientAdapterId = 3;
 @JsonSerializable(explicitToJson: true, fieldRename: FieldRename.snake)
 class Meal {
   @HiveField(0)
-  final String? id; // Added unique ID field
+  final String? id;
 
   @HiveField(1)
   final String? imageUrl;
@@ -36,7 +37,7 @@ class Meal {
   final int? servingSize;
 
   @HiveField(8)
-  final MealSummary? summary; // MealSummary type
+  final MealSummary? summary;
 
   @HiveField(9)
   final List<MealIngredient>? ingredients;
@@ -46,9 +47,10 @@ class Meal {
 
   @HiveField(11)
   final bool isFavourite;
+  
 
   Meal({
-    this.id, // Include in constructor
+    this.id,
     this.imageUrl,
     this.name,
     this.dishName,
@@ -61,6 +63,31 @@ class Meal {
     this.rating,
     this.isFavourite = false,
   });
+
+  // Factory method to create Meal object from Firestore document
+  factory Meal.fromDocument(DocumentSnapshot doc) {
+    var data = doc.data() as Map<String, dynamic>;
+    return Meal(
+      id: doc.id,
+      dishName: data['dishName'],
+      imageUrl: data['imageUrl'],
+      name: data['name'],
+      mealType: data['mealType'],
+      rating: (data['rating'] as num?)?.toDouble(),
+      cookTime: data['cookTime'],
+      servingSize: data['servingSize'],
+      summary: data['summary'] != null
+          ? MealSummary.fromJson(data['summary'])
+          : null,
+      ingredients: data['ingredients'] != null
+          ? (data['ingredients'] as List)
+              .map((item) => MealIngredient.fromJson(item))
+              .toList()
+          : null,
+      mealSteps: List<String>.from(data['mealSteps'] ?? []),
+      isFavourite: data['isFavourite'] ?? false,
+    );
+  }
 
   factory Meal.fromJson(Map<String, dynamic> json) => _$MealFromJson(json);
 
