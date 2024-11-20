@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:meal_recommendations/features/GeminiAi/Data/models/ImageModel.dart';
 import 'package:meal_recommendations/features/GeminiAi/Data/models/suggested_meal_model.dart';
+import 'package:http/http.dart' as http;
 
 class RecipeRemoteDatasource {
   final String apiKey = 'AIzaSyC7KGMLOwzuPM6hZXCz7QAnBXG5bqsUiII';
@@ -55,6 +57,31 @@ class RecipeRemoteDatasource {
     } catch (e) {
       print('Error: $e');
       throw Exception('Error fetching recipe suggestions: $e');
+    }
+  }
+
+  ///Fetch Dish Name Image (Ahmed)
+   Future<ImageModel> getDishImage(String dishName) async {
+    String baseUrl = 'https://api.spoonacular.com/recipes';
+    String imageUrl = '/complexSearch';
+
+    Uri url = Uri.https(baseUrl, imageUrl, {
+      'apiKey': 'e2a21c9bc1754ab9bd830d5d65bf7a7d',
+      'query': dishName,
+      'addRecipeInformation': 'false',
+    });
+    try {
+      var response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+      var json = jsonDecode(response.body);
+      return ImageModel.fromJson(json);
+    } catch (e) {
+      print(e.toString());
+      throw e;
     }
   }
 }
