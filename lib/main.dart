@@ -25,7 +25,7 @@ void main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await Hive.initFlutter();
- // await Hive.openBox('appBox');
+  await Hive.openBox('appBox');
   Hive.registerAdapter(MealAdapter());
   Hive.registerAdapter(MealSummaryAdapter());
   Hive.registerAdapter(MealNutritionAdapter());
@@ -34,7 +34,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await Hive.openBox<Meal>('myFavMeals');
-
 
   await checkIfUserIsLoggedIn();
 
@@ -47,25 +46,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
-  
     return DevicePreview(
-     enabled: !kReleaseMode,
+      enabled: !kReleaseMode,
       builder: (context) {
         return ScreenUtilInit(
-          minTextAdapt: true,
-          splitScreenMode: true,
-          builder: (_, child) {
-            return MaterialApp(
-              onGenerateRoute: AppRouter.onGenerateRoute,
-              title: AppStrings.appTitle,
-              debugShowCheckedModeBanner: false,
-              theme: AppThemes.lightTheme,
-              initialRoute: Routes.layout,
-            );
-          }
-        );
+            minTextAdapt: true,
+            splitScreenMode: true,
+            builder: (_, child) {
+              return MaterialApp(
+                onGenerateRoute: AppRouter.onGenerateRoute,
+                title: AppStrings.appTitle,
+                debugShowCheckedModeBanner: false,
+                theme: AppThemes.lightTheme,
+                initialRoute: Routes.layout,
+              );
+            });
       },
     );
   }

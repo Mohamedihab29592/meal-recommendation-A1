@@ -24,8 +24,7 @@ class BuildTopBar extends StatelessWidget {
         ),
         IconButton(
           onPressed: () {
-             Navigator.pushNamed(context, Routes.mealSuggestion);
-
+            Navigator.pushNamed(context, Routes.mealSuggestion);
           },
           icon: Icon(
             FontAwesomeIcons.robot,

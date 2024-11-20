@@ -25,7 +25,7 @@ class BuildSearchBar extends StatelessWidget {
         size: MediaQuery.of(context).size.width * 0.065,
       ),
       onChanged: (value) {
-        context.read<MealCubit>().filterMealsList(value);
+        context.read<MealCubit>().searchedMealsList(value);
       },
       hintText: 'Search Recipes',
       hintStyle: WidgetStatePropertyAll(
@@ -38,8 +38,7 @@ class BuildSearchBar extends StatelessWidget {
       trailing: [
         IconButton(
           onPressed: () {
-            // TODO: Show filter bottom sheet will be completed in next week
-           // const ShowFilterMealsBottomSheet();
+            _showModalBottomSheet(context);
           },
           icon: Icon(
             FontAwesomeIcons.sliders,
@@ -49,16 +48,21 @@ class BuildSearchBar extends StatelessWidget {
         ),
       ],
     );
-
   }
-  // TODO THIS FUNCTION NOT COMPLETED AND IT WILL BE COMPLETED IN THE NEXT TASK.
-  // void _showModalBottomSheet(BuildContext context) {
-  //   showModalBottomSheet(
-  //     context: context,
-  //     shape: const RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-  //     ),
-  //     builder: (context) => const ShowFilterMealsBottomSheet(),
-  //   );
-  // }
+
+  void _showModalBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (context) {
+        return
+            // BlocProvider.value(
+            // value: context.read<MealCubit>(), // Pass the existing MealCubit
+            // child: const
+            const ShowFilterMealsBottomSheet();
+      },
+    );
+  }
 }

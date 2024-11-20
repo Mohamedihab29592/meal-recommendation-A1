@@ -40,7 +40,7 @@ class MealCubit extends Cubit<MealState> {
     }
   }
 
-  void filterMealsList(String searchQuery) {
+  void searchedMealsList(String searchQuery) {
     if (searchQuery.isEmpty) {
       emit(MealLoaded(myMeals));
     } else {
@@ -51,6 +51,29 @@ class MealCubit extends Cubit<MealState> {
           .toList();
       emit(MealLoaded(filteredList));
     }
+  }
+
+  void filterListBottomSheet({
+    String? mealType,
+    String? mealTime,
+    num? numOfIngredients,
+  }) {
+    final isFilterEmpty = (mealType?.isEmpty ?? true) &&
+        (mealTime?.isEmpty ?? true) &&
+        numOfIngredients == null;
+    if (isFilterEmpty) {
+      emit(MealLoaded(myMeals));
+      return;
+    }
+    final filteredList = myMeals.where((meal) {
+      final matchesMealType = mealType == null || meal.mealType == mealType;
+      final matchesMealTime =
+          mealTime == null || meal.cookTime.toString() == mealTime;
+      final matchesNumOfIngredients = numOfIngredients == null ||
+          meal.ingredients?.length == numOfIngredients;
+      return matchesMealType && matchesMealTime && matchesNumOfIngredients;
+    }).toList();
+    emit(MealLoaded(filteredList));
   }
 
   void _listenToMeals() {
