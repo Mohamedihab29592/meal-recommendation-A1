@@ -16,9 +16,8 @@ class LayoutView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (_) =>LayoutBloc(),
-        child: BlocBuilder<LayoutBloc, LayoutState>(
+    return
+        BlocBuilder<LayoutBloc, LayoutState>(
           buildWhen: (previous, current) =>
               previous.bottomNavIndex != current.bottomNavIndex,
           builder: (context, state) => Scaffold(
@@ -52,7 +51,6 @@ class LayoutView extends StatelessWidget {
               onDestinationSelected: (index) =>
                   context.read<LayoutBloc>().add(ChangeBottomNavIndex(index)),
             ),
-          ),
-        ));
+          ));
   }
 }

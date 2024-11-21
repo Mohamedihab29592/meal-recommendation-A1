@@ -145,6 +145,9 @@ class AppRouter {
     return MaterialPageRoute(
         builder: (_) => MultiBlocProvider(providers: [
               BlocProvider(create: (context) => SideBarBloc(di())),
+              BlocProvider<LayoutBloc>(
+                create: (_) => di.get<LayoutBloc>(),
+              ),
               BlocProvider(
                 create: (context) => MealCubit(
                     fetchMealsUseCase: FetchMeals(

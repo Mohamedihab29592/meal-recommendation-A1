@@ -6,6 +6,8 @@ import 'package:meal_recommendations/features/favourite/presentation/controller/
 import 'package:meal_recommendations/features/favourite/presentation/controller/fav_meal_event.dart';
 import 'package:meal_recommendations/features/favourite/presentation/controller/fav_meal_state.dart';
 import 'package:meal_recommendations/features/favourite/presentation/widget/meal_card_fav.dart';
+import 'package:meal_recommendations/features/favourite/presentation/widget/meal_card_placeholder.dart';
+import 'package:shimmer/shimmer.dart';
 
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({super.key});
@@ -17,7 +19,19 @@ class FavoriteScreen extends StatelessWidget {
       child: BlocBuilder<FavMealBloc, FavMealState>(
         builder: (context, state) {
           if (state is FavMealLoading) {
-            return const Center(child: CircularProgressIndicator());
+             return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: ListView.builder(
+                itemCount: 10, // Number of shimmer items to show
+                itemBuilder: (context, index) {
+                  return Shimmer.fromColors(
+                    baseColor: Colors.grey[300]!,
+                    highlightColor: Colors.grey[100]!,
+                    child: MealCardPlaceholder(),
+                  );
+                },
+              ),
+            );
           } else if (state is FavMealLoaded) {
             if (state.meals.isEmpty) {
               return const Center(child: Text(AppStrings.noMeals));

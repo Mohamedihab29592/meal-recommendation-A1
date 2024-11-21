@@ -49,6 +49,7 @@ void setupServiceLocator() {
   di.registerLazySingleton<BaseLoginDataSource>(() => LoginDataSourceImpl());
   di.registerLazySingleton<BaseSeeAllDataSource>(() => SeeAllDataSourceImpl());
 
+
   //  repositories
   di.registerLazySingleton<UserRepository>(
           ()=> UserRepositoryImpl(di())
