@@ -30,6 +30,10 @@ class FavoriteScreen extends StatelessWidget {
                   final meal = state.meals[index];
                   return MealCard(
                     meal: meal,
+                    onRemove: (){
+                      context.read<FavMealBloc>().add(RemoveFavMealEvent(meal));
+
+                    },
                   );
                 },
               ),
