@@ -1,0 +1,49 @@
+# Meal Suggestion Feature
+
+## Overview
+This feature allows users to input a list of ingredients, and an AI-powered system (using the Gemini API) suggests a meal based on those ingredients.
+
+---
+
+## Key Features
+1. **Ingredient Input**: Users can enter multiple ingredients in a text field.
+2. **AI-Powered Suggestions**: The app uses the Gemini API to fetch meal suggestions.
+3. **Detailed Recipe Display**: Each suggestion includes:
+   - Meal Name
+   - Description
+   - Ingredients
+   - Instructions
+   - (Optional) Nutritional Information
+
+---
+
+## Project Architecture
+The feature is built following the **Clean Architecture** principles with the following structure:
+
+- **Data Layer**:
+  - Contains data sources and models for interacting with the Gemini API.
+  - Handles network requests and data parsing.
+
+- **Domain Layer**:
+  - Defines use cases.
+
+- **Presentation Layer**:
+  - Built using Flutter.
+  - Includes:
+    - **UI Components**: Widgets for user interaction and recipe display.
+    - **State Management**: Cubit is used to manage the state of the feature.
+
+---
+
+## Dependencies
+- **Flutter Bloc**: For state management using Cubit.
+- **MediaQuery**: To ensure responsive UI design.
+
+---
+
+## How It Works
+1. User inputs ingredients into the text field.
+2. The `SuggestedRecipeCubit` processes the input and fetches data from the Gemini API.
+3. The app displays the recipe details dynamically in the UI.
+
+---

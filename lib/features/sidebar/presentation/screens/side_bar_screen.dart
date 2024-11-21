@@ -11,10 +11,6 @@ import '../controller/bloc/side_bloc.dart';
 import '../controller/bloc/sidebar_events.dart';
 import '../widgets/nav_button.dart';
 
-
-
-
-
 class SideMenu extends StatelessWidget {
   const SideMenu({super.key});
 
@@ -26,36 +22,39 @@ class SideMenu extends StatelessWidget {
 
     double padding = screenWidth * 0.04; // 4% of screen width for padding
     double iconSize = screenHeight * 0.04; // 4% of screen height for icon size
-    double avatarRadius = screenHeight * 0.06; // 6% of screen height for avatar radius
-    double fontSize = screenHeight * 0.022; // 2.2% of screen height for font size
+    double avatarRadius =
+        screenHeight * 0.06; // 6% of screen height for avatar radius
+    double fontSize =
+        screenHeight * 0.022; // 2.2% of screen height for font size
 
     return Drawer(
       child: SingleChildScrollView(
         child: BlocConsumer<SideBarBloc, SideBarStates>(
-            listener: (BuildContext context, state) async{
-              if(state is SignOutSuccess){
-                Navigator.of(context).pushReplacementNamed(Routes.login);
-                 await SecureStorageHelper.delete(CacheKeys.cachedUserId,);
-              }else if (state is SignOutFailure) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(state.error)),
-                );
-              }
-
-            },
+          listener: (BuildContext context, state) async {
+            if (state is SignOutSuccess) {
+              Navigator.of(context).pushReplacementNamed(Routes.login);
+              await SecureStorageHelper.delete(
+                CacheKeys.cachedUserId,
+              );
+            } else if (state is SignOutFailure) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(state.error)),
+              );
+            }
+          },
           builder: (context, state) {
             var bloc = context.read<SideBarBloc>();
-            String selectedMenu = state is MenuSelectedState
-                ? state.selectedMenu
-                : 'Home';
+            String selectedMenu =
+                state is MenuSelectedState ? state.selectedMenu : 'Home';
             // Get name and path from the state if it’s an initial state
             return Column(
               children: [
                 // Header
                 ConditionalBuilder(
-                  condition:  bloc.name != null,
+                  condition: bloc.name != null,
                   builder: (context) => Container(
-                    height: screenHeight * 0.25, // 25% of screen height for header
+                    height:
+                        screenHeight * 0.25, // 25% of screen height for header
                     color: AppColors.primaryColor,
                     padding: EdgeInsets.symmetric(
                       vertical: padding,
@@ -66,11 +65,12 @@ class SideMenu extends StatelessWidget {
                         CircleAvatar(
                           radius: avatarRadius,
                           backgroundColor: Colors.grey[300],
-                          backgroundImage: bloc.imagePath !=null
+                          backgroundImage: bloc.imagePath != null
                               ? NetworkImage("${bloc.imagePath}")
                               : null,
                           child: bloc.imagePath == null
-                              ? Icon(Icons.person, size: iconSize, color: Colors.white)
+                              ? Icon(Icons.person,
+                                  size: iconSize, color: Colors.white)
                               : null,
                         ),
                         SizedBox(width: padding),
@@ -86,29 +86,32 @@ class SideMenu extends StatelessWidget {
                     ),
                   ),
                   fallback: (context) => Shimmer.fromColors(
-                    baseColor: Colors.grey.shade600 ,
+                    baseColor: Colors.grey.shade600,
                     highlightColor: Colors.grey.shade100,
                     enabled: true,
                     child: Container(
-                      height: screenHeight * 0.25, // 25% of screen height for header
+                      height: screenHeight *
+                          0.25, // 25% of screen height for header
                       color: AppColors.primaryColor,
-                      padding:  EdgeInsets.symmetric(
-                      vertical: padding,
-                      horizontal: padding,
-                    ),
+                      padding: EdgeInsets.symmetric(
+                        vertical: padding,
+                        horizontal: padding,
+                      ),
                       child: Row(
                         children: [
                           CircleAvatar(
                             radius: avatarRadius,
                           ),
-                          SizedBox(width: padding,),
-                          SizedBox(height: fontSize,),
+                          SizedBox(
+                            width: padding,
+                          ),
+                          SizedBox(
+                            height: fontSize,
+                          ),
                         ],
                       ),
                     ),
-
                   ),
-
                 ),
 
                 // Navigation Buttons
@@ -120,7 +123,7 @@ class SideMenu extends StatelessWidget {
                   isSelected: selectedMenu == 'Home',
                   onTap: () {
                     bloc.add(SelectMenuEvent("Home"));
-                    Navigator.pushNamed(context,Routes.layout);
+                    Navigator.pushNamed(context, Routes.layout);
                   },
                 ),
                 NavButton(
@@ -131,8 +134,7 @@ class SideMenu extends StatelessWidget {
                   isSelected: selectedMenu == 'Profile',
                   onTap: () {
                     bloc.add(SelectMenuEvent('Profile'));
-                    Navigator.pushNamed(context,Routes.profile);
-
+                    Navigator.pushNamed(context, Routes.profile);
                   },
                 ),
                 NavButton(
@@ -143,11 +145,10 @@ class SideMenu extends StatelessWidget {
                   isSelected: selectedMenu == 'Favorite',
                   onTap: () {
                     bloc.add(SelectMenuEvent("Favorite"));
-                    Navigator.pushNamed(context,Routes.favourite);
-
+                    Navigator.pushNamed(context, Routes.favourite);
                   },
                 ),
-            /*    NavButton(
+                /*    NavButton(
                   title: 'Setting',
                   icon: Icons.settings,
                   iconSize: iconSize,
@@ -170,7 +171,6 @@ class SideMenu extends StatelessWidget {
                   onTap: () {
                     bloc.add(SignOutEvent());
                     bloc.add(SelectMenuEvent('Logout'));
-
                   },
                 ),
               ],
@@ -181,6 +181,3 @@ class SideMenu extends StatelessWidget {
     );
   }
 }
-
-
-

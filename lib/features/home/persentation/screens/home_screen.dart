@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meal_recommendations/core/helpers/bloc_observer.dart';
 import 'package:meal_recommendations/core/themes/app_colors.dart';
-import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/build_ingredient_button.dart';
-import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/build_search_bar.dart';
-import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/build_top_bar.dart';
-import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/recipe_card.dart';
-import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/filter_bottom_sheet.dart';
-
+import 'package:meal_recommendations/features/home/persentation/businessLogic/meal_cubit.dart';
 import '../../../../core/routing/routes.dart';
+import '../widgets/build_ingredient_button.dart';
+import '../widgets/build_search_bar.dart';
+import '../widgets/build_top_bar.dart';
+import '../widgets/filter_bottom_sheet.dart';
+import '../widgets/recipe_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -32,7 +34,7 @@ class HomeScreen extends StatelessWidget {
             SizedBox(height: mediaQuery.size.height * 0.03),
             _buildTopRecipesHeader(context),
             SizedBox(height: mediaQuery.size.height * 0.02),
-            _buildRecipeList(mediaQuery),
+            _buildRecipeList(mediaQuery, context),
           ],
         ),
       ),
@@ -53,13 +55,13 @@ class HomeScreen extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        InkWell(
-          onTap: () {
-            Navigator.pushNamed(context, Routes.seeAll);
-          },
+        GestureDetector(
+          onTap: () => Navigator.pushNamed(context, Routes.seeAll),
           child: Text(
             'See all',
+
             style: TextStyle(
+              decoration: TextDecoration.underline,
               color: AppColors.primaryColor,
               fontSize: mediaQuery.size.width * 0.045,
               fontWeight: FontWeight.w500,
@@ -70,22 +72,10 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildRecipeList(MediaQueryData mediaQuery) {
+  Widget _buildRecipeList(MediaQueryData mediaQuery, BuildContext context) {
     return SizedBox(
-      width: mediaQuery.size.width,
-      height: mediaQuery.size.height * 0.5,
-      child: const RecipeCard(),
-    );
-  }
-
-// TODO THIS FUNCTION NOT COMPLETED AND IT WILL BE COMPLETED IN THE NEXT TASK.
-  void _showModalBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-      ),
-      builder: (context) => const ShowFilterMealsBottomSheet(),
-    );
+        width: mediaQuery.size.width,
+        height: mediaQuery.size.height * 0.5,
+        child: const RecipeCard());
   }
 }

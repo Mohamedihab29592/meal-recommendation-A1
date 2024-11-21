@@ -5,7 +5,8 @@ import 'package:meal_recommendations/core/helpers/extensions.dart';
 import 'package:meal_recommendations/core/models/meal.dart';
 import 'package:meal_recommendations/core/themes/app_colors.dart';
 import 'package:meal_recommendations/core/themes/app_text_styles.dart';
-import 'package:meal_recommendations/features/home/businessLogic/meal_cubit.dart';
+
+import '../../../home/persentation/businessLogic/meal_cubit.dart';
 
 class MealCard extends StatelessWidget {
   final Meal meal;

@@ -11,7 +11,8 @@ class SuggestedRecipeCubit extends Cubit<SuggestedRecipeState> {
     emit(SuggestedRecipeLoading());
     try {
       final recipe = await getRecipeSuggestionUseCase(ingredient);
-      emit(SuggestedRecipeSuccess(recipe));
+      final image=await getRecipeSuggestionUseCase.callGetImage(recipe.name);
+      emit(SuggestedRecipeSuccess(recipe,image));
     } catch (e) {
       emit(SuggestedRecipeError(errorMessage: e.toString()));
     }

@@ -2,11 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommendations/core/models/meal.dart';
-import 'package:meal_recommendations/features/home/persentation/HomeScreen/widgets/build_meal_details.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../../../../core/themes/app_colors.dart';
 import '../../../../../core/themes/app_text_styles.dart';
-import '../../../../meal_details/presentation/views/meal_details_view.dart';
-import '../../../businessLogic/meal_cubit.dart';
+import '../../../meal_details/presentation/views/meal_details_view.dart';
+import '../businessLogic/meal_cubit.dart';
+import 'build_meal_details.dart';
 
 class BuildMealCard extends StatelessWidget {
   const BuildMealCard({super.key, required this.meal});
@@ -36,7 +37,10 @@ class BuildMealCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildMealImage(meal.imageUrl, mediaQuery),
-            BuildMealDetails(meal: meal),
+            BuildMealDetails(
+              meal: meal,
+              isLoading: meal.imageUrl == null ? true : false,
+            ),
             _buildFavoriteButton(context, meal, mediaQuery),
           ],
         ),
@@ -47,9 +51,29 @@ class BuildMealCard extends StatelessWidget {
   Widget _buildMealImage(String? imageUrl, MediaQueryData mediaQuery) {
     return Padding(
       padding: EdgeInsets.all(mediaQuery.size.width * 0.02),
-      child: CircleAvatar(
-        radius: mediaQuery.size.width * 0.13,
-        backgroundImage: CachedNetworkImageProvider(imageUrl!),
+      child: SizedBox(
+        width: mediaQuery.size.width * 0.26,
+        height: mediaQuery.size.width * 0.26,
+        child: ClipOval(
+          child: CachedNetworkImage(
+            imageUrl: imageUrl ?? '',
+            fit: BoxFit.cover,
+            placeholder: (context, url) => Shimmer.fromColors(
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                color: Colors.grey,
+              ),
+            ),
+            errorWidget: (context, url, error) => Icon(
+              Icons.error,
+              size: mediaQuery.size.width * 0.1,
+              color: Colors.red,
+            ),
+          ),
+        ),
       ),
     );
   }
