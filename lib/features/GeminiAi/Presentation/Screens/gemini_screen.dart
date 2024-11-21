@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommendations/core/themes/app_text_styles.dart';
-
 import '../../../../core/themes/app_colors.dart';
+import '../Widgets/IngredientInputField.dart';
+import '../Widgets/meal_details.dart';
 import '../cubit/suggested_recipe_cubit.dart';
 import '../cubit/suggested_recipe_state.dart';
 
@@ -13,229 +14,106 @@ class MealSuggestionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final screenHeight = mediaQuery.size.height;
+    final screenWidth = mediaQuery.size.width;
+
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'Recipe Suggestion',
-          style: AppTextStyles.font18BoldDarkBlue.copyWith(color: Colors.white),
-        ),
-        backgroundColor: AppColors.primaryColor,
-      ),
+      appBar: _buildAppBar(),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildIngredientInput(context),
-              const SizedBox(height: 20),
-              BlocBuilder<SuggestedRecipeCubit, SuggestedRecipeState>(
-                builder: (context, state) {
-                  if (state is SuggestedRecipeLoading) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (state is SuggestedRecipeSuccess) {
-                    return _buildRecipeDetails(context, state);
-                  } else if (state is SuggestedRecipeError) {
-                    return Center(
-                      child: Text(
-                        'Error: ${state.errorMessage}',
-                        style: const TextStyle(color: Colors.red),
-                      ),
-                    );
-                  }
-                  return Container();
-                },
-              ),
-            ],
-          ),
+        padding: EdgeInsets.all(screenWidth * 0.04),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            IngredientInputField(
+              controller: ingredientController,
+
+              onGetSuggestionPressed: () {
+                final ingredients = ingredientController.text.trim();
+                if (ingredients.isNotEmpty) {
+                  context
+                      .read<SuggestedRecipeCubit>()
+                      .fetchSuggestedRecipe(ingredients);
+                }
+              },
+            ),
+            SizedBox(height: screenHeight * 0.02),
+            BlocBuilder<SuggestedRecipeCubit, SuggestedRecipeState>(
+              builder: (context, state) {
+                if (state is SuggestedRecipeLoading) {
+                  return Center(
+                    child: SizedBox(
+                      height: screenHeight * 0.05,
+                      width: screenHeight * 0.05,
+                      child: const CircularProgressIndicator(),
+                    ),
+                  );
+                } else if (state is SuggestedRecipeSuccess) {
+                  return RecipeDetails(state: state);
+                } else if (state is SuggestedRecipeError) {
+                  return ErrorMessage(
+                    message: state.errorMessage,
+                    textSize: screenWidth * 0.04,
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildIngredientInput(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TextField(
-          controller: ingredientController,
-          decoration: const InputDecoration(
-            labelText: 'Enter ingredients',
-            hintText: 'E.g., chicken, rice, tomato...',
-            border: OutlineInputBorder(),
-            suffixIcon: Icon(Icons.food_bank),
-          ),
-        ),
-        const SizedBox(height: 10),
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: () {
-              final ingredients = ingredientController.text;
-              context
-                  .read<SuggestedRecipeCubit>()
-                  .fetchSuggestedRecipe(ingredients);
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primaryColor,
-              padding: const EdgeInsets.symmetric(vertical: 15),
-            ),
-            child: const Text(
-              'Get Recipe Suggestion',
-              style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
-      ],
+  AppBar _buildAppBar() {
+    return AppBar(
+      centerTitle: true,
+      title: Text(
+        'Recipe Suggestion',
+        style: AppTextStyles.font18BoldDarkBlue
+            .copyWith(fontWeight: FontWeight.bold),
+      ),
+      foregroundColor: AppColors.primaryColor,
     );
+    // );
   }
+}
 
-  Widget _buildRecipeDetails(
-      BuildContext context, SuggestedRecipeSuccess state) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 20),
-        _buildSectionHeader('Meal Name'),
-        _buildCardContent(state.suggestedRecipe.mealName),
-        const SizedBox(height: 10),
-        _buildSectionHeader('Description'),
-        _buildCardContent(state.suggestedRecipe.description),
-        const SizedBox(height: 10),
-        _buildSectionHeader('Ingredients'),
-        _buildIngredientList(state.suggestedRecipe.ingredients),
-        const SizedBox(height: 10),
-        _buildSectionHeader('Instructions'),
-        _buildInstructionList(state.suggestedRecipe.instructions),
-        if (state.suggestedRecipe.nutritionalInformation != null)
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 10),
-              _buildSectionHeader('Nutritional Information'),
-              _buildCardContent(state.suggestedRecipe.nutritionalInformation!),
-            ],
-          ),
-      ],
-    );
-  }
+class SectionHeader extends StatelessWidget {
+  final String title;
+  final double fontSize;
 
-  Widget _buildSectionHeader(String title) {
+  const SectionHeader({required this.title, this.fontSize = 20, super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Text(
       title,
-      style: const TextStyle(
-        fontSize: 20,
+      style: TextStyle(
+        fontSize: fontSize,
         fontWeight: FontWeight.bold,
         color: AppColors.primaryColor,
       ),
     );
   }
+}
 
-  Widget _buildCardContent(String content) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(12.0),
-      margin: const EdgeInsets.only(top: 4),
-      decoration: BoxDecoration(
-        color: Colors.grey.shade100,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade300,
-            offset: const Offset(0, 2),
-            blurRadius: 5,
-          ),
-        ],
-      ),
+class ErrorMessage extends StatelessWidget {
+  final String message;
+  final double textSize;
+
+  const ErrorMessage(
+      {required this.message, required this.textSize, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
       child: Text(
-        content,
-        style: const TextStyle(fontSize: 16),
-      ),
-    );
-  }
-
-  Widget _buildIngredientList(List<String> ingredients) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        color: Colors.grey.shade100,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade300,
-            offset: const Offset(0, 2),
-            blurRadius: 5,
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: ingredients
-            .map((ingredient) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4.0),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.check,
-                          size: 18, color: AppColors.primaryColor),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          ingredient,
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                      ),
-                    ],
-                  ),
-                ))
-            .toList(),
-      ),
-    );
-  }
-
-  Widget _buildInstructionList(List<String> instructions) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        color: Colors.grey.shade100,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade300,
-            offset: const Offset(0, 2),
-            blurRadius: 5,
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: instructions
-            .asMap()
-            .entries
-            .map((entry) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${entry.key + 1}. ',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Expanded(
-                        child: Text(
-                          entry.value,
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                      ),
-                    ],
-                  ),
-                ))
-            .toList(),
+        'Error: $message',
+        style: TextStyle(
+          color: Colors.red,
+          fontSize: textSize,
+        ),
       ),
     );
   }
