@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -12,39 +13,44 @@ const int mealIngredientAdapterId = 3;
 @JsonSerializable(explicitToJson: true, fieldRename: FieldRename.snake)
 class Meal {
   @HiveField(0)
-  final String? imageUrl;
+  final String? id;
 
   @HiveField(1)
-  final String? name;
+  final String? imageUrl;
 
   @HiveField(2)
-  final String? dishName;
+  final String? name;
 
   @HiveField(3)
-  final String? mealType;
+  final String? dishName;
 
   @HiveField(4)
-  final double? rating;
+  final String? mealType;
 
   @HiveField(5)
-  final int? cookTime;
+  final double? rating;
 
   @HiveField(6)
-  final int? servingSize;
+  final int? cookTime;
 
   @HiveField(7)
-  final MealSummary? summary;
+  final int? servingSize;
 
   @HiveField(8)
-  final List<MealIngredient>? ingredients;
+  final MealSummary? summary;
 
   @HiveField(9)
-  final List<String>? mealSteps;
+  final List<MealIngredient>? ingredients;
 
   @HiveField(10)
+  final List<String>? mealSteps;
+
+  @HiveField(11)
   final bool isFavourite;
+  
 
   Meal({
+    this.id,
     this.imageUrl,
     this.name,
     this.dishName,
@@ -57,6 +63,31 @@ class Meal {
     this.rating,
     this.isFavourite = false,
   });
+
+  // Factory method to create Meal object from Firestore document
+  factory Meal.fromDocument(DocumentSnapshot doc) {
+    var data = doc.data() as Map<String, dynamic>;
+    return Meal(
+      id: doc.id,
+      dishName: data['dishName'],
+      imageUrl: data['imageUrl'],
+      name: data['name'],
+      mealType: data['mealType'],
+      rating: (data['rating'] as num?)?.toDouble(),
+      cookTime: data['cookTime'],
+      servingSize: data['servingSize'],
+      summary: data['summary'] != null
+          ? MealSummary.fromJson(data['summary'])
+          : null,
+      ingredients: data['ingredients'] != null
+          ? (data['ingredients'] as List)
+              .map((item) => MealIngredient.fromJson(item))
+              .toList()
+          : null,
+      mealSteps: List<String>.from(data['mealSteps'] ?? []),
+      isFavourite: data['isFavourite'] ?? false,
+    );
+  }
 
   factory Meal.fromJson(Map<String, dynamic> json) => _$MealFromJson(json);
 

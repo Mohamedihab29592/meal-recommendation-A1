@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meal_recommendations/core/helpers/bloc_observer.dart';
+import 'package:meal_recommendations/core/services/di.dart';
 import 'package:meal_recommendations/core/themes/app_colors.dart';
-import 'package:meal_recommendations/features/home/persentation/businessLogic/meal_cubit.dart';
+import 'package:meal_recommendations/features/home/businessLogic/bloc/meal_bloc.dart';
+import 'package:meal_recommendations/features/home/domain/usecases/meal_usecase.dart';
+import 'package:meal_recommendations/features/home/persentation/widgets/meal_widget.dart';
 import '../../../../core/routing/routes.dart';
 import '../widgets/build_ingredient_button.dart';
 import '../widgets/build_search_bar.dart';
 import '../widgets/build_top_bar.dart';
-import '../widgets/filter_bottom_sheet.dart';
 import '../widgets/recipe_card.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+
+  const HomeScreen({super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class HomeScreen extends StatelessWidget {
       vertical: mediaQuery.size.height * 0.02,
       horizontal: mediaQuery.size.width * 0.04,
     );
-
+  final mealUseCase = di<MealUseCase>();
     return SingleChildScrollView(
       child: Padding(
         padding: padding,
@@ -34,7 +36,11 @@ class HomeScreen extends StatelessWidget {
             SizedBox(height: mediaQuery.size.height * 0.03),
             _buildTopRecipesHeader(context),
             SizedBox(height: mediaQuery.size.height * 0.02),
-            _buildRecipeList(mediaQuery, context),
+            // _buildRecipeList(mediaQuery, context),
+             BlocProvider<MealBloc>(
+              create: (context) => MealBloc(mealUseCase),
+              child: const MealWidget(),
+            ),
           ],
         ),
       ),
@@ -55,6 +61,7 @@ class HomeScreen extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+
         GestureDetector(
           onTap: () => Navigator.pushNamed(context, Routes.seeAll),
           child: Text(
@@ -71,6 +78,7 @@ class HomeScreen extends StatelessWidget {
       ],
     );
   }
+
 
   Widget _buildRecipeList(MediaQueryData mediaQuery, BuildContext context) {
     return SizedBox(
