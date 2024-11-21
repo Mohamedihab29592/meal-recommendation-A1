@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meal_recommendations/core/helpers/bloc_observer.dart';
+import 'package:meal_recommendations/core/services/di.dart';
 import 'package:meal_recommendations/core/themes/app_colors.dart';
-import 'package:meal_recommendations/features/home/persentation/businessLogic/meal_cubit.dart';
+import 'package:meal_recommendations/features/home/businessLogic/bloc/meal_bloc.dart';
+import 'package:meal_recommendations/features/home/domain/usecases/meal_usecase.dart';
+import 'package:meal_recommendations/features/home/persentation/widgets/meal_widget.dart';
 import '../../../../core/routing/routes.dart';
 import '../widgets/build_ingredient_button.dart';
 import '../widgets/build_search_bar.dart';
 import '../widgets/build_top_bar.dart';
-import '../widgets/filter_bottom_sheet.dart';
 import '../widgets/recipe_card.dart';
 
 class HomeScreen extends StatelessWidget {

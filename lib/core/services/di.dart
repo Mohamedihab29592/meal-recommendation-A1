@@ -6,7 +6,7 @@ import 'package:meal_recommendations/features/SeeAllScreen/data/repository/SeeAl
 import 'package:meal_recommendations/features/SeeAllScreen/domain/repositories/BaseSeeAllDataSource.dart';
 import 'package:meal_recommendations/features/SeeAllScreen/domain/repositories/BaseSeeAllRepository.dart';
 import 'package:meal_recommendations/features/auth/Login_Screen/data/data_source/LoginDataSourceImpl.dart';
-import 'package:meal_recommendations/features/home/businessLogic/meal_cubit.dart';
+
 import 'package:meal_recommendations/features/home/data/data_source.dart';
 import 'package:meal_recommendations/features/favourite/data/repository/fetch_save_meal_repo_impl.dart';
 import 'package:meal_recommendations/features/favourite/domain/repositories/fetch_save_fav_repository.dart';
