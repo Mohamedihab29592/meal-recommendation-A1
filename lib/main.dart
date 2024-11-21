@@ -30,12 +30,10 @@ void main() async {
   Hive.registerAdapter(MealSummaryAdapter());
   Hive.registerAdapter(MealNutritionAdapter());
   Hive.registerAdapter(MealIngredientAdapter());
-  await Hive.openBox<Meal>('myFavMeals');
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  await Hive.openBox<Meal>('myFavMeals');
 
   await checkIfUserIsLoggedIn();
 
@@ -48,25 +46,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
-  
     return DevicePreview(
-     enabled: !kReleaseMode,
+      enabled: !kReleaseMode,
       builder: (context) {
         return ScreenUtilInit(
-          minTextAdapt: true,
-          splitScreenMode: true,
-          builder: (_, child) {
-            return MaterialApp(
-              onGenerateRoute: AppRouter.onGenerateRoute,
-              title: AppStrings.appTitle,
-              debugShowCheckedModeBanner: false,
-              theme: AppThemes.lightTheme,
-              initialRoute: Routes.splash,
-            );
-          }
-        );
+            minTextAdapt: true,
+            splitScreenMode: true,
+            builder: (_, child) {
+              return MaterialApp(
+                onGenerateRoute: AppRouter.onGenerateRoute,
+                title: AppStrings.appTitle,
+                debugShowCheckedModeBanner: false,
+                theme: AppThemes.lightTheme,
+                initialRoute: Routes.splash,
+              );
+            });
       },
     );
   }

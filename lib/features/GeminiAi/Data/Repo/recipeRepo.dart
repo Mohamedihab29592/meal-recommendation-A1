@@ -1,3 +1,5 @@
+import 'package:meal_recommendations/features/GeminiAi/Data/models/ImageModel.dart';
+
 import '../data_sorce/suggested_meal.dart';
 import '../models/suggested_meal_model.dart';
 
@@ -6,14 +8,24 @@ class RecipeRepository {
 
   RecipeRepository(this.remoteDatasource);
 
-  Future<SuggestedRecipe> getRecipeSuggestions(String ingredients) async {
+  Future<AIMeal> getRecipeSuggestions(String ingredients) async {
     final result = await remoteDatasource.getRecipeSuggestions(ingredients);
-    return SuggestedRecipe(
-      mealName: result.mealName,
-      description: result.description,
-      ingredients: result.ingredients,
-      instructions: result.instructions,
-      nutritionalInformation: result.nutritionalInformation,
-    );
+    return AIMeal(
+        name: result.name,
+        mealType: result.mealType,
+        rating: result.rating,
+        cookTime: result.cookTime,
+        servingSize: result.servingSize,
+        summary: result.summary,
+        ingredients: result.ingredients,
+        mealSteps: result.mealSteps);
   }
+
+
+  ///Fetch Dish Name Image (Ahmed)
+  Future<ImageModel> getDishImage(String dishName)async {
+    final result=await remoteDatasource.getDishImage(dishName);
+    return result;
+  }
+
 }

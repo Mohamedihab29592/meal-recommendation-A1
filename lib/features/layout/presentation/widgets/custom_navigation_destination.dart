@@ -14,7 +14,11 @@ class CustomNavigationDestination extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NavigationDestination(
-      icon: Image.asset(icon),
+      icon: SizedBox(
+        width: 24.w,
+        height: 24.h,
+        child: Image.asset(icon),
+      ),
       label: '',
       selectedIcon: Container(
         decoration: BoxDecoration(
@@ -29,9 +33,13 @@ class CustomNavigationDestination extends StatelessWidget {
             ),
           ],
         ),
-        padding: EdgeInsets.symmetric(horizontal: 22.w, vertical: 22.h),
+        padding: EdgeInsets.all(16.h), // Equal padding for uniform scaling
         margin: EdgeInsets.only(bottom: 8.h),
-        child: Image.asset(selectedIcon),
+        child: SizedBox(
+          width: 28.w,
+          height: 28.h,
+          child: Image.asset(selectedIcon),
+        ),
       ),
     );
   }
