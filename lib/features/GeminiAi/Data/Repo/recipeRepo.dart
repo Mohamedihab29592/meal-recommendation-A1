@@ -12,6 +12,7 @@ class RecipeRepository {
   Future<Meal> getRecipeSuggestions(String ingredients) async {
     final result = await remoteDatasource.getRecipeSuggestions(ingredients);
     return Meal(
+        id: result.id,
         dishName: result.dishName,
         name: result.name,
         mealType: result.mealType,
@@ -24,7 +25,7 @@ class RecipeRepository {
   }
 
   ///Fetch Dish Name Image (Ahmed)
-  Future<ImageModel> getDishImage(String dishName) async {
+  Future<String> getDishImage(String dishName) async {
     final result = await remoteDatasource.getDishImage(dishName);
     return result;
   }

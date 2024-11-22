@@ -35,7 +35,7 @@ class RecipeRemoteDatasource {
   "rating": "(number, rating of the recipe)",
   "cook_time": "(integer, cooking time in minutes)",
   "serving_size": "(integer, number of servings)",
-  "image_url": "(optional, string, URL of the recipe image)",
+  "image_url": "(optional, string, URL of the recipe image)ensure it`s not null",
   "summary": {
     "summary": "(string, a short description of the meal)",
     "nutrations": [
@@ -48,7 +48,7 @@ class RecipeRemoteDatasource {
   "ingredients": [
     {
       "name": "(string, ingredient name)",
-      "imageUrl": "(string, URL of the ingredient image)",
+      "imageUrl": "(string, URL of the ingredient image)" ensure it`s not null,
       "pieces": "(integer) just integer don`t put any thing behind it"
     }
   ],
@@ -134,7 +134,16 @@ The response must strictly adhere to the following rules:
   }
 
    */
-  Future<ImageModel> getDishImage(String dishName) async {
+  Future<String> getDishImage(String dishName) async {
+    try {
+      var image = await client.searchPhotos(query: dishName);
+      return image!.photos![0].src!.medium!;
+    } catch (e) {
+      print(e.toString());
+      throw e;
+    }
+  }
+  /*
     String baseUrl = 'api.spoonacular.com';
     String imageUrl = '/recipes/complexSearch';
 
@@ -150,13 +159,8 @@ The response must strictly adhere to the following rules:
           'Content-Type': 'application/json',
         },
       );
-      var json = jsonDecode(response.body);
-      return ImageModel.fromJson(json);
-    } catch (e) {
-      print(e.toString());
-      throw e;
-    }
-  }
+
+     */
 
   Future<List> getIngredientsImages(List<String> ingredientNames) async {
     final imageUrls = [];

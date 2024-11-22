@@ -9,10 +9,11 @@ class SuggestedRecipeInitial extends SuggestedRecipeState {}
 
 class SuggestedRecipeSuccess extends SuggestedRecipeState {
   final Meal suggestedRecipe;
-final ImageModel dishImage;
+  final String dishImage;
   final List ingredientImages;
 
-  SuggestedRecipeSuccess(this.suggestedRecipe,this.dishImage, this.ingredientImages);
+  SuggestedRecipeSuccess(
+      this.suggestedRecipe, this.dishImage, this.ingredientImages);
 }
 
 class SuggestedRecipeLoading extends SuggestedRecipeState {}

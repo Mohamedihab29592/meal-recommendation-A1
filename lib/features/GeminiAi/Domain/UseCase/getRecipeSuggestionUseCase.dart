@@ -15,7 +15,7 @@ class GetRecipeSuggestionUseCase {
 
 
 
-  Future<ImageModel> callGetImage(String dishName) {
+  Future<String> callGetImage(String dishName) {
     return recipeRepository.getDishImage(dishName);
   }
 

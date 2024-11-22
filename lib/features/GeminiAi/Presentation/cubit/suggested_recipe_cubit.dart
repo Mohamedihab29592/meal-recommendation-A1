@@ -22,7 +22,8 @@ class SuggestedRecipeCubit extends Cubit<SuggestedRecipeState> {
         ingredient.imageUrl = ingredientImages[index];
       });
       recipe.isFavourite = false;
-      recipe.imageUrl = image.results![0].image;
+      recipe.imageUrl = image;
+
 
       final mealsCollection = FirebaseFirestore.instance.collection('meals');
 
