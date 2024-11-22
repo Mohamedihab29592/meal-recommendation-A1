@@ -10,10 +10,11 @@ import '../../../home/persentation/businessLogic/meal_cubit.dart';
 
 class MealCard extends StatelessWidget {
   final Meal meal;
+  final VoidCallback onRemove;
 
   const MealCard({
     super.key,
-    required this.meal,
+    required this.meal, required this.onRemove,
   });
 
   @override
@@ -97,14 +98,10 @@ class MealCard extends StatelessWidget {
           Align(
             alignment: Alignment.topRight,
             child: IconButton(
-              onPressed: () {
-                final mealCubit = context.read<MealCubit>();
-                if (meal.isFavourite) {
-                  mealCubit.removeFavMeal(meal);
-                } else {
-                  mealCubit.addFavMeal(meal);
-                }
-              },
+               onPressed:onRemove,
+              // () {
+              //   context.read<MealCubit>().removeFavMeal(meal);
+              // },
               icon: Icon(
                 meal.isFavourite ? Icons.favorite : Icons.favorite_border,
                 color: AppColors.primaryColor,
