@@ -15,12 +15,13 @@ class IngredientItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(ingredient.imageUrl);
     return ListTile(
       leading: CachedNetworkImage(
         imageUrl: ingredient.imageUrl,
         imageBuilder: (_, image) => CircleAvatar(
           backgroundImage: image,
-          radius: 16.r, 
+          radius: 16.r,
         ),
         placeholder: (_, __) => CircleAvatar(
           radius: 16.r,

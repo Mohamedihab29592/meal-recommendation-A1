@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../Screens/gemini_screen.dart';
+import 'package:meal_recommendations/features/home/persentation/widgets/build_meal_card.dart';
 import '../cubit/suggested_recipe_state.dart';
-import 'card_content.dart';
-import 'ingredientList.dart';
-import 'instructionList.dart';
 
 class RecipeDetails extends StatelessWidget {
   final SuggestedRecipeSuccess state;
@@ -13,21 +9,8 @@ class RecipeDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final recipe = state.suggestedRecipe;
-
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const SizedBox(height: 20),
-      const SectionHeader(title: 'Meal Name'),
-      CardContent(content: recipe.name),
-      const SizedBox(height: 10),
-      const SectionHeader(title: 'Description'),
-      CardContent(content: recipe.summary),
-      const SizedBox(height: 10),
-      const SectionHeader(title: 'Ingredients'),
-      IngredientList(ingredients: recipe.ingredients),
-      const SizedBox(height: 10),
-      const SectionHeader(title: 'Instructions'),
-      InstructionList(instructions: recipe.mealSteps),
-    ]);
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [BuildMealCard(meal: state.suggestedRecipe)]);
   }
 }

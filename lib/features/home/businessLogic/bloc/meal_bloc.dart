@@ -7,7 +7,6 @@ import 'package:meal_recommendations/features/home/data/local_data.dart';
 import 'package:meal_recommendations/features/home/domain/usecases/meal_usecase.dart';
 import 'package:meal_recommendations/core/models/meal.dart';
 
-
 class MealBloc extends Bloc<MealEvent, MealState> {
   final MealUseCase mealUseCase;
 
@@ -48,19 +47,23 @@ class MealBloc extends Bloc<MealEvent, MealState> {
     }
   }
 
-  Future<void> _onUpdateIsFav(UpdateIsFav event, Emitter<MealState> emit) async {
+  Future<void> _onUpdateIsFav(
+      UpdateIsFav event, Emitter<MealState> emit) async {
     try {
       await updateIsFavInFireStore(event.dishName, event.isFav);
-      add(FetchMeals(event.userId)); // Optionally refresh meal list after updating favorite
+      add(FetchMeals(event
+          .userId)); // Optionally refresh meal list after updating favorite
     } catch (e) {
       emit(MealError('Failed to update favorite status: $e'));
     }
   }
 
-  Future<void> _onRemoveFavMeal(RemoveFavMeal event, Emitter<MealState> emit) async {
+  Future<void> _onRemoveFavMeal(
+      RemoveFavMeal event, Emitter<MealState> emit) async {
     try {
       await removeFavMeal(event.meal);
-      add(FetchMeals(event.userId)); // Optionally refresh meal list after removing favorite
+      add(FetchMeals(event
+          .userId)); // Optionally refresh meal list after removing favorite
     } catch (e) {
       emit(MealError('Failed to remove favorite meal: $e'));
     }
@@ -93,7 +96,8 @@ class MealBloc extends Bloc<MealEvent, MealState> {
           .doc(docId)
           .update({'is_favourite': !isFav})
           .then((_) => debugPrint("Is Fav updated successfully"))
-          .catchError((error) => debugPrint("Failed to update is_favourite: $error"));
+          .catchError(
+              (error) => debugPrint("Failed to update is_favourite: $error"));
     } else {
       debugPrint("Document ID not found for the dish: $dishName");
     }
@@ -106,7 +110,8 @@ class MealBloc extends Bloc<MealEvent, MealState> {
       await updateIsFavInFireStore(meal.dishName ?? '', true);
       LocalData().removeFavMeal(meal);
     } else {
-      debugPrint("Failed to remove meal from favorites because it does not exist in FireStore");
+      debugPrint(
+          "Failed to remove meal from favorites because it does not exist in FireStore");
     }
   }
 
@@ -118,7 +123,7 @@ class MealBloc extends Bloc<MealEvent, MealState> {
           .where('dish_name', isEqualTo: dishName)
           .limit(1)
           .get();
-      
+
       if (snapshot.docs.isNotEmpty) {
         return snapshot.docs.first.id;
       } else {

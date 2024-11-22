@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
                 title: AppStrings.appTitle,
                 debugShowCheckedModeBanner: false,
                 theme: AppThemes.lightTheme,
-                initialRoute: Routes.splash,
+                initialRoute: Routes.login,
               );
             });
       },

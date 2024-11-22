@@ -1,5 +1,6 @@
 import 'package:meal_recommendations/features/GeminiAi/Data/models/ImageModel.dart';
 
+import '../../../../core/models/meal.dart';
 import '../../Data/models/suggested_meal_model.dart';
 
 abstract class SuggestedRecipeState {}
@@ -7,9 +8,12 @@ abstract class SuggestedRecipeState {}
 class SuggestedRecipeInitial extends SuggestedRecipeState {}
 
 class SuggestedRecipeSuccess extends SuggestedRecipeState {
-  final AIMeal suggestedRecipe;
-final ImageModel dishImage;
-  SuggestedRecipeSuccess(this.suggestedRecipe,this.dishImage);
+  final Meal suggestedRecipe;
+  final String dishImage;
+  final List ingredientImages;
+
+  SuggestedRecipeSuccess(
+      this.suggestedRecipe, this.dishImage, this.ingredientImages);
 }
 
 class SuggestedRecipeLoading extends SuggestedRecipeState {}

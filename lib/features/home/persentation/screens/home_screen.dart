@@ -12,8 +12,9 @@ import '../widgets/build_top_bar.dart';
 import '../widgets/recipe_card.dart';
 
 class HomeScreen extends StatelessWidget {
-
-  const HomeScreen({super.key,});
+  const HomeScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class HomeScreen extends StatelessWidget {
       vertical: mediaQuery.size.height * 0.02,
       horizontal: mediaQuery.size.width * 0.04,
     );
-  final mealUseCase = di<MealUseCase>();
+    final mealUseCase = di<MealUseCase>();
     return SingleChildScrollView(
       child: Padding(
         padding: padding,
@@ -37,7 +38,7 @@ class HomeScreen extends StatelessWidget {
             _buildTopRecipesHeader(context),
             SizedBox(height: mediaQuery.size.height * 0.02),
             // _buildRecipeList(mediaQuery, context),
-             BlocProvider<MealBloc>(
+            BlocProvider<MealBloc>(
               create: (context) => MealBloc(mealUseCase),
               child: const MealWidget(),
             ),
@@ -61,12 +62,10 @@ class HomeScreen extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-
         GestureDetector(
           onTap: () => Navigator.pushNamed(context, Routes.seeAll),
           child: Text(
             'See all',
-
             style: TextStyle(
               decoration: TextDecoration.underline,
               color: AppColors.primaryColor,
@@ -78,7 +77,6 @@ class HomeScreen extends StatelessWidget {
       ],
     );
   }
-
 
   Widget _buildRecipeList(MediaQueryData mediaQuery, BuildContext context) {
     return SizedBox(
