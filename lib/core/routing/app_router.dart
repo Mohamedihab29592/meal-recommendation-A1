@@ -1,11 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
 import 'package:meal_recommendations/core/models/meal.dart';
 import 'package:meal_recommendations/core/routing/routes.dart';
 import 'package:meal_recommendations/core/services/di.dart';
-import 'package:meal_recommendations/core/utils/functions/check_if_user_is_logged_in.dart';
 import 'package:meal_recommendations/features/GeminiAi/Data/Repo/recipeRepo.dart';
 import 'package:meal_recommendations/features/GeminiAi/Data/data_sorce/suggested_meal.dart';
 import 'package:meal_recommendations/features/GeminiAi/Domain/UseCase/getRecipeSuggestionUseCase.dart';
@@ -13,7 +11,6 @@ import 'package:meal_recommendations/features/GeminiAi/Presentation/Screens/gemi
 import 'package:meal_recommendations/features/GeminiAi/Presentation/cubit/suggested_recipe_cubit.dart';
 import 'package:meal_recommendations/features/home/data/local_data.dart';
 import 'package:meal_recommendations/features/home/data/meal_repo_impl.dart';
-import 'package:meal_recommendations/features/home/domain/repo/meal_repo.dart';
 import 'package:meal_recommendations/features/home/domain/usecase/add_meal_to_fav.dart';
 import 'package:meal_recommendations/features/home/domain/usecase/fetch_meals.dart';
 import 'package:meal_recommendations/features/home/domain/usecase/firestore_usecase.dart';
@@ -119,10 +116,28 @@ class AppRouter {
 
       case Routes.mealSuggestion:
         return MaterialPageRoute(
-            builder: (_) => BlocProvider<SuggestedRecipeCubit>(
-                create: (_) => SuggestedRecipeCubit(GetRecipeSuggestionUseCase(
-                    RecipeRepository(RecipeRemoteDatasource()))),
-                child: MealSuggestionScreen()));
+            builder: (_) => MultiBlocProvider(providers: [
+                  BlocProvider<SuggestedRecipeCubit>(
+                    create: (_) => SuggestedRecipeCubit(
+                        GetRecipeSuggestionUseCase(
+                            RecipeRepository(RecipeRemoteDatasource()))),
+                  ),
+                  BlocProvider<MealCubit>(
+                    create: (_) => MealCubit(
+                        fetchMealsUseCase: FetchMeals(
+                            MealRepositoryImpl(FirebaseService(), LocalData())),
+                        addMealToFavoritesUseCase: AddMealToFav(
+                            MealRepositoryImpl(FirebaseService(), LocalData())),
+                        removeFavoriteMealUseCase: RemoveMeal(
+                            MealRepositoryImpl(FirebaseService(), LocalData())),
+                        updateIsFavUseCase: UpdateIsFavInFirestore(
+                            MealRepositoryImpl(FirebaseService(), LocalData())),
+                        removeMealFromFirestore: RemoveMealFromFirestore(
+                            MealRepositoryImpl(FirebaseService(), LocalData())),
+                        localData: LocalData()),
+                  )
+                ], child: MealSuggestionScreen()));
+
       default:
         return MaterialPageRoute(
           builder: (_) => const OnboardingScreen(),

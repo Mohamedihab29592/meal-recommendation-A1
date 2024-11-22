@@ -39,7 +39,7 @@ class BuildMealCard extends StatelessWidget {
             _buildMealImage(meal.imageUrl, mediaQuery),
             BuildMealDetails(
               meal: meal,
-              isLoading: meal.imageUrl == null ? true : false,
+              isLoading: false,
             ),
             _buildFavoriteButton(context, meal, mediaQuery),
           ],

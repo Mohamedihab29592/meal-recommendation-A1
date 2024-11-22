@@ -16,38 +16,38 @@ class Meal {
   final String? id;
 
   @HiveField(1)
-  final String? imageUrl;
+   String? imageUrl;
 
   @HiveField(2)
-  final String? name;
+   String? name;
 
   @HiveField(3)
-  final String? dishName;
+   String? dishName;
 
   @HiveField(4)
-  final String? mealType;
+   String? mealType;
 
   @HiveField(5)
-  final double? rating;
+   double? rating;
 
   @HiveField(6)
-  final int? cookTime;
+   int? cookTime;
 
   @HiveField(7)
-  final int? servingSize;
+   int? servingSize;
 
   @HiveField(8)
-  final MealSummary? summary;
+   MealSummary? summary;
 
   @HiveField(9)
-  final List<MealIngredient>? ingredients;
+   List<MealIngredient>? ingredients;
 
   @HiveField(10)
-  final List<String>? mealSteps;
+   List<String>? mealSteps;
 
   @HiveField(11)
-  final bool isFavourite;
-  
+   bool isFavourite;
+
 
   Meal({
     this.id,
@@ -138,13 +138,13 @@ class MealNutrition {
 @JsonSerializable()
 class MealIngredient {
   @HiveField(0)
-  final String name;
+   String name;
 
   @HiveField(1)
-  final String imageUrl;
+   String imageUrl;
 
   @HiveField(2)
-  final int pieces;
+   int pieces;
 
   MealIngredient({
     required this.imageUrl,

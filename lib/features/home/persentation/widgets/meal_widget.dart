@@ -11,7 +11,6 @@ import 'package:meal_recommendations/features/home/businessLogic/bloc/meal_bloc.
 import 'package:meal_recommendations/features/home/businessLogic/bloc/meal_event_bloc.dart';
 import 'package:meal_recommendations/features/home/businessLogic/bloc/meal_state_bloc.dart';
 
-
 class MealWidget extends StatefulWidget {
   const MealWidget({super.key});
 
